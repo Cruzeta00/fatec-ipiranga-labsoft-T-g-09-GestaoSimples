@@ -41,8 +41,17 @@ namespace GestaoSimples
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
+            m_window = new GestaoSimples();
+            Frame frame0 = new Frame();
+            frame0.NavigationFailed += ErrodeNavegacao;
+            frame0.Navigate(typeof(Login), args.Arguments);
+            m_window.Content = frame0;
             m_window.Activate();
+        }
+
+        void ErrodeNavegacao(object sender, NavigationFailedEventArgs e)
+        {
+            throw new Exception("Falha ao carregar a página " + e.SourcePageType.FullName);
         }
 
         private Window m_window;
