@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using GestaoSimples.Data;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -41,6 +42,13 @@ namespace GestaoSimples
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            using (var dbContext = new ContextoGestaoSimples())
+            {
+                dbContext.Database.EnsureCreated(); // Certifica-se de que o banco de dados foi criado
+
+                dbContext.VerificarEAdicionarUsuarioAdministrador();
+            }
+
             m_window = new GestaoSimples();
             Frame frame0 = new Frame();
             frame0.NavigationFailed += ErrodeNavegacao;
