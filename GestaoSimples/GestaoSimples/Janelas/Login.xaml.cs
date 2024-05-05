@@ -1,3 +1,4 @@
+using GestaoSimples.Data;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,9 +31,31 @@ namespace GestaoSimples
             this.InitializeComponent();
         }
 
-        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(Menu), usuario.Text, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight});
+            string usuario = this.usuario.Text;
+            string senha = this.senha.Text;
+
+            using(var contexto = new ContextoGestaoSimples())
+            {
+                var Usuario = contexto.Usuarios.FirstOrDefault(u => u.Login == usuario && u.Senha == senha);
+                if (Usuario != null)
+                {
+                    Frame.Navigate(typeof(Menu), this.usuario.Text, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                }
+                else
+                {
+                    ContentDialog msgErro = new ContentDialog
+                    {
+                        Title = "Erro de Conexão",
+                        Content = "Usuário ou Senha inválido.",
+                        CloseButtonText = "OK",
+                    };
+                    msgErro.XamlRoot = botaoLogin.XamlRoot;
+                    await msgErro.ShowAsync();
+                }
+            }
+            
         }
     }
 }
