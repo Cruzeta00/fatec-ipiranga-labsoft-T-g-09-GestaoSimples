@@ -10,7 +10,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock x:Name="gestaoSimples" Text="Gestão Simples" Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
-        <HyperlinkButton Content="Sair" Click="HyperlinkButton_Click" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="gestaoSimples" Text="Gestão Simples" Margin="10,5,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+        <Grid BorderThickness="5" BorderBrush="Beige" Width="1200" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,60,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+        <HyperlinkButton Content="Sair" Click="HyperlinkButton_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
     </Grid>
 </Page>
