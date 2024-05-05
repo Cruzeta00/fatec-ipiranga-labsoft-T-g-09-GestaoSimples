@@ -1,5 +1,7 @@
 ﻿using GestaoSimples.Modelos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Linq;
 
 namespace GestaoSimples.Data
@@ -10,7 +12,17 @@ namespace GestaoSimples.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=CRUZETOBOOK\SQLEXPRESS;Initial Catalog=GestaoSimples;Integrated Security=true;");
+            if (!optionsBuilder.IsConfigured)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("Configuracoes\\appsettings.json")
+                    .Build();
+
+                string connectionString = configuration.GetConnectionString("DefaultConnection");
+                optionsBuilder.UseSqlServer(connectionString);
+            }
+            //optionsBuilder.UseSqlServer(@"Data Source=CRUZETOBOOK\SQLEXPRESS;Initial Catalog=GestaoSimples;Integrated Security=true;");
         }
 
         public void VerificarEAdicionarUsuarioAdministrador()
