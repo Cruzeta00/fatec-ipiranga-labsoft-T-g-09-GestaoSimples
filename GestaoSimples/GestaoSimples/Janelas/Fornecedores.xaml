@@ -3,27 +3,33 @@
     x:Class="GestaoSimples.Janelas.Fornecedores"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GestaoSimples.Janelas"
+    xmlns:local="using:GestaoSimples.BarraDeNavegacao"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock x:Name="paginaLogin" Text="Login" Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
+        <TextBlock x:Name="paginaLogin" Text="Fornecedores" Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
+        <Grid BorderThickness="5" BorderBrush="Beige" Width="1200" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,60,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <local:BarraNavegacao HorizontalAlignment="Left"/>
+        </Grid>
         <StackPanel VerticalAlignment="Center" BorderThickness="2" BorderBrush="Pink" HorizontalAlignment="Center">
             <Grid BorderThickness="1" BorderBrush="Beige">
-                <TextBox HorizontalAlignment="Center" Width="200" x:Name="usuario" PlaceholderText="Login"/>
+                
             </Grid>
             <Grid>
-                <TextBox HorizontalAlignment="Center" Width="200" x:Name="senha" PlaceholderText="Senha"/>
+                
             </Grid>
             <HyperlinkButton Content="Buscar" Click="botaoBuscar_Click" HorizontalAlignment="Stretch" x:Name="botaoBuscar"/>
             <HyperlinkButton Content="Atualizar" Click="botaoAtualizar_Click" HorizontalAlignment="Stretch" x:Name="botaoAtualizar"/>
             <HyperlinkButton Content="Desativar" Click="botaoDesativar_Click" HorizontalAlignment="Stretch" x:Name="botaoDesativar"/>
-            <TextBlock IsTextSelectionEnabled="True" Text="Esqueci a Senha" HorizontalAlignment="Center">
-
-            </TextBlock>
         </StackPanel>
     </Grid>
 </Page>
