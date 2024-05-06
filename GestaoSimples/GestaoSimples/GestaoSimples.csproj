@@ -12,6 +12,7 @@
 	<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="BarraDeNavegacao\BarraNavegacao.xaml" />
     <None Remove="GestaoSimples.xaml" />
     <None Remove="Janelas\Fornecedores.xaml" />
     <None Remove="Login.xaml" />
@@ -53,6 +54,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="BarraDeNavegacao\BarraNavegacao.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Update="Configuracoes\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
