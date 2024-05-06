@@ -13,6 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="GestaoSimples.xaml" />
+    <None Remove="Janelas\Fornecedores.xaml" />
     <None Remove="Login.xaml" />
     <None Remove="Menu.xaml" />
   </ItemGroup>
@@ -52,12 +53,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Janelas\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Configuracoes\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Janelas\Fornecedores.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
