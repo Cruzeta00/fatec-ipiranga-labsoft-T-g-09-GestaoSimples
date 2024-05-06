@@ -9,6 +9,7 @@ namespace GestaoSimples.Data
     public class ContextoGestaoSimples : DbContext
     {
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Fornecedor> Fornecedores { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
