@@ -5,28 +5,43 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GestaoSimples.BarraDeNavegacao"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <CollectionViewSource x:Name="fornecedorList" IsSourceGrouped="True"/>
+    </Page.Resources>
+    
     <Grid>
-        <TextBlock x:Name="paginaLogin" Text="Fornecedores" Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
-        <Grid BorderThickness="5" BorderBrush="Beige" Width="1200" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,60,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-            </Grid.RowDefinitions>
+        <TextBlock x:Name="paginaFornecedores" Text="Fornecedores" Margin="10,5,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+        <Grid BorderThickness="5" BorderBrush="Gray" Width="1200" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,60,0">
             <local:BarraNavegacao HorizontalAlignment="Left"/>
         </Grid>
-        <StackPanel VerticalAlignment="Center" BorderThickness="2" BorderBrush="Pink" HorizontalAlignment="Center">
-            <Grid BorderThickness="1" BorderBrush="Beige">
-                
-            </Grid>
-            <Grid>
-                
-            </Grid>
+        <Grid>
+            <GridView VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="5" BorderBrush="Red" Width="1350px" Height="500" Margin="0,80,0,0" 
+                      x:Name="grid" ItemsSource="{Binding Source={StaticResource fornecedorList}}">
+                <GridView.GroupStyle>
+                    <GroupStyle HidesIfEmpty="False">
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Background="Purple" Margin="5" BorderBrush="White" BorderThickness="3" Padding="0">
+                                    <GridViewHeaderItem BorderBrush="Aqua" BorderThickness="15">
+                                        <TextBlock Text="{Binding Telefone}"></TextBlock>
+                                    </GridViewHeaderItem>
+                                    <GridViewItem BorderBrush="Green" BorderThickness="15">
+                                        <TextBlock Text="{Binding Id}" Foreground="Black" Margin="5" Style="{StaticResource BaseTextBlockStyle}" TextWrapping="NoWrap"/>
+                                    </GridViewItem>
+
+                                    <TextBlock Text="{Binding Nome}" Foreground="Black" Margin="5" Style="{StaticResource BaseTextBlockStyle}"/>
+                                    <TextBlock Text="{Binding CNPJ}" Foreground="Black" Margin="5" Style="{StaticResource HeaderTextBlockStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </GridView.GroupStyle>
+            </GridView>
+        </Grid>
+        <StackPanel VerticalAlignment="Bottom" BorderThickness="2" BorderBrush="Pink" HorizontalAlignment="Center" Orientation="Horizontal">
             <HyperlinkButton Content="Buscar" Click="botaoBuscar_Click" HorizontalAlignment="Stretch" x:Name="botaoBuscar"/>
             <HyperlinkButton Content="Atualizar" Click="botaoAtualizar_Click" HorizontalAlignment="Stretch" x:Name="botaoAtualizar"/>
             <HyperlinkButton Content="Desativar" Click="botaoDesativar_Click" HorizontalAlignment="Stretch" x:Name="botaoDesativar"/>
