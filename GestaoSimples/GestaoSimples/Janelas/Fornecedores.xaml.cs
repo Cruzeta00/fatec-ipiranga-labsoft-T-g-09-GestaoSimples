@@ -1,12 +1,16 @@
+using GestaoSimples.Data;
+using GestaoSimples.Modelos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -30,7 +34,12 @@ namespace GestaoSimples.Janelas
 
         private void botaoBuscar_Click(object sender, RoutedEventArgs e)
         {
-
+            List<Fornecedor> fornecedores = new ();
+            using (var contexto = new ContextoGestaoSimples())
+            {
+                fornecedores = contexto.Fornecedores.ToList();
+            }
+            fornecedorList.Source = fornecedores;
         }
 
         private void botaoDesativar_Click(object sender, RoutedEventArgs e)
