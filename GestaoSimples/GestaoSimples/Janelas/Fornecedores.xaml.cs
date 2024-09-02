@@ -1,5 +1,6 @@
 using GestaoSimples.Data;
 using GestaoSimples.Modelos;
+using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -27,24 +28,29 @@ namespace GestaoSimples.Janelas
     /// </summary>
     public sealed partial class Fornecedores : Page
     {
+        private readonly ServiceFornecedor _servicoFornecedor;
+
         public Fornecedores()
         {
             this.InitializeComponent();
+
+            _servicoFornecedor = new ServiceFornecedor();
         }
 
         private void botaoBuscar_Click(object sender, RoutedEventArgs e)
         {
-            List<Fornecedor> fornecedores = new ();
-            using (var contexto = new ContextoGestaoSimples())
-            {
-                fornecedores = contexto.Fornecedores.ToList();
-            }
-            fornecedorList.Source = fornecedores;
+            var fornecedores = _servicoFornecedor.BuscarFornecedores();
+            
+            FornecedoresListView.ItemsSource = fornecedores;
         }
 
         private void botaoDesativar_Click(object sender, RoutedEventArgs e)
         {
-
+            if(FornecedoresListView.SelectedItem != null)
+            {
+                var fornecedor = FornecedoresListView.SelectedItem as Fornecedor;
+                _servicoFornecedor.MudarStatus(fornecedor.Id);
+            }
         }
 
         private void botaoAtualizar_Click(object sender, RoutedEventArgs e)
