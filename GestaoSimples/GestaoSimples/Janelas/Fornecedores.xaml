@@ -13,35 +13,45 @@
     </Page.Resources>
     
     <Grid>
-        <TextBlock x:Name="paginaFornecedores" Text="Fornecedores" Margin="10,5,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
-        <Grid BorderThickness="5" BorderBrush="Gray" Width="1200" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,60,0">
+        <!-- Definição das linhas do Grid -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Linha para o título -->
+            <RowDefinition Height="Auto"/>
+            <!-- Linha para o menu de navegação -->
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <!-- Linha para a ListView (preenche o restante do espaço) -->
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0"  x:Name="paginaFornecedores" Text="Fornecedores" Margin="10,5,0,0" Style="{StaticResource TitleTextBlockStyle}"/>
+        
+        <Grid Grid.Row="1" BorderThickness="5" BorderBrush="Gray" Width="1200" Height="100" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,40,60,0">
             <local:BarraNavegacao HorizontalAlignment="Left"/>
         </Grid>
-        <Grid>
-            <GridView VerticalAlignment="Center" HorizontalAlignment="Center" BorderThickness="5" BorderBrush="Red" Width="1350px" Height="500" Margin="0,80,0,0" 
-                      x:Name="grid" ItemsSource="{Binding Source={StaticResource fornecedorList}}">
-                <GridView.GroupStyle>
-                    <GroupStyle HidesIfEmpty="False">
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <Grid Background="Purple" Margin="5" BorderBrush="White" BorderThickness="3" Padding="0">
-                                    <GridViewHeaderItem BorderBrush="Aqua" BorderThickness="15">
-                                        <TextBlock Text="{Binding Telefone}"></TextBlock>
-                                    </GridViewHeaderItem>
-                                    <GridViewItem BorderBrush="Green" BorderThickness="15">
-                                        <TextBlock Text="{Binding Id}" Foreground="Black" Margin="5" Style="{StaticResource BaseTextBlockStyle}" TextWrapping="NoWrap"/>
-                                    </GridViewItem>
-
-                                    <TextBlock Text="{Binding Nome}" Foreground="Black" Margin="5" Style="{StaticResource BaseTextBlockStyle}"/>
-                                    <TextBlock Text="{Binding CNPJ}" Foreground="Black" Margin="5" Style="{StaticResource HeaderTextBlockStyle}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </GridView.GroupStyle>
-            </GridView>
+        
+        
+        <Grid Grid.Row="2" HorizontalAlignment="Center" Margin="0,5,0,5">
+            <ListView x:Name="FornecedoresListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Id}" Margin="10"/>
+                            <TextBlock Text="{Binding Nome}" Margin="10"/>
+                            <TextBlock Text="{Binding CNPJ}" Margin="10"/>
+                            <TextBlock Text="{Binding Telefone}" Margin="10"/>
+                            <TextBlock Text="{Binding EMail}" Margin="10"/>
+                            <TextBlock Text="{Binding Ativo}" Margin="10"/>
+                            <TextBlock Text="{Binding Observacoes}" Margin="10"/>
+                            <TextBlock Text="{Binding DataCadastro}" Margin="10"/>
+                            <TextBlock Text="{Binding Classificacao}" Margin="10"/>
+                            <!-- Adicione outros campos conforme necessário -->
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
-        <StackPanel VerticalAlignment="Bottom" BorderThickness="2" BorderBrush="Pink" HorizontalAlignment="Center" Orientation="Horizontal">
+        <StackPanel Grid.Row="3" VerticalAlignment="Bottom" BorderThickness="2" BorderBrush="Pink" HorizontalAlignment="Center" Orientation="Horizontal">
             <HyperlinkButton Content="Buscar" Click="botaoBuscar_Click" HorizontalAlignment="Stretch" x:Name="botaoBuscar"/>
             <HyperlinkButton Content="Atualizar" Click="botaoAtualizar_Click" HorizontalAlignment="Stretch" x:Name="botaoAtualizar"/>
             <HyperlinkButton Content="Desativar" Click="botaoDesativar_Click" HorizontalAlignment="Stretch" x:Name="botaoDesativar"/>
