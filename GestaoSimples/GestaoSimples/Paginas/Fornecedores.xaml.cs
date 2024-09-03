@@ -1,5 +1,6 @@
 using GestaoSimples.Data;
 using GestaoSimples.Modelos;
+using GestaoSimples.Paginas;
 using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -15,8 +16,10 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -48,14 +51,23 @@ namespace GestaoSimples.Janelas
         {
             if(FornecedoresListView.SelectedItem != null)
             {
-                var fornecedor = FornecedoresListView.SelectedItem as Fornecedor;
+                var fornecedor = FornecedoresListView.SelectedItem as Modelos.Fornecedor;
                 _servicoFornecedor.MudarStatus(fornecedor.Id);
             }
         }
 
         private void botaoAtualizar_Click(object sender, RoutedEventArgs e)
         {
+            if (FornecedoresListView.SelectedItem != null)
+            {
+                var fornecedor = FornecedoresListView.SelectedItem as Modelos.Fornecedor;
 
+                Frame.Navigate(typeof(Paginas.Fornecedor), fornecedor.Id);
+            }
+            else
+            {
+                Frame.Navigate(typeof(Paginas.Fornecedor));
+            }
         }
     }
 }
