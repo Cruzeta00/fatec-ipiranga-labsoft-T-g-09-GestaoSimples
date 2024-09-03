@@ -14,9 +14,10 @@
   <ItemGroup>
     <None Remove="BarraDeNavegacao\BarraNavegacao.xaml" />
     <None Remove="GestaoSimples.xaml" />
-    <None Remove="Janelas\Fornecedores.xaml" />
+    <None Remove="JanelaInicial\Fornecedores.xaml" />
     <None Remove="Login.xaml" />
     <None Remove="Menu.xaml" />
+    <None Remove="Paginas\Fornecedor.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +61,9 @@
     <None Update="Configuracoes\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Paginas\Fornecedor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Janelas\Fornecedores.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

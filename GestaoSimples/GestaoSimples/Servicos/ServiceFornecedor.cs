@@ -36,5 +36,13 @@ namespace GestaoSimples.Servicos
                 contexto.SaveChanges();
             }
         }
+
+        public int BuscarNovoFornecedor()
+        {
+            using(var contexto = new ContextoGestaoSimples())
+            {
+                return (int)contexto.Fornecedores.OrderByDescending(x => x.Id).Select(x => x.Id).FirstOrDefault() + 1;
+            }
+        }
     }
 }
