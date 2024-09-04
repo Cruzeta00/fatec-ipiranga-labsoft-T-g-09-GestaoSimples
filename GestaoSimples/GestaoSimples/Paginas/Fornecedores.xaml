@@ -119,7 +119,7 @@
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" BorderThickness="2" BorderBrush="Gray" Orientation="Horizontal" Margin="5">
             <HyperlinkButton Content="Buscar" Click="botaoBuscar_Click" HorizontalAlignment="Stretch" x:Name="botaoBuscar"/>
-            <HyperlinkButton Content="Atualizar" Click="botaoAtualizar_Click" HorizontalAlignment="Stretch" x:Name="botaoAtualizar"/>
+            <HyperlinkButton Content="Criar/Atualizar" Click="botaoAtualizar_Click" HorizontalAlignment="Stretch" x:Name="botaoAtualizar"/>
             <HyperlinkButton Content="Desativar" Click="botaoDesativar_Click" HorizontalAlignment="Stretch" x:Name="botaoDesativar"/>
         </StackPanel>
     </Grid>

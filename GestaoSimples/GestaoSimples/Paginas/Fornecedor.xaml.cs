@@ -1,3 +1,4 @@
+using GestaoSimples.Modelos;
 using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -79,7 +80,25 @@ namespace GestaoSimples.Paginas
 
         private void botao_Click(object sender, RoutedEventArgs e)
         {
+            Modelos.Fornecedor  forn = new Modelos.Fornecedor();
 
+            forn.Id = Convert.ToInt32(Id.Text);
+            forn.Nome = Nome.Text;
+            forn.CNPJ = CNPJ.Text;
+            forn.Telefone = Telefone.Text;
+            forn.EMail = EMail.Text;
+            if (Ativo.IsChecked == true) forn.Ativo = true;
+            else forn.Ativo = false;
+            forn.Observacoes = Obs.Text;
+            forn.DataCadastro = Convert.ToDateTime(DataCad.Text);
+            Enum.TryParse(Class.Text, out Classificacao valor);
+            forn.Classificacao = valor;
+
+            if (botao.Content.ToString() == "Adicionar")
+            {
+                _servicoFornecedor.AdicionarFornecedor(forn);
+            }
+            else _servicoFornecedor.AtualizarFornecedor(forn);
         }
     }
 }
