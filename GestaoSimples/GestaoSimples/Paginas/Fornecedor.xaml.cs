@@ -28,12 +28,14 @@ namespace GestaoSimples.Paginas
     public sealed partial class Fornecedor : Page
     {
         private readonly ServiceFornecedor _servicoFornecedor;
+        private DateTimeOffset? selectedDate;
 
         public Fornecedor()
         {
             this.InitializeComponent();
 
             _servicoFornecedor = new ServiceFornecedor();
+            DataCad.DateChanged += DatePicker_DateChanged;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -73,7 +75,7 @@ namespace GestaoSimples.Paginas
                     EMail.Text = forn.EMail;
                     Ativo.IsChecked = forn.Ativo;
                     Obs.Text = forn.Observacoes;
-                    DataCad.Text = forn.DataCadastro.ToString();
+                    DataCad.Date = forn.DataCadastro;
                     Class.Text = forn.Classificacao.ToString();
                 }
             }
@@ -93,8 +95,7 @@ namespace GestaoSimples.Paginas
                 if (Ativo.IsChecked == true) forn.Ativo = true;
                 else forn.Ativo = false;
                 forn.Observacoes = Obs.Text;
-                DateTime.TryParse(DataCad.Text, out DateTime convertida);
-                forn.DataCadastro = convertida;
+                forn.DataCadastro = DateTime.Parse(selectedDate.ToString());
                 Enum.TryParse(Class.Text, out Classificacao valor);
                 forn.Classificacao = valor;
 
@@ -124,6 +125,15 @@ namespace GestaoSimples.Paginas
             // Aguarda 3 segundos antes de ocultar
             await Task.Delay(3000);
             ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
+        }
+
+        private void DatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        {
+            if (DataCad.Date != null)
+            {
+                selectedDate = DataCad.Date.Value;
+                
+            }
         }
     }
 }

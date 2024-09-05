@@ -67,7 +67,7 @@
             <TextBox x:Name="Obs" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
             <TextBlock Text="Data de Cadastro:" Grid.Row="7" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <TextBox x:Name="DataCad" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <CalendarDatePicker x:Name="DataCad" Header="Data de Cadastro" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
             <TextBlock Text="Classificação:" Grid.Row="8" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
             <TextBox x:Name="Class" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
