@@ -9,9 +9,11 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -78,27 +80,50 @@ namespace GestaoSimples.Paginas
             catch(Exception ex) { }
         }
 
-        private void botao_Click(object sender, RoutedEventArgs e)
+        private async void botao_Click(object sender, RoutedEventArgs e)
         {
             Modelos.Fornecedor  forn = new Modelos.Fornecedor();
 
-            forn.Id = Convert.ToInt32(Id.Text);
-            forn.Nome = Nome.Text;
-            forn.CNPJ = CNPJ.Text;
-            forn.Telefone = Telefone.Text;
-            forn.EMail = EMail.Text;
-            if (Ativo.IsChecked == true) forn.Ativo = true;
-            else forn.Ativo = false;
-            forn.Observacoes = Obs.Text;
-            forn.DataCadastro = Convert.ToDateTime(DataCad.Text);
-            Enum.TryParse(Class.Text, out Classificacao valor);
-            forn.Classificacao = valor;
-
-            if (botao.Content.ToString() == "Adicionar")
+            try
             {
-                _servicoFornecedor.AdicionarFornecedor(forn);
+                forn.Nome = Nome.Text;
+                forn.CNPJ = CNPJ.Text;
+                forn.Telefone = Telefone.Text;
+                forn.EMail = EMail.Text;
+                if (Ativo.IsChecked == true) forn.Ativo = true;
+                else forn.Ativo = false;
+                forn.Observacoes = Obs.Text;
+                DateTime.TryParse(DataCad.Text, out DateTime convertida);
+                forn.DataCadastro = convertida;
+                Enum.TryParse(Class.Text, out Classificacao valor);
+                forn.Classificacao = valor;
+
+            
+                if (botao.Content.ToString() == "Adicionar")
+                {
+                    _servicoFornecedor.AdicionarFornecedor(forn);
+                }
+                else _servicoFornecedor.AtualizarFornecedor(forn);
             }
-            else _servicoFornecedor.AtualizarFornecedor(forn);
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message); // Para logar no console ou arquivo, se necessário
+
+                // Exibe a notificação de erro
+                await ShowErrorNotificationAsync(ex.Message);
+                if(ex.InnerException != null)
+                    _ = ShowErrorNotificationAsync(ex.InnerException.ToString());
+            }
+        }
+
+        private async Task ShowErrorNotificationAsync(string message)
+        {
+            ErrorTextBlock.Text = message;  // Define o texto do erro
+            ErrorNotification.Visibility = Visibility.Visible;  // Torna a notificação visível
+
+            // Aguarda 3 segundos antes de ocultar
+            await Task.Delay(3000);
+            ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
         }
     }
 }
