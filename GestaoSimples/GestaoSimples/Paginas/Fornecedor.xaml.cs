@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,13 +30,15 @@ namespace GestaoSimples.Paginas
     {
         private readonly ServiceFornecedor _servicoFornecedor;
         private DateTimeOffset? selectedDate;
-
+        Classificacao? selectedStatus;
         public Fornecedor()
         {
             this.InitializeComponent();
 
             _servicoFornecedor = new ServiceFornecedor();
-            DataCad.DateChanged += DatePicker_DateChanged;
+            Class.ItemsSource = Enum.GetValues(typeof(Classificacao));
+
+            Class.SelectionChanged += StatusComboBox_SelectionChanged;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -45,7 +48,7 @@ namespace GestaoSimples.Paginas
             if (e.Parameter == null)
             {
                 botao.Content = "Adicionar";
-                PreencherDadosFornecedor(string.Empty);
+                PreencherDadosFornecedor();
             }
             else
             {
@@ -75,16 +78,28 @@ namespace GestaoSimples.Paginas
                     EMail.Text = forn.EMail;
                     Ativo.IsChecked = forn.Ativo;
                     Obs.Text = forn.Observacoes;
-                    DataCad.Date = forn.DataCadastro;
-                    Class.Text = forn.Classificacao.ToString();
+                    Class.SelectedItem = forn.Classificacao;
                 }
             }
             catch(Exception ex) { }
         }
 
+        private void PreencherDadosFornecedor()
+        {
+            try
+            {
+                int novo = _servicoFornecedor.BuscarNovoFornecedor();
+
+                Id.Text = novo.ToString();
+                
+            }
+            catch (Exception ex) { }
+        }
+
         private async void botao_Click(object sender, RoutedEventArgs e)
         {
             Modelos.Fornecedor  forn = new Modelos.Fornecedor();
+            int error = 0;
 
             try
             {
@@ -92,19 +107,31 @@ namespace GestaoSimples.Paginas
                 forn.CNPJ = CNPJ.Text;
                 forn.Telefone = Telefone.Text;
                 forn.EMail = EMail.Text;
-                if (Ativo.IsChecked == true) forn.Ativo = true;
-                else forn.Ativo = false;
+                forn.Ativo = Ativo.IsChecked == true;
                 forn.Observacoes = Obs.Text;
-                forn.DataCadastro = DateTime.Parse(selectedDate.ToString());
-                Enum.TryParse(Class.Text, out Classificacao valor);
-                forn.Classificacao = valor;
 
-            
-                if (botao.Content.ToString() == "Adicionar")
+                if (Class.SelectedValue == null)
                 {
-                    _servicoFornecedor.AdicionarFornecedor(forn);
+                    await ShowErrorNotificationAsync("Classificação não selecionada.");
+                    error++;
                 }
-                else _servicoFornecedor.AtualizarFornecedor(forn);
+                else
+                {
+                    forn.Classificacao = (Classificacao)Class.SelectedValue;
+                }
+
+                if(error == 0)
+                {
+                    if (botao.Content.ToString() == "Adicionar")
+                    {
+                        _servicoFornecedor.AdicionarFornecedor(forn);
+                    }
+                    else 
+                    {
+                        forn.Id = Convert.ToInt32(Id.Text);
+                        _servicoFornecedor.AtualizarFornecedor(forn); 
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -127,12 +154,11 @@ namespace GestaoSimples.Paginas
             ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
         }
 
-        private void DatePicker_DateChanged(CalendarDatePicker sender, CalendarDatePickerDateChangedEventArgs args)
+        private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataCad.Date != null)
+            if (Class.SelectedItem != null)
             {
-                selectedDate = DataCad.Date.Value;
-                
+                selectedStatus = (Classificacao)Class.SelectedItem;
             }
         }
     }

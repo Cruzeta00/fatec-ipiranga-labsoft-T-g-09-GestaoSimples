@@ -29,12 +29,9 @@
             <!-- Definindo duas colunas: uma para os títulos e outra para os valores -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <!-- Coluna para os títulos -->
                 <ColumnDefinition Width="*"/>
-                <!-- Coluna para os valores -->
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -66,11 +63,8 @@
             <TextBlock Text="Observacoes:" Grid.Row="6" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
             <TextBox x:Name="Obs" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
-            <TextBlock Text="Data de Cadastro:" Grid.Row="7" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <CalendarDatePicker x:Name="DataCad" Header="Data de Cadastro" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
-
             <TextBlock Text="Classificação:" Grid.Row="8" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <TextBox x:Name="Class" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <ComboBox x:Name="Class" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
         </Grid>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" BorderThickness="2" BorderBrush="Gray" Orientation="Horizontal" Margin="5">
