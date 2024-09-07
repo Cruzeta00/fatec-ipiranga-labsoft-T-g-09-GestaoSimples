@@ -5,6 +5,7 @@
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>GestaoSimples</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+	<ApplicationIcon>Recursos/Logo.ico</ApplicationIcon>
     <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
@@ -18,6 +19,12 @@
     <None Remove="Login.xaml" />
     <None Remove="Menu.xaml" />
     <None Remove="Paginas\Fornecedor.xaml" />
+    <None Remove="Recursos\Logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Recursos\Logo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +40,14 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26031-preview" />
+    <PackageReference Include="Vanara.PInvoke.User32" Version="4.0.3" />
     <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Recursos\Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
