@@ -9,19 +9,22 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock x:Name="paginaLogin" Text="Login" Margin="16" Style="{StaticResource TitleTextBlockStyle}"/>
-        <StackPanel VerticalAlignment="Center" BorderThickness="2" BorderBrush="Pink" HorizontalAlignment="Center">
-            <Grid BorderThickness="1" BorderBrush="Beige">
-                <TextBox HorizontalAlignment="Center" Width="200" x:Name="usuario" PlaceholderText="Login"/>
-            </Grid>
-            <Grid>
-                <TextBox HorizontalAlignment="Center" Width="200" x:Name="senha" PlaceholderText="Senha"/>
-            </Grid>
-            <HyperlinkButton Content="Logar" Click="HyperlinkButton_Click" HorizontalAlignment="Stretch" x:Name="botaoLogin"/>
-            <TextBlock IsTextSelectionEnabled="True" Text="Esqueci a Senha" HorizontalAlignment="Center">
-                
-            </TextBlock>
+    <Grid Background="LightSlateGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="paginaLogin" Text="Login" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
+
+        <TextBlock Text="GESTÃO SIMPLES" FontSize="150" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Center" Foreground="LightSteelBlue" TextWrapping="Wrap"/>
+
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" BorderThickness="2" BorderBrush="DarkSlateGray" HorizontalAlignment="Center" CornerRadius="10">
+
+            <TextBox HorizontalAlignment="Center" Width="200" x:Name="usuario" PlaceholderText="Login" Background="DarkSlateGray" Margin="0,0,0,1"/>
+            <PasswordBox HorizontalAlignment="Center" Width="200" x:Name="senha" PlaceholderText="Senha" Background="DarkSlateGray" Margin="0,1"/>
+
+            <HyperlinkButton Content="Logar" FontWeight="Bold" Click="HyperlinkButton_ClickLogin" HorizontalAlignment="Stretch" x:Name="botaoLogin" Background="SteelBlue" Margin="0,5"/>
+            <HyperlinkButton Content="Esqueci a Senha" FontWeight="Bold" Click="HyperlinkButton_ClickEsqueci" HorizontalAlignment="Stretch" x:Name="botaoEsqueciSenha" Background="SteelBlue"/>
         </StackPanel>
     </Grid>
 </Page>

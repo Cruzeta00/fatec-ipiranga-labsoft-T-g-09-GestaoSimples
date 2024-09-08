@@ -31,10 +31,10 @@ namespace GestaoSimples
             this.InitializeComponent();
         }
 
-        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        private async void HyperlinkButton_ClickLogin(object sender, RoutedEventArgs e)
         {
             string usuario = this.usuario.Text;
-            string senha = this.senha.Text;
+            string senha = this.senha.Password;
 
             using(var contexto = new ContextoGestaoSimples())
             {
@@ -56,6 +56,33 @@ namespace GestaoSimples
                 }
             }
             
+        }
+
+        private async void HyperlinkButton_ClickEsqueci(object sender, RoutedEventArgs e)
+        {
+            string usuario = this.usuario.Text;
+            string senha = this.senha.Password;
+
+            using (var contexto = new ContextoGestaoSimples())
+            {
+                var Usuario = contexto.Usuarios.FirstOrDefault(u => u.Login == usuario && u.Senha == senha);
+                if (Usuario != null)
+                {
+                    Frame.Navigate(typeof(Menu), this.usuario.Text, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                }
+                else
+                {
+                    ContentDialog msgErro = new ContentDialog
+                    {
+                        Title = "Erro de Conexão",
+                        Content = "Usuário ou Senha inválido.",
+                        CloseButtonText = "OK",
+                    };
+                    msgErro.XamlRoot = botaoLogin.XamlRoot;
+                    await msgErro.ShowAsync();
+                }
+            }
+
         }
     }
 }
