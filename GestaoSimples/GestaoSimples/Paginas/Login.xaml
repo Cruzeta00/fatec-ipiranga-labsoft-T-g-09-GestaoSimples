@@ -16,14 +16,14 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="paginaLogin" Text="Login" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
 
-        <TextBlock Text="GESTÃO SIMPLES" FontSize="150" VerticalAlignment="Center" Grid.Column="0" HorizontalAlignment="Center" Foreground="LightSteelBlue" TextWrapping="Wrap"/>
+        <Image Source="/Recursos/Sloggan.png" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Stretch="Uniform" Width="900" Height="900"/>
 
         <StackPanel Grid.Column="1" VerticalAlignment="Center" BorderThickness="2" BorderBrush="DarkSlateGray" HorizontalAlignment="Center" CornerRadius="10">
 
             <TextBox HorizontalAlignment="Center" Width="200" x:Name="usuario" PlaceholderText="Login" Background="DarkSlateGray" Margin="0,0,0,1"/>
             <PasswordBox HorizontalAlignment="Center" Width="200" x:Name="senha" PlaceholderText="Senha" Background="DarkSlateGray" Margin="0,1"/>
 
-            <HyperlinkButton Content="Logar" FontWeight="Bold" Click="HyperlinkButton_ClickLogin" HorizontalAlignment="Stretch" x:Name="botaoLogin" Background="SteelBlue" Margin="0,5"/>
+            <HyperlinkButton Content="Entrar" FontWeight="Bold" Click="HyperlinkButton_ClickLogin" HorizontalAlignment="Stretch" x:Name="botaoLogin" Background="SteelBlue" Margin="0,5"/>
             <HyperlinkButton Content="Esqueci a Senha" FontWeight="Bold" Click="HyperlinkButton_ClickEsqueci" HorizontalAlignment="Stretch" x:Name="botaoEsqueciSenha" Background="SteelBlue"/>
         </StackPanel>
     </Grid>
