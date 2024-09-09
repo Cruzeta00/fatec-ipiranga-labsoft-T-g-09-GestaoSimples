@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid>
+    <Grid Background="LightSlateGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -21,7 +21,7 @@
         
         <TextBlock Grid.Row="0" Grid.Column="0" x:Name="gestaoSimples" Text="Gestão Simples" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
 
-        <Grid Grid.Row="0" Grid.Column="1" BorderThickness="5" BorderBrush="Gray" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="5">
+        <Grid Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="Purple" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>

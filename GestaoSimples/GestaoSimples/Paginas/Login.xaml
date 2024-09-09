@@ -16,15 +16,15 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="paginaLogin" Text="Login" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
 
-        <Image Source="/Recursos/Sloggan.png" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Stretch="Uniform" Width="900" Height="900"/>
+        <Image Source="/Recursos/Sloggan.png" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Stretch="Uniform" Width="Auto" Height="Auto"/>
 
-        <StackPanel Grid.Column="1" VerticalAlignment="Center" BorderThickness="2" BorderBrush="DarkSlateGray" HorizontalAlignment="Center" CornerRadius="10">
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" BorderThickness="0" BorderBrush="DarkSlateGray" HorizontalAlignment="Center" CornerRadius="10">
 
-            <TextBox HorizontalAlignment="Center" Width="200" x:Name="usuario" PlaceholderText="Login" Background="DarkSlateGray" Margin="0,0,0,1"/>
-            <PasswordBox HorizontalAlignment="Center" Width="200" x:Name="senha" PlaceholderText="Senha" Background="DarkSlateGray" Margin="0,1"/>
+            <TextBox HorizontalAlignment="Center" Width="200" x:Name="usuario" FontWeight="Bold" PlaceholderText="Usuário" Background="DarkSlateGray" Margin="0,0,0,5"/>
+            <PasswordBox HorizontalAlignment="Center" Width="200" x:Name="senha" FontWeight="Bold" PlaceholderText="Senha" Background="DarkSlateGray" Margin="0,5" />
 
-            <HyperlinkButton Content="Entrar" FontWeight="Bold" Click="HyperlinkButton_ClickLogin" HorizontalAlignment="Stretch" x:Name="botaoLogin" Background="SteelBlue" Margin="0,5"/>
-            <HyperlinkButton Content="Esqueci a Senha" FontWeight="Bold" Click="HyperlinkButton_ClickEsqueci" HorizontalAlignment="Stretch" x:Name="botaoEsqueciSenha" Background="SteelBlue"/>
+            <HyperlinkButton Content="Entrar" FontWeight="Bold" Click="HyperlinkButton_ClickLogin" HorizontalAlignment="Stretch" x:Name="botaoLogin" Background="DarkBlue" Margin="0,8" Foreground="White"/>
+            <HyperlinkButton Content="Esqueci a Senha" FontWeight="Bold" Click="HyperlinkButton_ClickEsqueci" HorizontalAlignment="Stretch" x:Name="botaoEsqueciSenha" Background="CadetBlue" Margin="0,5" Foreground="White"/>
         </StackPanel>
     </Grid>
 </Page>
