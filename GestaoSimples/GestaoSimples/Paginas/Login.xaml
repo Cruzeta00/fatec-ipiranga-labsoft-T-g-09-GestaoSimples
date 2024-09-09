@@ -20,11 +20,11 @@
 
         <StackPanel Grid.Column="1" VerticalAlignment="Center" BorderThickness="0" BorderBrush="DarkSlateGray" HorizontalAlignment="Center" CornerRadius="10">
 
-            <TextBox HorizontalAlignment="Center" Width="200" x:Name="usuario" FontWeight="Bold" PlaceholderText="Usuário" Background="DarkSlateGray" Margin="0,0,0,5"/>
-            <PasswordBox HorizontalAlignment="Center" Width="200" x:Name="senha" FontWeight="Bold" PlaceholderText="Senha" Background="DarkSlateGray" Margin="0,5" />
+            <TextBox HorizontalAlignment="Center" Width="200" x:Name="usuario" FontWeight="Bold" PlaceholderText="Usuário" Background="{ThemeResource TextBoxPlaceholderTextThemeBrush}" Margin="0,0,0,5"/>
+            <PasswordBox HorizontalAlignment="Center" Width="200" x:Name="senha" FontWeight="Bold" PlaceholderText="Senha" Background="{ThemeResource TextBoxPlaceholderTextThemeBrush}" Margin="0,5" />
 
             <HyperlinkButton Content="Entrar" FontWeight="Bold" Click="HyperlinkButton_ClickLogin" HorizontalAlignment="Stretch" x:Name="botaoLogin" Background="DarkBlue" Margin="0,8" Foreground="White"/>
-            <HyperlinkButton Content="Esqueci a Senha" FontWeight="Bold" Click="HyperlinkButton_ClickEsqueci" HorizontalAlignment="Stretch" x:Name="botaoEsqueciSenha" Background="CadetBlue" Margin="0,5" Foreground="White"/>
+            <HyperlinkButton Content="Esqueci a Senha" FontWeight="Bold" Click="HyperlinkButton_ClickEsqueci" HorizontalAlignment="Stretch" x:Name="botaoEsqueciSenha" Background="White" Margin="0,5" Foreground="Black"/>
         </StackPanel>
     </Grid>
 </Page>
