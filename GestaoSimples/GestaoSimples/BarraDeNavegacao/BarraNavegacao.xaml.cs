@@ -26,20 +26,6 @@ namespace GestaoSimples.BarraDeNavegacao
         {
             this.InitializeComponent();
         }
-
-        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            if(this.Parent is Frame frame)
-            {
-                frame.Navigate(typeof(Fornecedores));
-            }
-            else
-            {
-                frame = RetornaPai();
-                frame.Navigate(typeof(Fornecedores));
-            }
-        }
-
         private Frame RetornaPai()
         {
             DependencyObject pai = VisualTreeHelper.GetParent(this.Parent);
@@ -50,7 +36,55 @@ namespace GestaoSimples.BarraDeNavegacao
             return (Frame)pai;
         }
 
-        private void HyperlinkButton_Click_1(object sender, RoutedEventArgs e)
+        private void ClickFornecedores(object sender, RoutedEventArgs e)
+        {
+            if (this.Parent is Frame frame)
+            {
+                frame.Navigate(typeof(Fornecedores));
+            }
+            else
+            {
+                frame = RetornaPai();
+                frame.Navigate(typeof(Fornecedores));
+            }
+        }
+
+        private void ClickProdutos(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickMercadorias(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickVendas(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickRelatorios(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickClientes(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickCaixa(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickAlertas(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickVoltar(object sender, RoutedEventArgs e)
         {
             if (this.Parent is Frame frame)
             {
