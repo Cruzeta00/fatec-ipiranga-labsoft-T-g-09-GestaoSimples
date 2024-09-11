@@ -93,7 +93,12 @@ namespace GestaoSimples.BarraDeNavegacao
             else
             {
                 frame = RetornaPai();
-                frame.GoBack();
+                
+                if(frame.CanGoBack)
+                {
+                    PageStackEntry anterior = frame.BackStack.LastOrDefault();
+                    if( anterior != null && anterior.SourcePageType != typeof(Login)) frame.GoBack();
+                }
             }
         }
     }
