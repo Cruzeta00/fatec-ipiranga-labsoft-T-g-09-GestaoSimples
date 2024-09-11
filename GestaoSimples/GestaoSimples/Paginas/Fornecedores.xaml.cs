@@ -32,6 +32,7 @@ namespace GestaoSimples.Janelas
     public sealed partial class Fornecedores : Page
     {
         private readonly ServiceFornecedor _servicoFornecedor;
+        private List<Modelos.Fornecedor> listaFornecedores { get; set; }
 
         public Fornecedores()
         {
@@ -43,7 +44,7 @@ namespace GestaoSimples.Janelas
         private void botaoBuscar_Click(object sender, RoutedEventArgs e)
         {
             var fornecedores = _servicoFornecedor.BuscarFornecedores();
-            
+            listaFornecedores = fornecedores;
             FornecedoresListView.ItemsSource = fornecedores;
         }
 
@@ -68,6 +69,18 @@ namespace GestaoSimples.Janelas
             {
                 Frame.Navigate(typeof(Paginas.Fornecedor));
             }
+        }
+
+        private void Buscando(object sender, TextChangedEventArgs e)
+        {
+            string textoBuscado = Textobusca.Text.ToLower();
+            var listaFiltrada = listaFornecedores.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
+                                                       f.CNPJ.ToLower().Contains(textoBuscado) ||
+                                                       f.EMail.ToLower().Contains(textoBuscado) ||
+                                                       f.Observacoes.ToLower().Contains(textoBuscado) ||
+                                                       f.Classificacao.ToString().ToLower().Contains(textoBuscado)).ToList();
+
+            FornecedoresListView.ItemsSource = listaFiltrada;
         }
     }
 }

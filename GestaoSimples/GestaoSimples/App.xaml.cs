@@ -40,7 +40,7 @@ namespace GestaoSimples
             Frame frame0 = new Frame();
 
             frame0.NavigationFailed += ErrodeNavegacao;
-            frame0.Navigate(typeof(Login), args.Arguments);            
+            frame0.Navigate(typeof(Login), args.Arguments);     
 
             m_window.Content = frame0;
             m_window.Activate();
