@@ -4,6 +4,7 @@ using GestaoSimples.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoSimples.Migrations
 {
     [DbContext(typeof(ContextoGestaoSimples))]
-    partial class ContextoGestaoSimplesModelSnapshot : ModelSnapshot
+    [Migration("20240912234009_Produtos")]
+    partial class Produtos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -67,13 +67,13 @@
             <ComboBox x:Name="Class" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
         </Grid>
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" BorderThickness="2" BorderBrush="Gray" Orientation="Horizontal" Margin="5">
-            <HyperlinkButton x:Name="botao" Click="botao_Click" HorizontalAlignment="Stretch"/>
-        </StackPanel>
-        
         <Border Grid.Row="2" Grid.ColumnSpan="3" x:Name="ErrorNotification" Background="Red" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                 Visibility="Collapsed" CornerRadius="10" Margin="0,0,0,20">
             <TextBlock x:Name="ErrorTextBlock" Foreground="White" Padding="10,5" Text="An error occurred!" />
         </Border>
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" BorderThickness="2" BorderBrush="Gray" Orientation="Horizontal" Margin="5">
+            <HyperlinkButton x:Name="botao" Click="botao_Click" HorizontalAlignment="Stretch"/>
+        </StackPanel>
     </Grid>
 </Page>

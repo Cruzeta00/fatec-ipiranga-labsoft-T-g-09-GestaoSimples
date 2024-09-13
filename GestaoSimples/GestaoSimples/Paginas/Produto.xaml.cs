@@ -10,13 +10,15 @@ using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using static Vanara.PInvoke.Kernel32.COPYFILE2_MESSAGE;
+using static Vanara.PInvoke.User32;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,18 +28,15 @@ namespace GestaoSimples.Paginas
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Fornecedor : Page
+    public sealed partial class Produto : Page
     {
-        private readonly ServiceFornecedor _servicoFornecedor;
-        Classificacao? selectedStatus;
-        public Fornecedor()
+        private readonly ServiceProduto _servicoProduto;
+
+        public Produto()
         {
             this.InitializeComponent();
 
-            _servicoFornecedor = new ServiceFornecedor();
-            Class.ItemsSource = Enum.GetValues(typeof(Classificacao));
-
-            Class.SelectionChanged += StatusComboBox_SelectionChanged;
+            _servicoProduto = new ServiceProduto();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -47,98 +46,99 @@ namespace GestaoSimples.Paginas
             if (e.Parameter == null)
             {
                 botao.Content = "Adicionar";
-                PreencherDadosFornecedor();
+                PreencherDadosProduto();
             }
             else
             {
                 botao.Content = "Atualizar";
-                PreencherDadosFornecedor(e.Parameter.ToString());
+                PreencherDadosProduto(e.Parameter.ToString());
             }
         }
-
-        private void PreencherDadosFornecedor(string idFornecedor)
+        
+        private void PreencherDadosProduto(string idProduto)
         {
             try
             {
-                if (String.IsNullOrEmpty(idFornecedor))
+                if (String.IsNullOrEmpty(idProduto))
                 {
-                    int novo = _servicoFornecedor.BuscarNovoFornecedor();
+                    int novo = _servicoProduto.BuscarNovoProduto();
 
                     Id.Text = novo.ToString();
                 }
                 else
                 {
-                    Modelos.Fornecedor forn = _servicoFornecedor.BuscarFornecedor(Convert.ToInt32(idFornecedor));
+                    Modelos.Produto prod = _servicoProduto.BuscarProduto(Convert.ToInt32(idProduto));
 
-                    Id.Text = forn.Id.ToString();
-                    Nome.Text = forn.Nome;
-                    CNPJ.Text = forn.CNPJ;
-                    Telefone.Text = forn.Telefone;
-                    EMail.Text = forn.EMail;
-                    Ativo.IsChecked = forn.Ativo;
-                    Obs.Text = forn.Observacoes;
-                    Class.SelectedItem = forn.Classificacao;
+                    Id.Text = prod.Id.ToString();
+                    Nome.Text = prod.Nome;
+                    Descricao.Text = prod.Descricao;
+                    Codigo.Text = prod.Codigo;
+                    Barras.Text = prod.CodigoDeBarras;
+                    Preco.Text = prod.Preco.ToString();
+                    Custo.Text = prod.Custo.ToString();
+                    Estoque.SelectedItem = prod.Estoque;
+                    Unidade.SelectedItem = prod.Unidade;
+                    Categoria.SelectedItem = prod.Categoria;
+                    Ativo.IsChecked = prod.Ativo;
+                    Validade.Date = prod.DataValidade;
+                    Atualizacao.Date = prod.DataAtualizacao;
                 }
             }
-            catch(Exception ex) { }
+            catch (Exception ex) { }
         }
 
-        private void PreencherDadosFornecedor()
+        private void PreencherDadosProduto()
         {
             try
             {
-                int novo = _servicoFornecedor.BuscarNovoFornecedor();
+                int novo = _servicoProduto.BuscarNovoProduto();
 
                 Id.Text = novo.ToString();
-                
+
             }
             catch (Exception ex) { }
         }
 
         private async void botao_Click(object sender, RoutedEventArgs e)
         {
-            Modelos.Fornecedor  forn = new Modelos.Fornecedor();
+            Modelos.Produto prod = new Modelos.Produto();
             int error = 0;
 
             try
             {
-                forn.Nome = Nome.Text;
-                forn.CNPJ = CNPJ.Text;
-                forn.Telefone = Telefone.Text;
-                forn.EMail = EMail.Text;
-                forn.Ativo = Ativo.IsChecked == true;
-                forn.Observacoes = Obs.Text;
+                prod.Nome = Nome.Text;
+                prod.Descricao = Descricao.Text;
+                prod.Codigo = Codigo.Text;
+                prod.CodigoDeBarras = Barras.Text;
+                prod.Preco = Convert.ToDouble(Preco.Text);
+                prod.Custo = Convert.ToDouble(Custo.Text);
+                prod.Estoque = Convert.ToInt32(Estoque.Text);
+                prod.Unidade = Unidade.Text;
+                prod.Categoria = Categoria.Text;
+                prod.Ativo = Ativo.IsChecked == true;
+                prod.DataValidade = Validade.Date.Value.DateTime;
+                prod.DataAtualizacao = Atualizacao.Date.Value.DateTime;
 
-                if (Class.SelectedValue == null)
-                {
-                    await ShowErrorNotificationAsync("Classificação não selecionada.");
-                    error++;
-                }
-                else
-                {
-                    forn.Classificacao = (Classificacao)Class.SelectedValue;
-                }
-
-                if(error == 0)
+                if (error == 0)
                 {
                     if (botao.Content.ToString() == "Adicionar")
                     {
-                        _servicoFornecedor.AdicionarFornecedor(forn);
+                        _servicoProduto.AdicionarProduto(prod);
                     }
-                    else 
+                    else
                     {
-                        forn.Id = Convert.ToInt32(Id.Text);
-                        _servicoFornecedor.AtualizarFornecedor(forn); 
+                        prod.Id = Convert.ToInt32(Id.Text);
+                        _servicoProduto.AtualizarProduto(prod);
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Debug.WriteLine(ex.Message); // Para logar no console ou arquivo, se necessário
 
                 // Exibe a notificação de erro
                 await ShowErrorNotificationAsync(ex.Message);
-                if(ex.InnerException != null)
+                if (ex.InnerException != null)
                     _ = ShowErrorNotificationAsync(ex.InnerException.ToString());
             }
         }
@@ -151,14 +151,6 @@ namespace GestaoSimples.Paginas
             // Aguarda 3 segundos antes de ocultar
             await Task.Delay(3000);
             ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
-        }
-
-        private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Class.SelectedItem != null)
-            {
-                selectedStatus = (Classificacao)Class.SelectedItem;
-            }
         }
     }
 }
