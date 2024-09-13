@@ -1,4 +1,5 @@
 using GestaoSimples.Janelas;
+using GestaoSimples.Paginas;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -51,7 +52,15 @@ namespace GestaoSimples.BarraDeNavegacao
 
         private void ClickProdutos(object sender, RoutedEventArgs e)
         {
-
+            if (this.Parent is Frame frame)
+            {
+                frame.Navigate(typeof(Produtos));
+            }
+            else
+            {
+                frame = RetornaPai();
+                frame.Navigate(typeof(Produtos));
+            }
         }
 
         private void ClickMercadorias(object sender, RoutedEventArgs e)
