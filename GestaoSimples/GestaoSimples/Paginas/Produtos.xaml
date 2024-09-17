@@ -118,7 +118,7 @@
             </ListView>
         </Grid>
 
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="NENHUM PRODUTO ENCONTRADO" FontWeight="Bold" FontSize="25" Foreground="DarkSlateGray"/>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="NenhumProduto" Text="NENHUM PRODUTO ENCONTRADO" FontWeight="Bold" FontSize="25" Foreground="DarkSlateGray"/>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="DarkSlateGray" Orientation="Horizontal" Margin="5" CornerRadius="10">
             <HyperlinkButton Content="Buscar" Click="botaoBuscar_Click" x:Name="botaoBuscar"/>
