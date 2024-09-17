@@ -1,3 +1,4 @@
+using GestaoSimples.Modelos;
 using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -22,6 +23,7 @@ namespace GestaoSimples.Paginas
             this.InitializeComponent();
 
             _servicoProduto = new ServiceProduto();
+            NenhumProduto.Visibility = Visibility.Collapsed;
         }
 
         private void botaoBuscar_Click(object sender, RoutedEventArgs e)
@@ -32,7 +34,7 @@ namespace GestaoSimples.Paginas
 
             if(ProdutosListView == null)
             {
-                
+                NenhumProduto.Visibility = Visibility.Visible;
             }
         }
 
@@ -55,7 +57,7 @@ namespace GestaoSimples.Paginas
             string textoBuscado = Textobusca.Text.ToLower();
             var listaFiltrada = listaProdutos.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
                                                        f.Descricao.ToLower().Contains(textoBuscado) ||
-                                                       f.Categoria.ToLower().Contains(textoBuscado)).ToList();
+                                                       f.Categoria.ToString().ToLower().Contains(textoBuscado)).ToList();
 
             ProdutosListView.ItemsSource = listaFiltrada;
         }

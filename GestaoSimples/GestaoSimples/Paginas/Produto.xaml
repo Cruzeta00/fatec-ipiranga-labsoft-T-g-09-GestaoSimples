@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid>
+    <Grid Background="LightSlateGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -69,13 +69,13 @@
             <TextBox x:Name="Custo" InputScope="Number" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
             <TextBlock Text="Estoque:" Grid.Row="7" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <ComboBox x:Name="Estoque" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="Estoque" Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
             <TextBlock Text="Unidade:" Grid.Row="8" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <ComboBox x:Name="Unidade" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <ComboBox x:Name="Unidade" SelectionChanged="SelecaoUnidade" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
             <TextBlock Text="Categoria:" Grid.Row="9" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <ComboBox x:Name="Categoria" Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <ComboBox x:Name="Categoria" SelectionChanged="SelecaoCategoria" Grid.Row="9" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
             <TextBlock Text="Ativo:" Grid.Row="10" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
             <CheckBox x:Name="Ativo" Grid.Row="10" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
@@ -83,8 +83,8 @@
             <TextBlock Text="Data de Validade:" Grid.Row="11" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
             <CalendarDatePicker x:Name="Validade" Grid.Row="11" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
-            <TextBlock Text="Data de Atualização:" Grid.Row="12" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <CalendarDatePicker x:Name="Atualizacao" Grid.Row="12" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <TextBlock Text="Fornecedor:" Grid.Row="12" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
+            <ComboBox x:Name="Forn" SelectionChanged="SelecaoFornecedor" Grid.Row="12" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
         </Grid>
 
         <Border Grid.Row="2" Grid.ColumnSpan="3" x:Name="ErrorNotification" Background="Red" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
@@ -93,7 +93,7 @@
         </Border>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" BorderThickness="2" BorderBrush="Gray" Orientation="Horizontal" Margin="5">
-            <HyperlinkButton x:Name="botao" Click="botao_Click" HorizontalAlignment="Stretch"/>
+            <HyperlinkButton x:Name="botao" Click="botao_Click" HorizontalAlignment="Stretch" Background="DarkSlateGray"/>
         </StackPanel>
     </Grid>
 </Page>

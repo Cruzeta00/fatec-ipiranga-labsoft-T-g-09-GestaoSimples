@@ -2,23 +2,12 @@ using GestaoSimples.Modelos;
 using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using static Vanara.PInvoke.Kernel32.COPYFILE2_MESSAGE;
-using static Vanara.PInvoke.User32;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,12 +20,29 @@ namespace GestaoSimples.Paginas
     public sealed partial class Produto : Page
     {
         private readonly ServiceProduto _servicoProduto;
+        private readonly ServiceFornecedor _serviceFornecedor;
+        Unidade _unidade;
+        Categoria _categoria;
+        Modelos.Fornecedor _fornecedor;
+
 
         public Produto()
         {
             this.InitializeComponent();
 
             _servicoProduto = new ServiceProduto();
+            _serviceFornecedor = new ServiceFornecedor();
+
+            Unidade.ItemsSource = Enum.GetValues(typeof(Unidade));
+            Categoria.ItemsSource = Enum.GetValues(typeof(Categoria));
+            Forn.ItemsSource = _serviceFornecedor.BuscarFornecedores();
+
+            Unidade.SelectionChanged += SelecaoUnidade;
+            Categoria.SelectionChanged += SelecaoCategoria;
+            Forn.SelectionChanged += SelecaoFornecedor;
+
+            Forn.DisplayMemberPath = "Nome";
+            Forn.SelectedValuePath = "Id";
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -68,6 +74,7 @@ namespace GestaoSimples.Paginas
                 else
                 {
                     Modelos.Produto prod = _servicoProduto.BuscarProduto(Convert.ToInt32(idProduto));
+                    prod.Fornecedor = _serviceFornecedor.BuscarFornecedor(prod.FornecedorId);
 
                     Id.Text = prod.Id.ToString();
                     Nome.Text = prod.Nome;
@@ -76,12 +83,12 @@ namespace GestaoSimples.Paginas
                     Barras.Text = prod.CodigoDeBarras;
                     Preco.Text = prod.Preco.ToString();
                     Custo.Text = prod.Custo.ToString();
-                    Estoque.SelectedItem = prod.Estoque;
+                    Estoque.Text = prod.Estoque.ToString();
                     Unidade.SelectedItem = prod.Unidade;
                     Categoria.SelectedItem = prod.Categoria;
                     Ativo.IsChecked = prod.Ativo;
                     Validade.Date = prod.DataValidade;
-                    Atualizacao.Date = prod.DataAtualizacao;
+                    Forn.SelectedValue = prod.Fornecedor.Id;
                 }
             }
             catch (Exception ex) { }
@@ -113,21 +120,49 @@ namespace GestaoSimples.Paginas
                 prod.Preco = Convert.ToDouble(Preco.Text);
                 prod.Custo = Convert.ToDouble(Custo.Text);
                 prod.Estoque = Convert.ToInt32(Estoque.Text);
-                prod.Unidade = Unidade.Text;
-                prod.Categoria = Categoria.Text;
                 prod.Ativo = Ativo.IsChecked == true;
                 prod.DataValidade = Validade.Date.Value.DateTime;
-                prod.DataAtualizacao = Atualizacao.Date.Value.DateTime;
+
+                if(Unidade.SelectedItem == null)
+                {
+                    await ShowErrorNotificationAsync("Unidade não selecionada.");
+                    error++;
+                }
+                else
+                {
+                    prod.Unidade =  (Unidade)Unidade.SelectedValue;
+                }
+                if(Categoria.SelectedItem == null)
+                {
+                    await ShowErrorNotificationAsync("Categoria não selecionada.");
+                    error++;
+                }
+                else
+                {
+                    prod.Categoria = (Categoria)Categoria.SelectedValue;
+                }
+                if(Forn.SelectedItem == null)
+                {
+                    await ShowErrorNotificationAsync("Fornecedor não selecionada.");
+                    error++;
+                }
+                else
+                {
+                    prod.FornecedorId = _fornecedor.Id;
+                }
 
                 if (error == 0)
                 {
                     if (botao.Content.ToString() == "Adicionar")
                     {
+                        prod.DataAtualizacao = DateTime.Now;
+                        prod.DataCriacao = DateTime.Now;
                         _servicoProduto.AdicionarProduto(prod);
                     }
                     else
                     {
                         prod.Id = Convert.ToInt32(Id.Text);
+                        prod.DataAtualizacao = DateTime.Now;
                         _servicoProduto.AtualizarProduto(prod);
                     }
                 }
@@ -151,6 +186,30 @@ namespace GestaoSimples.Paginas
             // Aguarda 3 segundos antes de ocultar
             await Task.Delay(3000);
             ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
+        }
+
+        private void SelecaoUnidade(object sender, SelectionChangedEventArgs e)
+        {
+            if (Unidade.SelectedItem != null)
+            {
+                _unidade = (Unidade)Unidade.SelectedItem;
+            }
+        }
+
+        private void SelecaoCategoria(object sender, SelectionChangedEventArgs e)
+        {
+            if (Categoria.SelectedItem != null)
+            {
+                _categoria = (Categoria)Categoria.SelectedItem;
+            }
+        }
+
+        private void SelecaoFornecedor(object sender, SelectionChangedEventArgs e)
+        {
+            if(Forn.SelectedItem != null)
+            {
+                _fornecedor = (Modelos.Fornecedor)Forn.SelectedItem;
+            }
         }
     }
 }
