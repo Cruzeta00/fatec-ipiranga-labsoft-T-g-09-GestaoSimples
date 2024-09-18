@@ -70,7 +70,15 @@ namespace GestaoSimples.BarraDeNavegacao
 
         private void ClickVendas(object sender, RoutedEventArgs e)
         {
-
+            if (this.Parent is Frame frame)
+            {
+                frame.Navigate(typeof(Vendas));
+            }
+            else
+            {
+                frame = RetornaPai();
+                frame.Navigate(typeof(Vendas));
+            }
         }
 
         private void ClickRelatorios(object sender, RoutedEventArgs e)
