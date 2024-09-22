@@ -4,6 +4,7 @@ using GestaoSimples.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoSimples.Migrations
 {
     [DbContext(typeof(ContextoGestaoSimples))]
-    partial class ContextoGestaoSimplesModelSnapshot : ModelSnapshot
+    [Migration("20240922231558_Cliente")]
+    partial class Cliente
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,23 +200,13 @@ namespace GestaoSimples.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DataVenda")
                         .HasColumnType("datetime2");
 
                     b.Property<double>("ValorTotal")
                         .HasColumnType("float");
 
-                    b.Property<int>("VendedorId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ClienteId");
-
-                    b.HasIndex("VendedorId");
 
                     b.ToTable("Vendas");
                 });
@@ -247,25 +239,6 @@ namespace GestaoSimples.Migrations
                         .IsRequired();
 
                     b.Navigation("Fornecedor");
-                });
-
-            modelBuilder.Entity("GestaoSimples.Modelos.Venda", b =>
-                {
-                    b.HasOne("GestaoSimples.Modelos.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GestaoSimples.Modelos.Usuario", "Vendedor")
-                        .WithMany()
-                        .HasForeignKey("VendedorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cliente");
-
-                    b.Navigation("Vendedor");
                 });
 
             modelBuilder.Entity("GestaoSimples.Modelos.Venda", b =>

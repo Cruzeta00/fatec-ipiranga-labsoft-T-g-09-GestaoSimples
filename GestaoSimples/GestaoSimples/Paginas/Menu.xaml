@@ -21,17 +21,9 @@
         
         <Image Source="/Recursos/Sloggan.png" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="3" Stretch="None"  Opacity="0.15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         
-        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="gestaoSimples" Text="Gestão Simples" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
-
-        <Grid Grid.Row="0" Grid.Column="1" BorderThickness="2" BorderBrush="Purple" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="5*"/>
-            </Grid.RowDefinitions>
-            
-            <local:BarraNavegacao HorizontalAlignment="Stretch"/>
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" Margin="3" Grid.ColumnSpan="2">
+            <TextBlock HorizontalAlignment="Left" x:Name="gestaoSimples" Text="Gestão Simples" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
+            <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
 
         <Grid Grid.Row="2" Grid.ColumnSpan="2" Background="DarkSlateGray" HorizontalAlignment="Center" CornerRadius="10">

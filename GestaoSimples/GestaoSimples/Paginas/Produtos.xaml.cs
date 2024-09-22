@@ -23,16 +23,13 @@ namespace GestaoSimples.Paginas
             this.InitializeComponent();
 
             _servicoProduto = new ServiceProduto();
+
+            listaProdutos = _servicoProduto.BuscarProdutos();
+            ProdutosListView.ItemsSource = listaProdutos;
+
             NenhumProduto.Visibility = Visibility.Collapsed;
-        }
 
-        private void botaoBuscar_Click(object sender, RoutedEventArgs e)
-        {
-            var produtos = _servicoProduto.BuscarProdutos();
-            listaProdutos = produtos;
-            ProdutosListView.ItemsSource = produtos;
-
-            if(ProdutosListView == null)
+            if (ProdutosListView == null)
             {
                 NenhumProduto.Visibility = Visibility.Visible;
             }
@@ -46,20 +43,25 @@ namespace GestaoSimples.Paginas
 
                 Frame.Navigate(typeof(Produto), produto.Id);
             }
-            else
-            {
-                Frame.Navigate(typeof(Produto));
-            }
         }
 
+        private void botaoCriar_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(Produto));
+        }
+        
         private void Buscando(object sender, TextChangedEventArgs e)
         {
             string textoBuscado = Textobusca.Text.ToLower();
-            var listaFiltrada = listaProdutos.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
+
+            if(listaProdutos != null)
+            {
+                var listaFiltrada = listaProdutos.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
                                                        f.Descricao.ToLower().Contains(textoBuscado) ||
                                                        f.Categoria.ToString().ToLower().Contains(textoBuscado)).ToList();
 
-            ProdutosListView.ItemsSource = listaFiltrada;
+                ProdutosListView.ItemsSource = listaFiltrada;
+            }
         }
     }
 }

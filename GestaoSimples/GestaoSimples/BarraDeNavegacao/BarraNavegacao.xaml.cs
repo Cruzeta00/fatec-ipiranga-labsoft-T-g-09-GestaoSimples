@@ -63,11 +63,6 @@ namespace GestaoSimples.BarraDeNavegacao
             }
         }
 
-        private void ClickMercadorias(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void ClickVendas(object sender, RoutedEventArgs e)
         {
             if (this.Parent is Frame frame)
@@ -81,12 +76,47 @@ namespace GestaoSimples.BarraDeNavegacao
             }
         }
 
-        private void ClickRelatorios(object sender, RoutedEventArgs e)
+        private void ClickClientes(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
+        private void ClickCompras(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
+        private void ClickVoltar(object sender, RoutedEventArgs e)
+        {
+            Frame frame = RetornaPai();
+                
+            if(frame.CanGoBack)
+            {
+                var nomePag = frame.Content.GetType().Name;
+                if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda")
+                {
+                    if (nomePag == "Fornecedor")
+                        frame.Navigate(typeof(Fornecedores));
+                    else if (nomePag == "Produto")
+                        frame.Navigate(typeof(Produtos));
+                    else if (nomePag == "Venda")
+                        frame.Navigate(typeof(Vendas));
+                }
+                else if (nomePag == "Fornecedores" || nomePag == "Produtos" || nomePag == "Vendas")
+                {
+                    // Para guias principais, voltar para o Menu Inicial
+                    frame.Navigate(typeof(Menu));
+                }
+                else if (nomePag == "Menu") { }
+            }
+        }
+        
+        private void ClickMercadorias(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void ClickClientes(object sender, RoutedEventArgs e)
+        private void ClickRelatorios(object sender, RoutedEventArgs e)
         {
 
         }
@@ -99,24 +129,6 @@ namespace GestaoSimples.BarraDeNavegacao
         private void ClickAlertas(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void ClickVoltar(object sender, RoutedEventArgs e)
-        {
-            if (this.Parent is Frame frame)
-            {
-                frame.GoBack();
-            }
-            else
-            {
-                frame = RetornaPai();
-                
-                if(frame.CanGoBack)
-                {
-                    PageStackEntry anterior = frame.BackStack.LastOrDefault();
-                    if( anterior != null && anterior.SourcePageType != typeof(Login)) frame.GoBack();
-                }
-            }
         }
     }
 }
