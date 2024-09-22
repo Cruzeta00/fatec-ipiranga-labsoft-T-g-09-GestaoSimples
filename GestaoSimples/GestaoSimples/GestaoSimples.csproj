@@ -21,6 +21,7 @@
     <None Remove="Paginas\Fornecedor.xaml" />
     <None Remove="Paginas\Produto.xaml" />
     <None Remove="Paginas\Produtos.xaml" />
+    <None Remove="Paginas\Venda.xaml" />
     <None Remove="Paginas\Vendas.xaml" />
     <None Remove="Recursos\Logo.ico" />
   </ItemGroup>
@@ -81,6 +82,9 @@
     <None Update="Configuracoes\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Paginas\Venda.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Paginas\Vendas.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

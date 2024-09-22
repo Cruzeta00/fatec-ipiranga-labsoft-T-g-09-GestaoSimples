@@ -8,17 +8,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" CornerRadius="10" Margin="0" BorderBrush="White" BorderThickness="1">
+    <StackPanel Orientation="Horizontal" CornerRadius="10" BorderBrush="White" BorderThickness="1">
         <HyperlinkButton Content="Fornecedores" Click="ClickFornecedores" Height="100" Width="110" Background="DarkSlateGray"/>
         <HyperlinkButton Content="Produtos" Click="ClickProdutos" Height="100" Width="110" Background="DarkSlateGray"/>
-        <HyperlinkButton Content="Mercadorias" Click="ClickMercadorias" Height="100" Width="110" Background="DarkSlateGray"/>
+        <!--<HyperlinkButton Content="Mercadorias" Click="ClickMercadorias" Height="100" Width="110" Background="DarkSlateGray"/>-->
 
         <HyperlinkButton Content="Vendas" Click="ClickVendas" Height="100" Width="110" Background="DarkSlateGray"/>
-        <HyperlinkButton Content="Relatorios" Click="ClickRelatorios" Height="100" Width="110" Background="DarkSlateGray"/>
+        <!--<HyperlinkButton Content="Relatorios" Click="ClickRelatorios" Height="100" Width="110" Background="DarkSlateGray"/>-->
         <HyperlinkButton Content="Clientes" Click="ClickClientes" Height="100" Width="110" Background="DarkSlateGray"/>
 
-        <HyperlinkButton Content="Caixa" Click="ClickCaixa" Height="100" Width="110" Background="DarkSlateGray"/>
-        <HyperlinkButton Content="Alertas" Click="ClickAlertas" Height="100" Width="110" Background="DarkSlateGray"/>
+        <HyperlinkButton Content="Compras" Click="ClickCompras" Height="100" Width="110" Background="DarkSlateGray"/>
+        <!--<HyperlinkButton Content="Caixa" Click="ClickCaixa" Height="100" Width="110" Background="DarkSlateGray"/>
+        <HyperlinkButton Content="Alertas" Click="ClickAlertas" Height="100" Width="110" Background="DarkSlateGray"/>-->
         <HyperlinkButton Content="Voltar" Click="ClickVoltar" Height="100" Width="110" Background="DarkSlateGray"/>
     </StackPanel>
 </UserControl>

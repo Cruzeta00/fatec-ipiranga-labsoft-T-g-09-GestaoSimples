@@ -25,141 +25,39 @@ namespace GestaoSimples.Paginas
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class Vendas : Page, INotifyPropertyChanged
+    public sealed partial class Vendas : Page
     {
         private double _valorTotal;
 
         private readonly ServiceVenda _servicoVenda;
-        private readonly ServiceProduto _servicoProduto;
-
-        private List<Modelos.Produto> listaProdutos { get; set; }
-        private List<Modelos.ItemVenda> listaVenda { get; set; }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public double ValorTotal
-        {
-            get { return _valorTotal; }
-            set
-            {
-                _valorTotal = value;
-
-                OnPropertyChanged(nameof(ValorTotal));
-            }
-        }
+        private List<Modelos.ItemVenda> listaVendas { get; set; }
 
         public Vendas()
         {
             this.InitializeComponent();
 
             _servicoVenda = new ServiceVenda();
-            _servicoProduto = new ServiceProduto();
-
-            var produtos = _servicoProduto.BuscarProdutos();
-            listaProdutos = produtos;
-            ProdutosListView.ItemsSource = produtos;
-
-            NenhumProduto.Visibility = Visibility.Visible;
+            NenhumaVenda.Visibility = Visibility.Visible;
         }
-
 
         private async void botaoAdicionar_Click(object sender, RoutedEventArgs e)
         {
-            var resultado = await ConfirmarVendaDialog.ShowAsync();
-
-            if(resultado == ContentDialogResult.Primary)
-            {
-                //FinalizarVenda();
-            }
-            else
-            {
-                LimparVenda();
-            }
-        }
-
-        private void FinalizarVenda()
-        {
-            Venda venda = new Venda
-            {
-                DataVenda = DateTime.Now,
-                ItensVenda = listaVenda,
-                ValorTotal = _valorTotal
-            };
-
-            _servicoVenda.AdicionarVenda(venda);
-        }
-
-        private void LimparVenda()
-        {
-            listaVenda.Clear();
-            ValorTotal = 0;
+            Frame.Navigate(typeof(Paginas.Venda));
         }
 
         private void Buscando(object sender, TextChangedEventArgs e)
         {
-            string textoBuscado = Textobusca.Text.ToLower();
-            var listaFiltrada = listaProdutos.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
+            /*string textoBuscado = Textobusca.Text.ToLower();
+            var listaFiltrada = listaVendas.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
                                                        f.Descricao.ToLower().Contains(textoBuscado) ||
                                                        f.Categoria.ToString().ToLower().Contains(textoBuscado)).ToList();
 
-            ProdutosListView.ItemsSource = listaFiltrada;
+            VendasListView.ItemsSource = listaFiltrada;*/
         }
 
-        private void AtualizarValorTotal()
+        private void ClickVendaLista(object sender, ItemClickEventArgs e)
         {
-            ValorTotal = listaVenda.Sum(item => item.ValorTotalItem);
-        }
 
-        private void ClickItemLista(object sender, ItemClickEventArgs e)
-        {
-            NenhumProduto.Visibility= Visibility.Collapsed;
-
-            Modelos.Produto produtoSelecionado = (Modelos.Produto)e.ClickedItem;
-
-            if (listaVenda == null)
-            {
-                listaVenda = new List<ItemVenda>();
-            }
-
-            var itemVendaExistente = listaVenda.FirstOrDefault(i => i.Produto.Id == produtoSelecionado.Id);
-
-            if(itemVendaExistente != null)
-            {
-                itemVendaExistente.Quantidade++;
-                itemVendaExistente.ValorTotalItem = itemVendaExistente.Quantidade * itemVendaExistente.Produto.Preco;
-            }
-            else
-            {
-                var novoItemVenda = new ItemVenda
-                {
-                    Produto = produtoSelecionado,
-                    Quantidade = 1,
-                    ValorTotalItem = produtoSelecionado.Preco
-                };
-
-                listaVenda.Add(novoItemVenda);
-            }
-
-            ItensVendaListView.ItemsSource = null;
-            ItensVendaListView.ItemsSource = listaVenda;
-
-            AtualizarValorTotal();
-        }
-
-        private void ConfirmarVenda_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            FinalizarVenda();
-        }
-
-        private void CancelarVenda_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            LimparVenda();
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

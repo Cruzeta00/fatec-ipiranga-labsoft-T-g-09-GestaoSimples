@@ -16,15 +16,14 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="paginaVendas" Text="Vendas" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
 
-        <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="5">
-            <local:BarraNavegacao HorizontalAlignment="Left"/>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5">
+            <TextBlock HorizontalAlignment="Left" x:Name="paginaVendas" Text="Vendas" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
+            <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
@@ -34,7 +33,7 @@
             </Grid.ColumnDefinitions>
             <TextBox PlaceholderText="Buscar..." VerticalAlignment="Top" TextChanged="Buscando" x:Name="Textobusca" Background="DarkSlateGray" Margin="5,0" TextWrapping="Wrap"/>
             <Grid Grid.ColumnSpan="2" Margin="0,35">
-                <ListView x:Name="ProdutosListView" HorizontalAlignment="Left" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="ClickItemLista">
+                <ListView x:Name="VendasListView" HorizontalAlignment="Left" VerticalAlignment="Top" IsItemClickEnabled="True">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
                             <Grid Margin="5" Grid.Column="0">
@@ -56,97 +55,13 @@
                 </ListView>
             </Grid>
         </Grid>
-        
-        <Grid Grid.Row="2" Grid.ColumnSpan="2"  Margin="3,25" VerticalAlignment="Stretch">
-            <ListView x:Name="ItensVendaListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <ListView.HeaderTemplate>
-                    <DataTemplate>
-                        <Grid Margin="5">
-                            <Grid.ColumnDefinitions>
-                                <!-- Descrição -->
-                                <ColumnDefinition Width="4*"/>
-                                <!-- Quantidade -->
-                                <ColumnDefinition Width="*"/>
-                                <!-- Preço -->
-                                <ColumnDefinition Width="*"/>
-                                <!-- Total -->
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <ListViewHeaderItem Content="Descrição" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
-                            <ListViewHeaderItem Content="Quantidade" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
-                            <ListViewHeaderItem Content="Preço" Grid.Column="2" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
-                            <ListViewHeaderItem Content="Total" Grid.Column="3" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
-                            
-                        </Grid>
-                    </DataTemplate>
-                </ListView.HeaderTemplate>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="2">
-                            <Grid.ColumnDefinitions>
-                                <!-- Descrição -->
-                                <ColumnDefinition Width="4*"/>
-                                <!-- Quantidade -->
-                                <ColumnDefinition Width="*"/>
-                                <!-- Preço -->
-                                <ColumnDefinition Width="*"/>
-                                <!-- Total -->
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <ListViewItem Content="{Binding Produto.Descricao}" Grid.Column="0" HorizontalAlignment="Left"/>
-                            <Border Grid.Column="0" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding Quantidade}" Grid.Column="1" HorizontalAlignment="Left"/>
-                            <Border Grid.Column="1" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding Produto.Preco}" Grid.Column="2" HorizontalAlignment="Center"/>
-                            <Border Grid.Column="2" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="NenhumaVenda" 
+                   Text="NENHUMA VENDA ADICIONADO" FontWeight="Bold" FontSize="25" Foreground="DarkSlateGray"/>
 
-                            <ListViewItem Content="{Binding ValorTotalItem}" Grid.Column="3" HorizontalAlignment="Center"/>
-                            <Border Grid.Column="3" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="NenhumProduto" Text="NENHUM PRODUTO ADICIONADO" FontWeight="Bold" FontSize="25" Foreground="DarkSlateGray"/>
-
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="Total Geral:" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Bold" FontSize="15" IsColorFontEnabled="True" Margin="200,0"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ValorTotal, Mode=OneWay}" 
-                 VerticalAlignment="Top" HorizontalAlignment="Right" FontFamily="Bold" 
-                 FontSize="15" IsColorFontEnabled="True" Margin="130,0" IsEnabled="True" 
-                 IsReadOnly="True"/>
-
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="DarkSlateGray" Orientation="Horizontal" Margin="5" CornerRadius="10">
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Background="DarkSlateGray" Orientation="Horizontal" Margin="5" CornerRadius="10">
             <HyperlinkButton Content="Adicionar Venda" Click="botaoAdicionar_Click" x:Name="botaoAddVenda"/>
         </StackPanel>
-
-        <ContentDialog x:Name="ConfirmarVendaDialog"
-                       Title="Confirmar Venda"
-                       PrimaryButtonText="Confirmar"
-                       SecondaryButtonText="Cancelar"
-                       PrimaryButtonClick="ConfirmarVenda_Click"
-                       CloseButtonClick="CancelarVenda_Click">
-
-            <StackPanel>
-                <TextBlock Text="Itens Vendidos:" FontWeight="Bold"/>
-                <ListView ItemsSource="{x:Bind listaVenda}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local1:ItemVenda">
-                            <StackPanel>
-                                <TextBlock Text="{x:Bind Produto.Nome}"/>
-                                <TextBlock Text="{x:Bind Quantidade}"/>
-                                <TextBlock Text="{x:Bind ValorTotalItem, Mode=OneWay}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-                <TextBlock Text="Valor Total:" FontWeight="Bold"/>
-                <TextBlock Text="{x:Bind ValorTotal, Mode=OneWay}" />
-            </StackPanel>
-        </ContentDialog>
-
     </Grid>
 </Page>
