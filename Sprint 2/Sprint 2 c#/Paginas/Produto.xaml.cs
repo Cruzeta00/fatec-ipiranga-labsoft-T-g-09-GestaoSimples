@@ -20,7 +20,7 @@ namespace GestaoSimples.Paginas
     public sealed partial class Produto : Page
     {
         private readonly ServiceProduto _servicoProduto;
-        private readonly ServiceFornecedor _servicoFornecedor;
+        private readonly ServiceFornecedor _serviceFornecedor;
         Unidade _unidade;
         Categoria _categoria;
         Modelos.Fornecedor _fornecedor;
@@ -31,11 +31,11 @@ namespace GestaoSimples.Paginas
             this.InitializeComponent();
 
             _servicoProduto = new ServiceProduto();
-            _servicoFornecedor = new ServiceFornecedor();
+            _serviceFornecedor = new ServiceFornecedor();
 
             Unidade.ItemsSource = Enum.GetValues(typeof(Unidade));
             Categoria.ItemsSource = Enum.GetValues(typeof(Categoria));
-            Forn.ItemsSource = _servicoFornecedor.BuscarFornecedores();
+            Forn.ItemsSource = _serviceFornecedor.BuscarFornecedores();
 
             Unidade.SelectionChanged += SelecaoUnidade;
             Categoria.SelectionChanged += SelecaoCategoria;
@@ -74,7 +74,7 @@ namespace GestaoSimples.Paginas
                 else
                 {
                     Modelos.Produto prod = _servicoProduto.BuscarProduto(Convert.ToInt32(idProduto));
-                    prod.Fornecedor = _servicoFornecedor.BuscarFornecedor(prod.FornecedorId);
+                    prod.Fornecedor = _serviceFornecedor.BuscarFornecedor(prod.FornecedorId);
 
                     Id.Text = prod.Id.ToString();
                     Nome.Text = prod.Nome;

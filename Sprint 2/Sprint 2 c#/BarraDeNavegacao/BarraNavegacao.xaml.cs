@@ -63,6 +63,11 @@ namespace GestaoSimples.BarraDeNavegacao
             }
         }
 
+        private void ClickMercadorias(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         private void ClickVendas(object sender, RoutedEventArgs e)
         {
             if (this.Parent is Frame frame)
@@ -76,53 +81,41 @@ namespace GestaoSimples.BarraDeNavegacao
             }
         }
 
-        private void ClickClientes(object sender, RoutedEventArgs e)
-        {
-            if (this.Parent is Frame frame)
-            {
-                frame.Navigate(typeof(Clientes));
-            }
-            else
-            {
-                frame = RetornaPai();
-                frame.Navigate(typeof(Clientes));
-            }
-        }
-        
-        private void ClickCompras(object sender, RoutedEventArgs e)
+        private void ClickRelatorios(object sender, RoutedEventArgs e)
         {
 
         }
-        
-        private void ClickUsuarios(object sender, RoutedEventArgs e)
+
+        private void ClickClientes(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickCaixa(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ClickAlertas(object sender, RoutedEventArgs e)
         {
 
         }
 
         private void ClickVoltar(object sender, RoutedEventArgs e)
         {
-            Frame frame = RetornaPai();
-                
-            if(frame.CanGoBack)
+            if (this.Parent is Frame frame)
             {
-                var nomePag = frame.Content.GetType().Name;
-                if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda" || nomePag == "Cliente")
+                frame.GoBack();
+            }
+            else
+            {
+                frame = RetornaPai();
+                
+                if(frame.CanGoBack)
                 {
-                    if (nomePag == "Fornecedor")
-                        frame.Navigate(typeof(Fornecedores));
-                    else if (nomePag == "Produto")
-                        frame.Navigate(typeof(Produtos));
-                    else if (nomePag == "Venda")
-                        frame.Navigate(typeof(Vendas));
-                    else if (nomePag == "Cliente")
-                        frame.Navigate(typeof(Clientes));
+                    PageStackEntry anterior = frame.BackStack.LastOrDefault();
+                    if( anterior != null && anterior.SourcePageType != typeof(Login)) frame.GoBack();
                 }
-                else if (nomePag == "Fornecedores" || nomePag == "Produtos" || nomePag == "Vendas" || nomePag == "Clientes")
-                {
-                    // Para guias principais, voltar para o Menu Inicial
-                    frame.Navigate(typeof(Menu));
-                }
-                else if (nomePag == "Menu") { }
             }
         }
     }
