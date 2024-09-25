@@ -16,13 +16,13 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
 
-        <Grid Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Stretch" Margin="5">
+        <Grid Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5">
             <TextBlock HorizontalAlignment="Left" x:Name="paginaVenda" Text="Venda" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
             <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
@@ -32,24 +32,35 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox PlaceholderText="Buscar..." VerticalAlignment="Top" TextChanged="Buscando" x:Name="Textobusca" Background="DarkSlateGray" Margin="5,0" TextWrapping="Wrap"/>
-            <Grid Grid.ColumnSpan="2" Margin="0,35">
-                <ListView x:Name="ProdutosListView" HorizontalAlignment="Left" VerticalAlignment="Top" IsItemClickEnabled="True" ItemClick="ClickItemLista">
+            <TextBox Grid.ColumnSpan="2" PlaceholderText="Buscar... (Nome/Descrição)" HorizontalAlignment="Center" VerticalAlignment="Top" TextChanged="Buscando" 
+                     x:Name="Textobusca" Background="DarkSlateGray" Margin="5,0" TextWrapping="Wrap"/>
+            <Grid Grid.ColumnSpan="2" Margin="0,35" HorizontalAlignment="Stretch">
+                <ListView x:Name="ProdutosListView" HorizontalAlignment="Stretch" IsItemClickEnabled="True" ItemClick="ClickItemLista">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
-                            <Grid Margin="5" Grid.Column="0">
+                            <Grid Margin="5">
                                 <Grid.ColumnDefinitions>
+                                    <!-- Nome -->
+                                    <ColumnDefinition Width="*"/>
                                     <!-- Descrição -->
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <ListViewHeaderItem Content="Descrição" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                                <ListViewHeaderItem Content="Nome" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
+                                <ListViewHeaderItem Content="Descrição" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate >
                         <DataTemplate >
-                            <Grid Margin="2" Grid.Column="1" >
-                                <ListViewItem Content="{Binding Descricao}" HorizontalAlignment="Left" />
+                            <Grid Margin="2" BorderBrush="AliceBlue" BorderThickness="1">
+                                <Grid.ColumnDefinitions>
+                                    <!-- Nome -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Descrição -->
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <ListViewItem Content="{Binding Nome}" Grid.Column="0" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                                <ListViewItem Content="{Binding Descricao}" Grid.Column="1" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -57,25 +68,36 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.ColumnSpan="2"  Margin="3,25" VerticalAlignment="Stretch">
-            <ListView x:Name="ItensVendaListView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid Grid.Row="2" Grid.ColumnSpan="2"  Margin="3,25">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2">
+                <TextBlock Text="NOME CLIENTE:" FontWeight="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="0"/>
+                <TextBlock Text=" " x:Name="NomeCliente" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1"/>
+            </StackPanel>
+            <ListView x:Name="ItensVendaListView" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
                 <ListView.HeaderTemplate>
                     <DataTemplate>
-                        <Grid Margin="5">
+                        <Grid Margin="5,0">
                             <Grid.ColumnDefinitions>
+                                <!-- Nome -->
+                                <ColumnDefinition Width="4*"/>
                                 <!-- Descrição -->
                                 <ColumnDefinition Width="4*"/>
                                 <!-- Quantidade -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <!-- Preço -->
                                 <ColumnDefinition Width="*"/>
                                 <!-- Total -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <ListViewHeaderItem Content="Descrição" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
-                            <ListViewHeaderItem Content="Quantidade" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
-                            <ListViewHeaderItem Content="Preço" Grid.Column="2" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
-                            <ListViewHeaderItem Content="Total" Grid.Column="3" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                            <ListViewHeaderItem Content="Nome" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
+                            <ListViewHeaderItem Content="Descrição" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
+                            <ListViewHeaderItem Content="Quantidade" Grid.Column="2" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
+                            <ListViewHeaderItem Content="Preço" Grid.Column="3" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
+                            <ListViewHeaderItem Content="Total Produto" Grid.Column="4" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
 
                         </Grid>
                     </DataTemplate>
@@ -84,26 +106,30 @@
                     <DataTemplate>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
+                                <!-- Nome -->
+                                <ColumnDefinition Width="4*"/>
                                 <!-- Descrição -->
                                 <ColumnDefinition Width="4*"/>
                                 <!-- Quantidade -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <!-- Preço -->
                                 <ColumnDefinition Width="*"/>
                                 <!-- Total -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <ListViewItem Content="{Binding Produto.Descricao}" Grid.Column="0" HorizontalAlignment="Left"/>
+                            <ListViewItem Content="{Binding Produto.Nome}" Grid.Column="0" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             <Border Grid.Column="0" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
-
-                            <ListViewItem Content="{Binding Quantidade}" Grid.Column="1" HorizontalAlignment="Left"/>
+                            
+                            <ListViewItem Content="{Binding Produto.Descricao}" Grid.Column="1" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             <Border Grid.Column="1" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding Produto.Preco}" Grid.Column="2" HorizontalAlignment="Center"/>
+                            <ListViewItem Content="{Binding Quantidade}" Grid.Column="2" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             <Border Grid.Column="2" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding ValorTotalItem}" Grid.Column="3" HorizontalAlignment="Center"/>
+                            <ListViewItem Content="{Binding Produto.Preco}" Grid.Column="3" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                             <Border Grid.Column="3" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
+
+                            <ListViewItem Content="{Binding ValorTotalItem}" Grid.Column="4" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -121,6 +147,19 @@
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="DarkSlateGray" Orientation="Horizontal" Margin="5" CornerRadius="10">
             <HyperlinkButton Content="Adicionar Venda" Click="botaoAdicionar_Click" x:Name="botaoAddVenda"/>
         </StackPanel>
+        
+        <ContentDialog x:Name="RegistrarCPFDialog"
+           Title="Deseja Registrar o CPF"
+           PrimaryButtonText="Confirmar"
+           SecondaryButtonText="Cancelar"
+           PrimaryButtonClick="AdicionarCPFNaCompra"
+           CloseButtonClick="CancelarCPFNaCompra_Click">
+
+            <StackPanel>
+                <TextBlock Text="Digite o CPF:" FontWeight="Bold"/>
+                <TextBox x:Name="CPFTextBox"/>
+            </StackPanel>
+        </ContentDialog>
 
         <ContentDialog x:Name="ConfirmarVendaDialog"
                    Title="Confirmar Venda"

@@ -40,7 +40,7 @@ namespace GestaoSimples.Paginas
             NenhumaVenda.Visibility = Visibility.Visible;
         }
 
-        private async void botaoAdicionar_Click(object sender, RoutedEventArgs e)
+        private void botaoAdicionar_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Paginas.Venda));
         }
