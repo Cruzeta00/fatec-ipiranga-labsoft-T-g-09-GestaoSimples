@@ -18,6 +18,8 @@
     <None Remove="JanelaInicial\Fornecedores.xaml" />
     <None Remove="Login.xaml" />
     <None Remove="Menu.xaml" />
+    <None Remove="Paginas\Cliente.xaml" />
+    <None Remove="Paginas\Clientes.xaml" />
     <None Remove="Paginas\Fornecedor.xaml" />
     <None Remove="Paginas\Produto.xaml" />
     <None Remove="Paginas\Produtos.xaml" />
@@ -82,6 +84,12 @@
     <None Update="Configuracoes\appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Paginas\Cliente.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Paginas\Clientes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Paginas\Venda.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

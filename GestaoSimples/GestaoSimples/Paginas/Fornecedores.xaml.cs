@@ -72,7 +72,6 @@ namespace GestaoSimples.Janelas
 
                 FornecedoresListView.ItemsSource = listaFiltrada;
             }
-            
         }
     }
 }
