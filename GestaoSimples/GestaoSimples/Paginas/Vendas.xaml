@@ -31,24 +31,65 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox PlaceholderText="Buscar..." VerticalAlignment="Top" TextChanged="Buscando" x:Name="Textobusca" Background="DarkSlateGray" Margin="5,0" TextWrapping="Wrap"/>
+            <TextBox PlaceholderText="Buscar Venda... (Nome Cliente/Nome Vendedor)" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2" TextChanged="Buscando" x:Name="Textobusca" 
+                     Background="DarkSlateGray" Margin="5,0" TextWrapping="Wrap"/>
             <Grid Grid.ColumnSpan="2" Margin="0,35">
-                <ListView x:Name="VendasListView" HorizontalAlignment="Left" VerticalAlignment="Top" IsItemClickEnabled="True">
+                <ListView x:Name="VendasListView" HorizontalAlignment="Stretch" IsItemClickEnabled="True">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
-                            <Grid Margin="5" Grid.Column="0">
+                            <Grid Margin="5" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                                 <Grid.ColumnDefinitions>
-                                    <!-- Descrição -->
+                                    <!-- Id -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Data da Venda -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Valor Total da Venda -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Id Cliente -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Nome Cliente -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Id Vendedor -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Nome Vendedor -->
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <ListViewHeaderItem Content="Descrição" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                                <ListViewHeaderItem Content="ID" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                                <ListViewHeaderItem Content="Data da Venda" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                                <ListViewHeaderItem Content="Valor Total da Venda" Grid.Column="2" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                                <ListViewHeaderItem Content="ID Cliente" Grid.Column="3" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                                <ListViewHeaderItem Content="Nome Cliente" Grid.Column="4" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                                <ListViewHeaderItem Content="ID Vendedor" Grid.Column="5" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
+                                <ListViewHeaderItem Content="Nome Vendedor" Grid.Column="6" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="LightGray"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate >
                         <DataTemplate >
-                            <Grid Margin="2" Grid.Column="1" >
-                                <ListViewItem Content="{Binding Descricao}" HorizontalAlignment="Left" />
+                            <Grid Margin="2" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <!-- Id -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Data da Venda -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Valor Total da Venda -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Id Cliente -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Nome Cliente -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Id Vendedor -->
+                                    <ColumnDefinition Width="Auto"/>
+                                    <!-- Nome Vendedor -->
+                                    <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                <ListViewItem Content="{Binding Id}" HorizontalAlignment="Left" />
+                                <ListViewItem Content="{Binding DataVenda}" HorizontalAlignment="Left" />
+                                <ListViewItem Content="{Binding ValorTotal}" HorizontalAlignment="Left" />
+                                <ListViewItem Content="{Binding ClienteId}" HorizontalAlignment="Left" />
+                                <ListViewItem Content="{Binding Cliente.Nome}" HorizontalAlignment="Left" />
+                                <ListViewItem Content="{Binding VendedorId}" HorizontalAlignment="Left" />
+                                <ListViewItem Content="{Binding Vendedor.Nome}" HorizontalAlignment="Left" />
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

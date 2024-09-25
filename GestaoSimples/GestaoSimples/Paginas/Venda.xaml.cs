@@ -31,6 +31,7 @@ namespace GestaoSimples.Paginas
 
         private readonly ServiceVenda _servicoVenda;
         private readonly ServiceProduto _servicoProduto;
+        private readonly ServiceCliente _servicoCliente;
 
         private List<Modelos.Produto> listaProdutos { get; set; }
         private List<Modelos.ItemVenda> listaVenda { get; set; }
@@ -55,12 +56,32 @@ namespace GestaoSimples.Paginas
 
             _servicoVenda = new ServiceVenda();
             _servicoProduto = new ServiceProduto();
+            _servicoCliente = new ServiceCliente();
 
             var produtos = _servicoProduto.BuscarProdutos();
             listaProdutos = produtos;
             ProdutosListView.ItemsSource = produtos;
 
             NenhumProduto.Visibility = Visibility.Visible;
+
+            Loaded += PaginaVenda_Carregada;
+            
+        }
+
+        private void PaginaVenda_Carregada(object sender, RoutedEventArgs e)
+        {
+            ChamarRegistrarCPF();
+        }
+
+        private async void ChamarRegistrarCPF()
+        {
+            var resultado = await RegistrarCPFDialog.ShowAsync();
+
+            if (resultado == ContentDialogResult.Primary) { }
+            else
+            {
+                NomeCliente.Text = " Cliente não informou o CPF";
+            }
         }
 
         private async void botaoAdicionar_Click(object sender, RoutedEventArgs e)
@@ -69,7 +90,7 @@ namespace GestaoSimples.Paginas
 
             if (resultado == ContentDialogResult.Primary)
             {
-                //FinalizarVenda();
+                Frame.Navigate(typeof(Vendas));
             }
             else
             {
@@ -77,21 +98,10 @@ namespace GestaoSimples.Paginas
             }
         }
 
-        private void FinalizarVenda()
-        {
-            Modelos.Venda venda = new Modelos.Venda
-            {
-                DataVenda = DateTime.Now,
-                ItensVenda = listaVenda,
-                ValorTotal = _valorTotal
-            };
-
-            _servicoVenda.AdicionarVenda(venda);
-        }
-
         private void LimparVenda()
         {
             listaVenda.Clear();
+            ItensVendaListView.ItemsSource = null;
             ValorTotal = 0;
         }
 
@@ -148,17 +158,36 @@ namespace GestaoSimples.Paginas
 
         private void ConfirmarVenda_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            FinalizarVenda();
+            Modelos.Venda venda = new Modelos.Venda
+            {
+                DataVenda = DateTime.Now,
+                ItensVenda = listaVenda,
+                ValorTotal = _valorTotal
+            };
+
+            _servicoVenda.AdicionarVenda(venda);
         }
 
         private void CancelarVenda_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            LimparVenda();
+            
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void AdicionarCPFNaCompra(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            string cpfCliente = CPFTextBox.Text;
+
+            NomeCliente.Text = _servicoCliente.BuscarNomeClientePorCPF(cpfCliente);
+        }
+
+        private void CancelarCPFNaCompra_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+
         }
     }
 }
