@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid Background="LightSlateGray">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -25,7 +25,7 @@
             <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="10">
+        <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1" HorizontalAlignment="Stretch" Margin="10">
             <!-- Definindo duas colunas: uma para os títulos e outra para os valores -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

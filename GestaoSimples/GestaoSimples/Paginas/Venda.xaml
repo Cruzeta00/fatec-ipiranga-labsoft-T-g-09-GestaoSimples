@@ -17,6 +17,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -27,7 +28,7 @@
             <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="CadetBlue">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -68,16 +69,17 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="2" Grid.ColumnSpan="2"  Margin="3,25">
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,3">
+            <TextBlock Text="NOME CLIENTE: " FontWeight="Black" Margin="5,0"/>
+            <TextBlock Text=" " x:Name="NomeCliente" FontWeight="Bold"/>
+        </StackPanel>
+
+        <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="3,25" Background="CadetBlue">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.ColumnSpan="2">
-                <TextBlock Text="NOME CLIENTE:" FontWeight="Black" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="0"/>
-                <TextBlock Text=" " x:Name="NomeCliente" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1"/>
-            </StackPanel>
-            <ListView x:Name="ItensVendaListView" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.ColumnSpan="2">
+            <ListView x:Name="ItensVendaListView" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.ColumnSpan="2">
                 <ListView.HeaderTemplate>
                     <DataTemplate>
                         <Grid Margin="5,0">
@@ -136,19 +138,25 @@
             </ListView>
         </Grid>
 
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="NenhumProduto" Text="NENHUM PRODUTO ADICIONADO" 
+        <TextBlock Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="NenhumProduto" Text="NENHUM PRODUTO ADICIONADO" 
                    FontWeight="Bold" FontSize="25" Foreground="DarkSlateGray"/>
 
-        <TextBlock Grid.Row="3" Grid.Column="1" Text="Total Geral:" VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Bold" FontSize="15" 
-                   IsColorFontEnabled="True" Margin="200,0"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind ValorTotal, Mode=OneWay}" 
-             VerticalAlignment="Top" HorizontalAlignment="Right" FontFamily="Bold" 
-             FontSize="15" IsColorFontEnabled="True" Margin="130,0" IsEnabled="True" 
-             IsReadOnly="True"/>
+        <StackPanel Grid.Row="4" Grid.Column="0" Orientation="Vertical" Margin="3">
+            <TextBlock Text="Total Geral:" HorizontalAlignment="Center" FontFamily="Bold" FontSize="15" IsColorFontEnabled="True" Margin="200,0"/>
+            <TextBox Text="{x:Bind ValorTotal, Mode=OneWay}" HorizontalAlignment="Center" FontFamily="Bold" FontSize="15" IsColorFontEnabled="True" Margin="130,0" IsEnabled="True" IsReadOnly="True"/>
+        </StackPanel>
 
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="DarkSlateGray" Orientation="Horizontal" 
+        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical" Margin="3">
+            <TextBlock Text="Formato de Pagamento" HorizontalAlignment="Right" FontFamily="Bold" FontSize="15" IsColorFontEnabled="True" Margin="200,0"/>
+            <RadioButtons HorizontalAlignment="Right" Margin="200,0">
+                <RadioButton Content="PIX" x:Name="Pix"/>
+                <RadioButton Content="DINHEIRO" x:Name="Dinheiro"/>
+            </RadioButtons>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="DarkSlateGray" Orientation="Horizontal" 
                     Margin="5" CornerRadius="10">
-            <HyperlinkButton Content="Adicionar Venda" Click="botaoAdicionar_Click" x:Name="botaoAddVenda"/>
+            <HyperlinkButton Content="Adicionar Venda" Click="BotaoAdicionar_Click" x:Name="botaoAddVenda"/>
         </StackPanel>
         
         <ContentDialog x:Name="RegistrarCPFDialog"
@@ -156,10 +164,11 @@
            PrimaryButtonText="Confirmar"
            SecondaryButtonText="Cancelar"
            PrimaryButtonClick="AdicionarCPFNaCompra"
-           CloseButtonClick="CancelarCPFNaCompra_Click">
+           CloseButtonClick="CancelarCPFNaCompra_Click"
+           HorizontalAlignment="Center">
 
             <StackPanel>
-                <TextBlock Text="Digite o CPF:" FontWeight="Bold"/>
+                <TextBlock Text="Digite o CPF do Cliente:" FontWeight="Bold"/>
                 <TextBox x:Name="CPFTextBox"/>
             </StackPanel>
         </ContentDialog>
