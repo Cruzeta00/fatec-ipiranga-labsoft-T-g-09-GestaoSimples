@@ -44,7 +44,7 @@ namespace GestaoSimples.Paginas
             get { return _valorTotal; }
             set
             {
-                _valorTotal = value;
+                _valorTotal = Math.Ceiling(value * 100) / 100;
 
                 OnPropertyChanged(nameof(ValorTotal));
             }
@@ -84,7 +84,7 @@ namespace GestaoSimples.Paginas
             }
         }
 
-        private async void botaoAdicionar_Click(object sender, RoutedEventArgs e)
+        private async void BotaoAdicionar_Click(object sender, RoutedEventArgs e)
         {
             var resultado = await ConfirmarVendaDialog.ShowAsync();
 
@@ -103,6 +103,7 @@ namespace GestaoSimples.Paginas
             listaVenda.Clear();
             ItensVendaListView.ItemsSource = null;
             ValorTotal = 0;
+            NenhumProduto.Visibility = Visibility.Visible;
         }
 
         private void Buscando(object sender, TextChangedEventArgs e)
@@ -173,21 +174,21 @@ namespace GestaoSimples.Paginas
             
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private void AdicionarCPFNaCompra(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             string cpfCliente = CPFTextBox.Text;
 
             NomeCliente.Text = _servicoCliente.BuscarNomeClientePorCPF(cpfCliente);
         }
-
+        
         private void CancelarCPFNaCompra_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
 
+        }
+        
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
