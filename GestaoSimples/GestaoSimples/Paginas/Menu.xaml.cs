@@ -41,12 +41,13 @@ namespace GestaoSimples
         protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            Usuario usuLogado;
 
-            usuLogado = _servicoUsuario.BuscarUsuarioPorLogin(e.Parameter.ToString());
+            Usuario usuLogado = _servicoUsuario.BuscarUsuarioPorLogin(e.Parameter.ToString());
+            
             if (usuLogado != null && e.Parameter.ToString() == usuLogado.Login)
             {
-                
+                SessaoUsuario.Instancia.UsuarioId = usuLogado.Id;
+                SessaoUsuario.Instancia.Login = usuLogado.Login;
             }
             else
             {

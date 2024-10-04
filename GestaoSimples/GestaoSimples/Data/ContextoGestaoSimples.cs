@@ -14,6 +14,8 @@ namespace GestaoSimples.Data
         public DbSet<Venda> Vendas { get; set; }
         public DbSet<ItemVenda> ItensVenda { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<Compra> Compras { get; set; }
+        public DbSet<ItemCompra> ItensCompra { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,6 +44,23 @@ namespace GestaoSimples.Data
                 };
 
                 Usuarios.Add(usuarioAdministrador);
+                SaveChanges();
+            }
+        }
+
+        public void VerificaEAdicionarClienteAvulso()
+        {
+            if(!Clientes.Any(u => u.Nome == "Cliente Avulso"))
+            {
+                var clienteAvulso = new Cliente
+                {
+                    Id = 0,
+                    CPF = "",
+                    Nome = "Cliente Avulso",
+                    Telefone = ""
+                };
+
+                Clientes.Add(clienteAvulso);
                 SaveChanges();
             }
         }

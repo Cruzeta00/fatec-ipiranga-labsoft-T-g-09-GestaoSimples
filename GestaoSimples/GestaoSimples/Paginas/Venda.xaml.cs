@@ -185,12 +185,20 @@ namespace GestaoSimples.Paginas
 
         private void ConfirmarVenda_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            Modelos.Venda venda = new Modelos.Venda
+            Modelos.Venda venda = new Modelos.Venda();
+            if(CPFTextBox.Text == "")
             {
-                DataVenda = DateTime.Now,
-                ItensVenda = listaVenda,
-                ValorTotal = _valorTotal
-            };
+                venda.ClienteId = 3;
+            }
+            else
+            {
+                venda.ClienteId = _servicoCliente.BuscarIDClientePorCPF(CPFTextBox.Text);
+            }
+
+            venda.VendedorId = SessaoUsuario.Instancia.UsuarioId;
+            venda.DataVenda = DateTime.Now;
+            venda.ItensVenda = listaVenda;
+            venda.ValorTotal = _valorTotal;
 
             _servicoVenda.AdicionarVenda(venda);
         }

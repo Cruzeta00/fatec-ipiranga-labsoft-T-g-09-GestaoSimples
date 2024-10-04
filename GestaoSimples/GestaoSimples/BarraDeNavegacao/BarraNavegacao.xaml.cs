@@ -91,7 +91,15 @@ namespace GestaoSimples.BarraDeNavegacao
         
         private void ClickCompras(object sender, RoutedEventArgs e)
         {
-
+            if (this.Parent is Frame frame)
+            {
+                frame.Navigate(typeof(Compras));
+            }
+            else
+            {
+                frame = RetornaPai();
+                frame.Navigate(typeof(Compras));
+            }
         }
         
         private void ClickUsuarios(object sender, RoutedEventArgs e)
@@ -114,7 +122,7 @@ namespace GestaoSimples.BarraDeNavegacao
             if(frame.CanGoBack)
             {
                 var nomePag = frame.Content.GetType().Name;
-                if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda" || nomePag == "Cliente" || nomePag == "Usuario")
+                if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda" || nomePag == "Cliente" || nomePag == "Usuario" || nomePag == "Compra")
                 {
                     if (nomePag == "Fornecedor")
                         frame.Navigate(typeof(Fornecedores));
@@ -126,8 +134,10 @@ namespace GestaoSimples.BarraDeNavegacao
                         frame.Navigate(typeof(Clientes));
                     else if (nomePag == "Usuario")
                         frame.Navigate(typeof(Usuarios));
+                    else if (nomePag == "Compra")
+                        frame.Navigate(typeof(Compras));
                 }
-                else if (nomePag == "Fornecedores" || nomePag == "Produtos" || nomePag == "Vendas" || nomePag == "Clientes" || nomePag == "Usuarios")
+                else if (nomePag == "Fornecedores" || nomePag == "Produtos" || nomePag == "Vendas" || nomePag == "Clientes" || nomePag == "Usuarios" || nomePag == "Compras")
                 {
                     // Para guias principais, voltar para o Menu Inicial
                     frame.Navigate(typeof(Menu));
