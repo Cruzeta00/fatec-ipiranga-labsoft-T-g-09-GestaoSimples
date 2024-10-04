@@ -1,3 +1,4 @@
+using GestaoSimples.Janelas;
 using GestaoSimples.Modelos;
 using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
@@ -123,12 +124,28 @@ namespace GestaoSimples.Paginas
                 {
                     if (botao.Content.ToString() == "Adicionar")
                     {
-                        _servicoFornecedor.AdicionarFornecedor(forn);
+                        error = _servicoFornecedor.AdicionarFornecedor(forn);
+                        if (error == 1)
+                        {
+                            Frame.Navigate(typeof(Fornecedores));
+                        }
+                        else
+                        {
+                            throw new Exception("Erro ao adicionar o Parceiro");
+                        }
                     }
                     else 
                     {
                         forn.Id = Convert.ToInt32(Id.Text);
-                        _servicoFornecedor.AtualizarFornecedor(forn); 
+                        error = _servicoFornecedor.AtualizarFornecedor(forn);
+                        if (error == 1)
+                        {
+                            Frame.Navigate(typeof(Fornecedores));
+                        }
+                        else
+                        {
+                            throw new Exception("Erro ao atualizar o Parceiro");
+                        }
                     }
                 }
             }

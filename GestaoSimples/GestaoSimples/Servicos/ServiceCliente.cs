@@ -10,22 +10,26 @@ namespace GestaoSimples.Servicos
 {
     public class ServiceCliente
     {
-        public void AdicionarCliente(Cliente cliente)
+        public int AdicionarCliente(Cliente cliente)
         {
+            int retorno = -1;
             using (var contexto = new ContextoGestaoSimples())
             {
                 contexto.Clientes.Add(cliente);
-                contexto.SaveChanges();
+                retorno = contexto.SaveChanges();
             }
+            return retorno;
         }
 
-        public void AtualizarCliente(Cliente cliente)
+        public int AtualizarCliente(Cliente cliente)
         {
+            int retorno = -1;
             using (var contexto = new ContextoGestaoSimples())
             {
                 contexto.Clientes.Update(cliente);
-                contexto.SaveChanges();
+                retorno = contexto.SaveChanges();
             }
+            return retorno;
         }
 
         public List<Cliente> BuscarClientes()

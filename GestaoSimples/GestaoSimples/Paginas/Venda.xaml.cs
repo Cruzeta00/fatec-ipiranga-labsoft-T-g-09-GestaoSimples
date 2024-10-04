@@ -86,21 +86,47 @@ namespace GestaoSimples.Paginas
 
         private async void BotaoAdicionar_Click(object sender, RoutedEventArgs e)
         {
-            var resultado = await ConfirmarVendaDialog.ShowAsync();
-
-            if (resultado == ContentDialogResult.Primary)
+            if(ItensVendaListView.Items.Count == 0)
             {
-                Frame.Navigate(typeof(Vendas));
+                ContentDialog msgErro = new ContentDialog
+                {
+                    Title = "Erro - Nenhum Produto Selecionado",
+                    Content = "Necessário selecionar pelo menos 1 produto para adicionar a venda.",
+                    CloseButtonText = "OK",
+                };
+                msgErro.XamlRoot = botaoAddVenda.XamlRoot;
+                await msgErro.ShowAsync();
+            }
+            else if(FormatoPagamento.SelectedItem == null)
+            {
+                ContentDialog msgErro = new ContentDialog
+                {
+                    Title = "Erro - Forma de Pagamento não selecionada",
+                    Content = "Necessário selecionar forma de pagamento para adicionar a venda.",
+                    CloseButtonText = "OK",
+                };
+                msgErro.XamlRoot = botaoAddVenda.XamlRoot;
+                await msgErro.ShowAsync();
             }
             else
             {
-                LimparVenda();
+                var resultado = await ConfirmarVendaDialog.ShowAsync();
+
+                if (resultado == ContentDialogResult.Primary)
+                {
+                    Frame.Navigate(typeof(Vendas));
+                }
+                else
+                {
+                    LimparVenda();
+                }
             }
         }
 
         private void LimparVenda()
         {
             listaVenda.Clear();
+            FormatoPagamento.SelectedItem = null;
             ItensVendaListView.ItemsSource = null;
             ValorTotal = 0;
             NenhumProduto.Visibility = Visibility.Visible;

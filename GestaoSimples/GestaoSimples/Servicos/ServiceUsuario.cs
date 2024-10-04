@@ -8,49 +8,57 @@ using System.Threading.Tasks;
 
 namespace GestaoSimples.Servicos
 {
-    public class ServiceProduto
+    public class ServiceUsuario
     {
-        public List<Produto> BuscarProdutos()
+        public List<Usuario> BuscarUsuarios()
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                return contexto.Produtos.ToList();
+                return contexto.Usuarios.ToList();
             }
         }
 
-        public Produto BuscarProduto(int Id)
+        public Usuario BuscarUsuario(int Id)
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                return contexto.Produtos.FirstOrDefault(x => x.Id == Id);
+                return contexto.Usuarios.FirstOrDefault(x => x.Id == Id);
             }
         }
 
-        public int BuscarNovoProduto()
+        public Usuario BuscarUsuarioPorLogin(string login)
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                return contexto.Produtos.OrderByDescending(x => x.Id).Select(x => x.Id).FirstOrDefault() + 1;
+                return contexto.Usuarios.FirstOrDefault(x => x.Login == login);
             }
         }
 
-        public int AdicionarProduto(Produto prod)
+        public int BuscarNovoUsuario()
+        {
+            using (var contexto = new ContextoGestaoSimples())
+            {
+                return contexto.Usuarios.OrderByDescending(x => x.Id).Select(x => x.Id).FirstOrDefault() + 1;
+            }
+        }
+
+        public int AdicionarUsuario(Usuario usu)
         {
             int retorno = -1;
             using (var contexto = new ContextoGestaoSimples())
             {
-                contexto.Produtos.Add(prod);
+                contexto.Usuarios.Add(usu);
                 retorno = contexto.SaveChanges();
             }
             return retorno;
         }
 
-        public int AtualizarProduto(Produto prod)
+        public int AtualizarUsuario(Usuario usu)
         {
             int retorno = -1;
             using (var contexto = new ContextoGestaoSimples())
             {
-                contexto.Produtos.Update(prod);
+                contexto.Usuarios.Update(usu);
                 retorno = contexto.SaveChanges();
             }
             return retorno;

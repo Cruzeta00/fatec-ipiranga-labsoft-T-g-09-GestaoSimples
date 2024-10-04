@@ -1,3 +1,5 @@
+using GestaoSimples.Modelos;
+using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -23,14 +25,40 @@ namespace GestaoSimples
     /// </summary>
     public sealed partial class Menu : Page
     {
+        private readonly ServiceUsuario _servicoUsuario;
         public Menu()
         {
             this.InitializeComponent();
+
+            _servicoUsuario = new ServiceUsuario();
         }
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Login));
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            Usuario usuLogado;
+
+            usuLogado = _servicoUsuario.BuscarUsuarioPorLogin(e.Parameter.ToString());
+            if (usuLogado != null && e.Parameter.ToString() == usuLogado.Login)
+            {
+                
+            }
+            else
+            {
+                ContentDialog mudarSenha = new ContentDialog()
+                {
+                    Title = "Mudança de Senha",
+                    Content = "Recomendamos acessar a guia de Usuários e alterar a Senha ou Nome cadastrado no sistema para manter-lo seguro.",
+                    CloseButtonText = "OK",
+                };
+                mudarSenha.XamlRoot = Frame.XamlRoot;
+                await mudarSenha.ShowAsync();
+            }
         }
     }
 }

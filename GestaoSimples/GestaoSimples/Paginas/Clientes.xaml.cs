@@ -36,6 +36,13 @@ namespace GestaoSimples.Paginas
 
             listaClientes = _serviceCliente.BuscarClientes();
             ClientesListView.ItemsSource = listaClientes;
+
+            NenhumCliente.Visibility = Visibility.Collapsed;
+
+            if (ClientesListView == null)
+            {
+                NenhumCliente.Visibility = Visibility.Visible;
+            }
         }
 
         private void Buscando(object sender, TextChangedEventArgs e)
