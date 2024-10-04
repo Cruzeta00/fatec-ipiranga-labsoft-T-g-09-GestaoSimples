@@ -61,29 +61,50 @@ namespace GestaoSimples
 
         private async void HyperlinkButton_ClickEsqueci(object sender, RoutedEventArgs e)
         {
-            string usuario = this.usuario.Text;
-            string senha = this.senha.Password;
-
-            using (var contexto = new ContextoGestaoSimples())
+            TextBox nome = new TextBox
             {
-                var Usuario = contexto.Usuarios.FirstOrDefault(u => u.Login == usuario && u.Senha == senha);
-                if (Usuario != null)
+                PlaceholderText = "Digite o nome completo cadastrado no seu perfil."
+            };
+
+            ContentDialog esqueciSenha = new ContentDialog
+            {
+                Title = "Esqueci a Senha",
+                Content = new StackPanel
                 {
-                    Frame.Navigate(typeof(Menu), this.usuario.Text, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
-                }
-                else
-                {
-                    ContentDialog msgErro = new ContentDialog
+                    Children =
                     {
-                        Title = "Erro de Conexão",
-                        Content = "Usuário ou Senha inválido.",
-                        CloseButtonText = "OK",
-                    };
-                    msgErro.XamlRoot = botaoLogin.XamlRoot;
-                    await msgErro.ShowAsync();
+                        new TextBlock {Text = "Para recuperar a senha, digite o nome completo cadastrado no seu usuário."},
+                        nome
+                    }
+                },
+                CloseButtonText = "OK",
+                
+            };
+            esqueciSenha.XamlRoot = botaoEsqueciSenha.XamlRoot;
+            await esqueciSenha.ShowAsync();
+
+            if(nome.Text != null)
+            {
+                using (var contexto = new ContextoGestaoSimples())
+                {
+                    var Usuario = contexto.Usuarios.FirstOrDefault(u => u.Nome == nome.Text);
+                    if (Usuario != null)
+                    {
+                        Frame.Navigate(typeof(Menu), this.usuario.Text, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                    }
+                    else
+                    {
+                        ContentDialog msgErro = new ContentDialog
+                        {
+                            Title = "Erro de Conexão",
+                            Content = "Nome de usuário inválido. Entre em contato com um ADMINISTRADOR para acessar o sistema.",
+                            CloseButtonText = "OK",
+                        };
+                        msgErro.XamlRoot = botaoLogin.XamlRoot;
+                        await msgErro.ShowAsync();
+                    }
                 }
             }
-
         }
     }
 }

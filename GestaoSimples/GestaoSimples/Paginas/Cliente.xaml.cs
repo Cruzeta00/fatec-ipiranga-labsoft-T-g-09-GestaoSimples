@@ -14,7 +14,6 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using GestaoSimples.Servicos;
 using GestaoSimples.Modelos;
-using static Vanara.PInvoke.User32;
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -88,7 +87,7 @@ namespace GestaoSimples.Paginas
             catch (Exception ex) { }
         }
 
-        private async void botao_Click(object sender, RoutedEventArgs e)
+        private async void Botao_Click(object sender, RoutedEventArgs e)
         {
             Modelos.Cliente cliente = new Modelos.Cliente();
             int error = 0;
@@ -104,12 +103,28 @@ namespace GestaoSimples.Paginas
                 {
                     if (botao.Content.ToString() == "Adicionar")
                     {
-                        _servicoCliente.AdicionarCliente(cliente);
+                        error = _servicoCliente.AdicionarCliente(cliente);
+                        if(error == 1)
+                        {
+                            Frame.Navigate(typeof(Clientes));
+                        }
+                        else
+                        {
+                            throw new Exception("Erro ao adicionar Cliente.");
+                        }
                     }
                     else
                     {
                         cliente.Id = Convert.ToInt32(Id.Text);
-                        _servicoCliente.AtualizarCliente(cliente);
+                        error = _servicoCliente.AtualizarCliente(cliente);
+                        if(error == 1)
+                        {
+                            Frame.Navigate(typeof(Clientes));
+                        }
+                        else
+                        {
+                            throw new Exception("Erro ao atualizar Cliente.");
+                        }
                     }
                 }
             }

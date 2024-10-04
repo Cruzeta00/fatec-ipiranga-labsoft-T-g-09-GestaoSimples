@@ -70,9 +70,8 @@
                     <DataTemplate>
                         <Grid Margin="2">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
                                 <!-- ID -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <!-- Nome -->
                                 <ColumnDefinition Width="*"/>
                                 <!-- CNPJ -->
@@ -80,14 +79,15 @@
                                 <!-- Telefone -->
                                 <ColumnDefinition Width="*"/>
                                 <!-- E-mail -->
-                                <ColumnDefinition Width="Auto"/>
-                                <!-- Ativo -->
                                 <ColumnDefinition Width="*"/>
+                                <!-- Ativo -->
+                                <ColumnDefinition Width="Auto"/>
                                 <!-- Observações -->
                                 <ColumnDefinition Width="*"/>
                                 <!-- Data Cadastro -->
                                 <ColumnDefinition Width="*"/>
                                 <!-- Classificação -->
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <ListViewItem Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             <Border Grid.Column="0" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
@@ -120,6 +120,9 @@
             </ListView>
         </Grid>
 
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="NenhumFornecedor" Text="NENHUM PRODUTO CADASTRADO/ENCONTRADO" FontWeight="Bold" FontSize="25" 
+                   Foreground="DarkSlateGray"/>
+        
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Background="DarkSlateGray" Orientation="Horizontal" 
                     Margin="3" CornerRadius="10">
             <HyperlinkButton Content="Criar" Click="botaoCriar_Click" x:Name="botaoCriar"/>

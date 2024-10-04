@@ -36,21 +36,21 @@
                                 <!-- ID -->
                                 <ColumnDefinition Width="Auto"/>
                                 <!-- Nome -->
-                                <ColumnDefinition Width="9*"/>
-                                <!-- CNPJ -->
-                                <ColumnDefinition Width="9*"/>
-                                <!-- Telefone -->
-                                <ColumnDefinition Width="9*"/>
-                                <!-- E-mail -->
-                                <ColumnDefinition Width="9*"/>
+                                <ColumnDefinition Width="*"/>
+                                <!-- Descrição -->
+                                <ColumnDefinition Width="*"/>
+                                <!-- Preço -->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- Estoque -->
+                                <ColumnDefinition Width="Auto"/>
+                                <!-- Unidade-->
+                                <ColumnDefinition Width="*"/>
+                                <!-- Categoria -->
+                                <ColumnDefinition Width="*"/>
                                 <!-- Ativo -->
                                 <ColumnDefinition Width="Auto"/>
-                                <!-- Observações -->
-                                <ColumnDefinition Width="9*"/>
-                                <!-- Data Cadastro -->
-                                <ColumnDefinition Width="9*"/>
-                                <!-- Classificação -->
-                                <ColumnDefinition Width="9*"/>
+                                <!-- Data Validade -->
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <ListViewHeaderItem Content="ID" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Foreground="White"/>
                             <ListViewHeaderItem Content="Nome" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Foreground="White"/>
@@ -75,9 +75,9 @@
                                 <!-- Descrição -->
                                 <ColumnDefinition Width="*"/>
                                 <!-- Preço -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <!-- Estoque -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                                 <!-- Unidade -->
                                 <ColumnDefinition Width="*"/>
                                 <!-- Categoria -->
@@ -102,13 +102,13 @@
                             <ListViewItem Content="{Binding Estoque}" Grid.Column="4" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             <Border Grid.Column="4" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding Unidade}" Grid.Column="5" BorderThickness="50,0" IsHitTestVisible="False"/>
+                            <ListViewItem Content="{Binding Unidade}" Grid.Column="5" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                             <Border Grid.Column="5" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding Categoria}" Grid.Column="6" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                            <ListViewItem Content="{Binding Categoria}" Grid.Column="6" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                             <Border Grid.Column="6" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <CheckBox IsChecked="{Binding Ativo}" IsEnabled="False" Grid.Column="7" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+                            <CheckBox IsChecked="{Binding Ativo}" IsEnabled="False" Grid.Column="7" BorderThickness="50,0" IsHitTestVisible="False"/>
                             <Border Grid.Column="7" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
                             <ListViewItem Content="{Binding DataValidade}" Grid.Column="8" HorizontalAlignment="Left" IsHitTestVisible="False"/>
@@ -118,7 +118,8 @@
             </ListView>
         </Grid>
 
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="NenhumProduto" Text="NENHUM PRODUTO CADASTRADO/ENCONTRADO" FontWeight="Bold" FontSize="25" Foreground="DarkSlateGray"/>
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="NenhumProduto" Text="NENHUM PRODUTO CADASTRADO/ENCONTRADO" FontWeight="Bold" FontSize="25" 
+                   Foreground="DarkSlateGray"/>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Background="DarkSlateGray" Orientation="Horizontal" Margin="5" CornerRadius="10">
             <HyperlinkButton Content="Criar" Click="botaoCriar_Click" x:Name="botaoCriar"/>

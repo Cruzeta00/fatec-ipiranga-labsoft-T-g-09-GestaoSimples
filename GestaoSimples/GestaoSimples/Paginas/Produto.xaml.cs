@@ -106,7 +106,7 @@ namespace GestaoSimples.Paginas
             catch (Exception ex) { }
         }
 
-        private async void botao_Click(object sender, RoutedEventArgs e)
+        private async void Botao_Click(object sender, RoutedEventArgs e)
         {
             Modelos.Produto prod = new Modelos.Produto();
             int error = 0;
@@ -157,13 +157,29 @@ namespace GestaoSimples.Paginas
                     {
                         prod.DataAtualizacao = DateTime.Now;
                         prod.DataCriacao = DateTime.Now;
-                        _servicoProduto.AdicionarProduto(prod);
+                        error = _servicoProduto.AdicionarProduto(prod);
+                        if(error == 1)
+                        {
+                            Frame.Navigate(typeof(Produtos));
+                        }
+                        else
+                        {
+                            throw new Exception("Erro ao adicionar Produto.");
+                        }
                     }
                     else
                     {
                         prod.Id = Convert.ToInt32(Id.Text);
                         prod.DataAtualizacao = DateTime.Now;
-                        _servicoProduto.AtualizarProduto(prod);
+                        error = _servicoProduto.AtualizarProduto(prod);
+                        if (error == 1)
+                        {
+                            Frame.Navigate(typeof(Produtos));
+                        }
+                        else
+                        {
+                            throw new Exception("Erro ao atualizar Produto.");
+                        }
                     }
                 }
             }

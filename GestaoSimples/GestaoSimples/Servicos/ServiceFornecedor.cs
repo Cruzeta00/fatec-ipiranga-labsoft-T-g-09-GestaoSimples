@@ -23,17 +23,6 @@ namespace GestaoSimples.Servicos
             }
         }
 
-        public void MudarStatus(int Id)
-        {
-            using(var contexto =new ContextoGestaoSimples())
-            {
-                Fornecedor fornecedor = BuscarFornecedor(Id);
-                fornecedor.Ativo = !fornecedor.Ativo;
-                contexto.Fornecedores.Update(fornecedor);
-                contexto.SaveChanges();
-            }
-        }
-
         public int BuscarNovoFornecedor()
         {
             using(var contexto = new ContextoGestaoSimples())
@@ -42,22 +31,26 @@ namespace GestaoSimples.Servicos
             }
         }
 
-        public void AdicionarFornecedor(Modelos.Fornecedor forn)
+        public int AdicionarFornecedor(Modelos.Fornecedor forn)
         {
+            int retorno = -1;
             using (var contexto = new ContextoGestaoSimples())
             {
                 contexto.Fornecedores.Add(forn);
-                contexto.SaveChanges();
+                retorno = contexto.SaveChanges();
             }
+            return retorno;
         }
 
-        public void AtualizarFornecedor(Modelos.Fornecedor forn)
+        public int AtualizarFornecedor(Modelos.Fornecedor forn)
         {
+            int retorno = -1;
             using (var contexto = new ContextoGestaoSimples())
             {
                 contexto.Fornecedores.Update(forn);
-                contexto.SaveChanges();
+                retorno = contexto.SaveChanges();
             }
+            return retorno;
         }
     }
 }

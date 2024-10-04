@@ -93,7 +93,7 @@
         </Border>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal" Margin="5">
-            <HyperlinkButton x:Name="botao" Click="botao_Click" HorizontalAlignment="Stretch" Background="DarkSlateGray" CornerRadius="10"/>
+            <HyperlinkButton x:Name="botao" Click="Botao_Click" HorizontalAlignment="Stretch" Background="DarkSlateGray" CornerRadius="10"/>
         </StackPanel>
     </Grid>
 </Page>

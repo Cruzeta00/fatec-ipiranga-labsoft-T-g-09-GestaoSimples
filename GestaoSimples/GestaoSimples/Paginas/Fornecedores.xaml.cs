@@ -42,6 +42,13 @@ namespace GestaoSimples.Janelas
 
             listaFornecedores = _servicoFornecedor.BuscarFornecedores();
             FornecedoresListView.ItemsSource = listaFornecedores;
+
+            NenhumFornecedor.Visibility = Visibility.Collapsed;
+
+            if (FornecedoresListView == null)
+            {
+                NenhumFornecedor.Visibility = Visibility.Visible;
+            }
         }
 
         private void botaoAtualizar_Click(object sender, RoutedEventArgs e)
