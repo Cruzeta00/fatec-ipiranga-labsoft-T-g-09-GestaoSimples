@@ -44,7 +44,16 @@ namespace GestaoSimples.Servicos
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                return contexto.Clientes.FirstOrDefault(x => x.Id == ID);
+                Cliente cli = contexto.Clientes.FirstOrDefault(x => x.Id == ID);
+                return cli;
+            }
+        }
+
+        public int BuscarIDClientePorCPF(string cpf)
+        {
+            using (var contexto = new ContextoGestaoSimples())
+            {
+                return contexto.Clientes.Where(x => x.CPF == cpf).Select(x => x.Id).FirstOrDefault();
             }
         }
 

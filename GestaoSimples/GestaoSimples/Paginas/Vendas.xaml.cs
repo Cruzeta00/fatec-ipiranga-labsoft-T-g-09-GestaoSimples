@@ -27,17 +27,39 @@ namespace GestaoSimples.Paginas
     /// </summary>
     public sealed partial class Vendas : Page
     {
-        private double _valorTotal;
-
         private readonly ServiceVenda _servicoVenda;
-        private List<Modelos.ItemVenda> listaVendas { get; set; }
+        private readonly ServiceCliente _servicoCliente;
+        private readonly ServiceUsuario _servicoUsuario;
+        private List<Modelos.Venda> listaVendas { get; set; }
 
         public Vendas()
         {
             this.InitializeComponent();
 
             _servicoVenda = new ServiceVenda();
-            NenhumaVenda.Visibility = Visibility.Visible;
+            _servicoCliente = new ServiceCliente();
+            _servicoUsuario = new ServiceUsuario();
+
+            listaVendas = _servicoVenda.BuscarVendas();
+            listaVendas = PreencheNomes(listaVendas);
+            VendasListView.ItemsSource = listaVendas;
+
+            NenhumaVenda.Visibility = Visibility.Collapsed;
+
+            if(VendasListView == null)
+            {
+                NenhumaVenda.Visibility = Visibility.Visible;
+            }
+        }
+
+        private List<Modelos.Venda> PreencheNomes(List<Modelos.Venda> listaVendas)
+        {
+            foreach(Modelos.Venda v in  listaVendas)
+            {
+                v.Cliente = _servicoCliente.BuscarCliente(v.ClienteId);
+                v.Vendedor = _servicoUsuario.BuscarUsuario(v.VendedorId);
+            }
+            return listaVendas;
         }
 
         private void botaoAdicionar_Click(object sender, RoutedEventArgs e)

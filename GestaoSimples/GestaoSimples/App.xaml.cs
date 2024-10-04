@@ -34,6 +34,7 @@ namespace GestaoSimples
                 dbContext.Database.EnsureCreated(); // Certifica-se de que o banco de dados foi criado
 
                 dbContext.VerificarEAdicionarUsuarioAdministrador();
+                dbContext.VerificaEAdicionarClienteAvulso();
             }
 
             m_window = new GestaoSimples();
