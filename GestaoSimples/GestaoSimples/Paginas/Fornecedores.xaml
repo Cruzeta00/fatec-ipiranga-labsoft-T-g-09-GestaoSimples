@@ -68,7 +68,7 @@
                 </ListView.HeaderTemplate>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="2">
+                        <Grid Margin="2" BorderBrush="AliceBlue" BorderThickness="1">
                             <Grid.ColumnDefinitions>
                                 <!-- ID -->
                                 <ColumnDefinition Width="Auto"/>

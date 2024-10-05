@@ -178,7 +178,7 @@
                    PrimaryButtonText="Confirmar"
                    SecondaryButtonText="Cancelar"
                    PrimaryButtonClick="ConfirmarVenda_Click"
-                   CloseButtonClick="CancelarVenda_Click">
+                   SecondaryButtonClick="CancelarVenda_Click">
 
             <StackPanel>
                 <TextBlock Text="Itens Vendidos:" FontWeight="Bold"/>

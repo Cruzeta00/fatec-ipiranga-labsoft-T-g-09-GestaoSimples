@@ -39,19 +39,19 @@
                             <Grid Margin="5" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <!-- Id -->
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                     <!-- Data da Compra-->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Valor Total da Compra -->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Id Fornecedor -->
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                     <!-- Nome Fornecedor -->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Id Comprador -->
-                                    <ColumnDefinition Width="Auto"/>
-                                    <!-- Nome Comprador -->
                                     <ColumnDefinition Width="*"/>
+                                    <!-- Nome Comprador -->
+                                    <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
                                 <ListViewHeaderItem Content="ID" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
                                 <ListViewHeaderItem Content="Data da Compra" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
@@ -64,31 +64,43 @@
                         </DataTemplate>
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate >
-                        <DataTemplate >
-                            <Grid Margin="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
+                        <DataTemplate>
+                            <Grid Margin="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" BorderBrush="AliceBlue" BorderThickness="1">
                                 <Grid.ColumnDefinitions>
                                     <!-- Id -->
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                     <!-- Data da Compra -->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Valor Total da Compra -->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Id Fornecedor -->
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                     <!-- Nome Fornecedor -->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Id Comprador -->
-                                    <ColumnDefinition Width="Auto"/>
-                                    <!-- Nome Comprador -->
                                     <ColumnDefinition Width="*"/>
+                                    <!-- Nome Comprador -->
+                                    <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
-                                <ListViewItem Content="{Binding Id}" HorizontalAlignment="Left" />
-                                <ListViewItem Content="{Binding DataCompra}" HorizontalAlignment="Left" />
-                                <ListViewItem Content="{Binding ValorTotal}" HorizontalAlignment="Left" />
-                                <ListViewItem Content="{Binding FornecedorId}" HorizontalAlignment="Left" />
-                                <ListViewItem Content="{Binding Fornecedor.Nome}" HorizontalAlignment="Left" />
-                                <ListViewItem Content="{Binding CompradorId}" HorizontalAlignment="Left" />
-                                <ListViewItem Content="{Binding Comprador.Nome}" HorizontalAlignment="Left" />
+                                <ListViewItem Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                                <Border Grid.Column="0" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Center"/>
+
+                                <ListViewItem Content="{Binding DataCompra}" Grid.Column="1" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                                <Border Grid.Column="1" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
+
+                                <ListViewItem Content="{Binding ValorTotal}" Grid.Column="2" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                                <Border Grid.Column="2" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
+
+                                <ListViewItem Content="{Binding FornecedorId}" Grid.Column="3" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                                <Border Grid.Column="3" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
+
+                                <ListViewItem Content="{Binding Fornecedor.Nome}" Grid.Column="4" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                                <Border Grid.Column="4" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
+
+                                <ListViewItem Content="{Binding CompradorId}" Grid.Column="5" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                                <Border Grid.Column="5" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
+
+                                <ListViewItem Content="{Binding Comprador.Nome}" Grid.Column="6" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>

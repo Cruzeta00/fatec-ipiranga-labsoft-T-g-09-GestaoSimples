@@ -58,14 +58,12 @@ namespace GestaoSimples.Paginas
             _servicoProduto = new ServiceProduto();
             _servicoCliente = new ServiceCliente();
 
-            var produtos = _servicoProduto.BuscarProdutos();
-            listaProdutos = produtos;
-            ProdutosListView.ItemsSource = produtos;
+            listaProdutos = _servicoProduto.BuscarProdutos();
+            ProdutosListView.ItemsSource = listaProdutos;
 
             NenhumProduto.Visibility = Visibility.Visible;
 
             Loaded += PaginaVenda_Carregada;
-            
         }
 
         private void PaginaVenda_Carregada(object sender, RoutedEventArgs e)

@@ -46,6 +46,11 @@ namespace GestaoSimples.Servicos
                     var produto = contexto.Produtos.FirstOrDefault(p => p.Id == item.ProdutoId);
                     if (produto != null)
                     {
+                        if (produto.FornecedorId != compra.FornecedorId)
+                        {
+                            throw new InvalidOperationException("O fornecedor do produto não corresponde ao fornecedor da compra.");
+                        }
+
                         produto.Estoque += item.Quantidade;
                         contexto.Entry(produto).State = EntityState.Modified;
                     }
