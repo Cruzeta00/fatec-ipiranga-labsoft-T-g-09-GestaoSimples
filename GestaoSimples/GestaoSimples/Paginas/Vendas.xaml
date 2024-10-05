@@ -40,22 +40,22 @@
                             <Grid Margin="5" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <!-- Id -->
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                     <!-- Data da Venda -->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Valor Total da Venda -->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Id Cliente -->
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                     <!-- Nome Cliente -->
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                     <!-- Id Vendedor -->
-                                    <ColumnDefinition Width="Auto"/>
-                                    <!-- Nome Vendedor -->
                                     <ColumnDefinition Width="*"/>
+                                    <!-- Nome Vendedor -->
+                                    <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
                                 <ListViewHeaderItem Content="ID" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
-                                <ListViewHeaderItem Content="Data da Venda" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
+                                <ListViewHeaderItem Content="Data da Venda" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Foreground="White"/>
                                 <ListViewHeaderItem Content="Valor Total da Venda" Grid.Column="2" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Foreground="White"/>
                                 <ListViewHeaderItem Content="ID Cliente" Grid.Column="3" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
                                 <ListViewHeaderItem Content="Nome Cliente" Grid.Column="4" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
@@ -67,24 +67,22 @@
                     <ListView.ItemTemplate >
                         <DataTemplate >
                             <Grid Margin="5" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" BorderBrush="AliceBlue" BorderThickness="1">
-                                
                                 <Grid.ColumnDefinitions>
                                     <!-- Id -->
-                                <ColumnDefinition Width="Auto"/>
-                                <!-- Data da Venda -->
-                                <ColumnDefinition Width="*"/>
-                                <!-- Valor Total da Venda -->
-                                <ColumnDefinition Width="*"/>
-                                <!-- Id Cliente -->
-                                <ColumnDefinition Width="Auto"/>
-                                <!-- Nome Cliente -->
-                                <ColumnDefinition Width="*"/>
-                                <!-- Id Vendedor -->
-                                <ColumnDefinition Width="Auto"/>
-                                <!-- Nome Vendedor -->
-                                <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Data da Venda -->
+                                    <ColumnDefinition Width="2*"/>
+                                    <!-- Valor Total da Venda -->
+                                    <ColumnDefinition Width="2*"/>
+                                    <!-- Id Cliente -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Nome Cliente -->
+                                    <ColumnDefinition Width="2*"/>
+                                    <!-- Id Vendedor -->
+                                    <ColumnDefinition Width="*"/>
+                                    <!-- Nome Vendedor -->
+                                    <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
-                                
                                 <ListViewItem Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                                 <Border Grid.Column="0" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Center"/>
 

@@ -1,5 +1,6 @@
 ﻿using GestaoSimples.Data;
 using GestaoSimples.Modelos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace GestaoSimples.Servicos
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                return contexto.Produtos.ToList();
+                return contexto.Produtos.Include(f => f.Fornecedor).ToList();
             }
         }
 

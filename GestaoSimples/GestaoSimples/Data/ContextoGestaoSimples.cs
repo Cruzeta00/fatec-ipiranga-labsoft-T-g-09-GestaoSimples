@@ -27,7 +27,7 @@ namespace GestaoSimples.Data
                     .Build();
 
                 string connectionString = configuration.GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder.UseSqlServer(connectionString).EnableSensitiveDataLogging();
             }
             //optionsBuilder.UseSqlServer(@"Data Source=CRUZETOBOOK\SQLEXPRESS;Initial Catalog=GestaoSimples;Integrated Security=true;");
         }
