@@ -43,7 +43,7 @@ namespace GestaoSimples.Servicos
 
                 foreach (var item in compra.ItensCompra)
                 {
-                    var produto = contexto.Produtos.Include(p => p.Fornecedor).FirstOrDefault(p => p.Id == item.ProdutoId);
+                    var produto = contexto.Produtos.FirstOrDefault(p => p.Id == item.ProdutoId);
                     if (produto != null)
                     {
                         if (produto.FornecedorId != compra.FornecedorId)

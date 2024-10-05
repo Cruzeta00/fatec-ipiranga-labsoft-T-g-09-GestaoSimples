@@ -34,23 +34,23 @@
                         <Grid Margin="5">
                             <Grid.ColumnDefinitions>
                                 <!-- ID -->
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <!-- Nome -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <!-- Descrição -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <!-- Preço -->
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <!-- Estoque -->
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <!-- Unidade-->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <!-- Categoria -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <!-- Ativo -->
-                                <ColumnDefinition Width="Auto"/>
-                                <!-- Data Validade -->
                                 <ColumnDefinition Width="*"/>
+                                <!-- Data Validade -->
+                                <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
                             <ListViewHeaderItem Content="ID" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Foreground="White"/>
                             <ListViewHeaderItem Content="Nome" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" Foreground="White"/>
@@ -66,26 +66,26 @@
                 </ListView.HeaderTemplate>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="2">
+                        <Grid Margin="2" BorderBrush="AliceBlue" BorderThickness="1">
                             <Grid.ColumnDefinitions>
                                 <!-- ID -->
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <!-- Nome -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <!-- Descrição -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <!-- Preço -->
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <!-- Estoque -->
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                                 <!-- Unidade -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <!-- Categoria -->
-                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
                                 <!-- Ativo -->
-                                <ColumnDefinition Width="Auto"/>
-                                <!-- Data Validade -->
                                 <ColumnDefinition Width="*"/>
+                                <!-- Data Validade -->
+                                <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
                             <ListViewItem Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             <Border Grid.Column="0" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
@@ -108,7 +108,7 @@
                             <ListViewItem Content="{Binding Categoria}" Grid.Column="6" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                             <Border Grid.Column="6" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <CheckBox IsChecked="{Binding Ativo}" IsEnabled="False" Grid.Column="7" BorderThickness="50,0" IsHitTestVisible="False"/>
+                            <CheckBox IsChecked="{Binding Ativo}" IsEnabled="False" Grid.Column="7" BorderThickness="35,0" IsHitTestVisible="False"/>
                             <Border Grid.Column="7" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
                             <ListViewItem Content="{Binding DataValidade}" Grid.Column="8" HorizontalAlignment="Left" IsHitTestVisible="False"/>

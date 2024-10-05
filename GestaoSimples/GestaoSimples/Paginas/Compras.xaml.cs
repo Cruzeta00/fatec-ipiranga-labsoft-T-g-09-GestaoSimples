@@ -25,6 +25,9 @@ namespace GestaoSimples.Paginas
     public sealed partial class Compras : Page
     {
         private readonly ServiceCompra _servicoCompra;
+        private readonly ServiceFornecedor _servicoFornecedor;
+        private readonly ServiceUsuario _servicoUsuario;
+
         private List<Modelos.Compra> listaCompras {  get; set; }
 
         public Compras()
@@ -32,8 +35,11 @@ namespace GestaoSimples.Paginas
             this.InitializeComponent();
 
             _servicoCompra = new ServiceCompra();
+            _servicoFornecedor = new ServiceFornecedor();
+            _servicoUsuario = new ServiceUsuario();
 
             listaCompras = _servicoCompra.BuscarCompras();
+            listaCompras = PreencheNomes(listaCompras);
             ComprasListView.ItemsSource = listaCompras;
 
             NenhumaCompra.Visibility = Visibility.Collapsed;
@@ -57,6 +63,16 @@ namespace GestaoSimples.Paginas
         private void BotaoAdicionar_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(Compra));
+        }
+
+        private List<Modelos.Compra> PreencheNomes(List<Modelos.Compra> listaCompras)
+        {
+            foreach (Modelos.Compra c in listaCompras)
+            {
+                c.Fornecedor = _servicoFornecedor.BuscarFornecedor(c.FornecedorId);
+                c.Comprador = _servicoUsuario.BuscarUsuario(c.CompradorId);
+            }
+            return listaCompras;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace GestaoSimples.Servicos
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                return contexto.Produtos.Include(f => f.Fornecedor).ToList();
+                return contexto.Produtos.ToList();
             }
         }
 
