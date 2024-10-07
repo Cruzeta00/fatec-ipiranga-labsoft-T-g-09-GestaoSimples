@@ -42,23 +42,26 @@ namespace GestaoSimples
         {
             base.OnNavigatedTo(e);
 
-            Usuario usuLogado = _servicoUsuario.BuscarUsuarioPorLogin(e.Parameter.ToString());
+            if(e.Parameter != null)
+            {
+                Usuario usuLogado = _servicoUsuario.BuscarUsuarioPorLogin(e.Parameter.ToString());
             
-            if (usuLogado != null && e.Parameter.ToString() == usuLogado.Login)
-            {
-                SessaoUsuario.Instancia.UsuarioId = usuLogado.Id;
-                SessaoUsuario.Instancia.Login = usuLogado.Login;
-            }
-            else
-            {
-                ContentDialog mudarSenha = new ContentDialog()
+                if (usuLogado != null && e.Parameter.ToString() == usuLogado.Login)
                 {
-                    Title = "Mudança de Senha",
-                    Content = "Recomendamos acessar a guia de Usuários e alterar a Senha ou Nome cadastrado no sistema para manter-lo seguro.",
-                    CloseButtonText = "OK",
-                };
-                mudarSenha.XamlRoot = Frame.XamlRoot;
-                await mudarSenha.ShowAsync();
+                    SessaoUsuario.Instancia.UsuarioId = usuLogado.Id;
+                    SessaoUsuario.Instancia.Login = usuLogado.Login;
+                }
+                else
+                {
+                    ContentDialog mudarSenha = new ContentDialog()
+                    {
+                        Title = "Mudança de Senha",
+                        Content = "Recomendamos acessar a guia de Usuários e alterar a Senha ou Nome cadastrado no sistema para manter-lo seguro.",
+                        CloseButtonText = "OK",
+                    };
+                    mudarSenha.XamlRoot = Frame.XamlRoot;
+                    await mudarSenha.ShowAsync();
+                }
             }
         }
     }
