@@ -48,7 +48,7 @@ namespace GestaoSimples.Servicos
                     {
                         if (produto.FornecedorId != compra.FornecedorId)
                         {
-                            throw new InvalidOperationException("O fornecedor do produto não corresponde ao fornecedor da compra.");
+                            //throw new InvalidOperationException("O fornecedor do produto não corresponde ao fornecedor da compra.");
                         }
 
                         produto.Estoque += item.Quantidade;

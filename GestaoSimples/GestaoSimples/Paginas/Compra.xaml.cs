@@ -119,8 +119,6 @@ namespace GestaoSimples.Paginas
         {
             try
             {
-
-
                 Modelos.Compra compra = new Modelos.Compra();
                 compra.CompradorId = SessaoUsuario.Instancia.UsuarioId;
                 compra.DataCompra = DateTime.Now;
@@ -184,6 +182,7 @@ namespace GestaoSimples.Paginas
 
             if (fornecedores.Count() > 1)
             {
+                /*
                 ContentDialog msgErro = new ContentDialog
                 {
                     Title = "Erro - Multiplos Fornecedores",
@@ -192,6 +191,7 @@ namespace GestaoSimples.Paginas
                 };
                 msgErro.XamlRoot = botaoAddCompra.XamlRoot;
                 await msgErro.ShowAsync();
+                */
             }
         }
 
