@@ -144,6 +144,7 @@ namespace GestaoSimples.Paginas
                     Login.Text = usu.Login;
                     Nome.Text = usu.Nome;
                     Cargo.SelectedItem = usu.Cargo;
+                    CPF.Text = usu.CPF;
                     Senha.Password = usu.Senha;
                 }
             }
