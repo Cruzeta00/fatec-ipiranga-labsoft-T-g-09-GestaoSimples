@@ -37,6 +37,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <TextBlock Text="Id:" Grid.Row="0" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
@@ -51,8 +52,11 @@
             <TextBlock Text="Cargo:" Grid.Row="3" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
             <ComboBox x:Name="Cargo" SelectionChanged="SelecaoCargo" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
-            <TextBlock Text="Senha:" Grid.Row="4" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <PasswordBox x:Name="Senha" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <TextBlock Text="CPF:" Grid.Row="4" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBox x:Name="CPF" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+
+            <TextBlock Text="Senha:" Grid.Row="5" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
+            <PasswordBox x:Name="Senha" Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
         </Grid>
 
         <Border Grid.Row="2" Grid.ColumnSpan="3" x:Name="ErrorNotification" Background="Red" HorizontalAlignment="Center" VerticalAlignment="Bottom" 

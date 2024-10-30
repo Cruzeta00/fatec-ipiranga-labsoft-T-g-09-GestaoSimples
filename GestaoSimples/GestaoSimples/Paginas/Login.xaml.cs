@@ -63,7 +63,7 @@ namespace GestaoSimples
         {
             TextBox nome = new TextBox
             {
-                PlaceholderText = "Digite o nome completo cadastrado no seu perfil."
+                PlaceholderText = "Digite o CPF cadastrado no seu perfil."
             };
 
             ContentDialog esqueciSenha = new ContentDialog
@@ -73,7 +73,7 @@ namespace GestaoSimples
                 {
                     Children =
                     {
-                        new TextBlock {Text = "Para recuperar a senha, digite o nome completo cadastrado no seu usuário."},
+                        new TextBlock {Text = "Para recuperar a senha, digite o CPF cadastrado no seu usuário."},
                         nome
                     }
                 },
@@ -87,7 +87,7 @@ namespace GestaoSimples
             {
                 using (var contexto = new ContextoGestaoSimples())
                 {
-                    var Usuario = contexto.Usuarios.FirstOrDefault(u => u.Nome == nome.Text);
+                    var Usuario = contexto.Usuarios.FirstOrDefault(u => u.CPF == nome.Text);
                     if (Usuario != null)
                     {
                         Frame.Navigate(typeof(Menu), this.usuario.Text, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
@@ -97,7 +97,7 @@ namespace GestaoSimples
                         ContentDialog msgErro = new ContentDialog
                         {
                             Title = "Erro de Conexão",
-                            Content = "Nome de usuário inválido. Entre em contato com um ADMINISTRADOR para acessar o sistema.",
+                            Content = "CPF de usuário inválido. Entre em contato com um ADMINISTRADOR para acessar o sistema.",
                             CloseButtonText = "OK",
                         };
                         msgErro.XamlRoot = botaoLogin.XamlRoot;

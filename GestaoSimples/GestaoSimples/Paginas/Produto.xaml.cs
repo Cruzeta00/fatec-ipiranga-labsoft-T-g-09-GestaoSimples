@@ -125,8 +125,8 @@ namespace GestaoSimples.Paginas
 
                 if(Unidade.SelectedItem == null)
                 {
-                    await ShowErrorNotificationAsync("Unidade não selecionada.");
                     error++;
+                    await ShowErrorNotificationAsync("Unidade não selecionada.");
                 }
                 else
                 {
@@ -134,8 +134,8 @@ namespace GestaoSimples.Paginas
                 }
                 if(Categoria.SelectedItem == null)
                 {
-                    await ShowErrorNotificationAsync("Categoria não selecionada.");
                     error++;
+                    await ShowErrorNotificationAsync("Categoria não selecionada.");
                 }
                 else
                 {
@@ -143,12 +143,17 @@ namespace GestaoSimples.Paginas
                 }
                 if(Forn.SelectedItem == null)
                 {
-                    await ShowErrorNotificationAsync("Fornecedor não selecionada.");
                     error++;
+                    await ShowErrorNotificationAsync("Fornecedor não selecionada.");
                 }
                 else
                 {
                     prod.FornecedorId = _fornecedor.Id;
+                }
+                if(prod.Estoque < 0)
+                {
+                    error++;
+                    await ShowErrorNotificationAsync("Produtos não podem ser criados com quantidades negativas.");
                 }
 
                 if (error == 0)
