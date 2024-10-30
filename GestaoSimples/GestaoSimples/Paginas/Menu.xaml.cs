@@ -56,7 +56,7 @@ namespace GestaoSimples
                     ContentDialog mudarSenha = new ContentDialog()
                     {
                         Title = "Mudança de Senha",
-                        Content = "Recomendamos acessar a guia de Usuários e alterar a Senha ou Nome cadastrado no sistema para manter-lo seguro.",
+                        Content = "Recomendamos acessar a guia de Usuários e alterar a Senha cadastrada no sistema para manter-lo seguro.",
                         CloseButtonText = "OK",
                     };
                     mudarSenha.XamlRoot = Frame.XamlRoot;

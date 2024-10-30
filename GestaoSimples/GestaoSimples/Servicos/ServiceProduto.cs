@@ -15,7 +15,7 @@ namespace GestaoSimples.Servicos
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                return contexto.Produtos.ToList();
+                return contexto.Produtos.OrderByDescending(x => x.Ativo).ThenBy(x => x.Id).ToList();
             }
         }
 
