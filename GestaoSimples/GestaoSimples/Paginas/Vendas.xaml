@@ -34,7 +34,7 @@
             <TextBox PlaceholderText="Buscar Venda... (Nome Cliente/Nome Vendedor)" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2" TextChanged="Buscando" x:Name="Textobusca" 
                      Background="DarkSlateGray" Margin="5,0" TextWrapping="Wrap"/>
             <Grid Grid.ColumnSpan="2" Margin="0,35">
-                <ListView x:Name="VendasListView" HorizontalAlignment="Stretch" IsItemClickEnabled="True">
+                <ListView x:Name="VendasListView" HorizontalAlignment="Stretch" IsItemClickEnabled="True" ItemClick="ClickVenda_ItemLine">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
                             <Grid Margin="5" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">

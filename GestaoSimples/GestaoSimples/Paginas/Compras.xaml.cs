@@ -52,12 +52,16 @@ namespace GestaoSimples.Paginas
 
         private void Buscando(object sender, TextChangedEventArgs e)
         {
-            /*string textoBuscado = Textobusca.Text.ToLower();
-            var listaFiltrada = listaCompras.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
-                                                       f.Descricao.ToLower().Contains(textoBuscado) ||
-                                                       f.Categoria.ToString().ToLower().Contains(textoBuscado)).ToList();
+            string textoBuscado = Textobusca.Text.ToLower();
 
-            ComprasListView.ItemsSource = listaFiltrada;*/
+            if(listaCompras != null)
+            {
+                var listaFiltrada = listaCompras.Where(f => f.Fornecedor.Nome.ToLower().Contains(textoBuscado) ||
+                                                           f.Comprador.Nome.ToLower().Contains(textoBuscado) ||
+                                                           f.ItensCompra.ToString().ToLower().Contains(textoBuscado)).ToList();
+
+                ComprasListView.ItemsSource = listaFiltrada;
+            }
         }
 
         private void BotaoAdicionar_Click(object sender, RoutedEventArgs e)
@@ -73,6 +77,11 @@ namespace GestaoSimples.Paginas
                 c.Comprador = _servicoUsuario.BuscarUsuario(c.CompradorId);
             }
             return listaCompras;
+        }
+
+        private void ComprasListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Frame.Navigate(typeof(ItensCompra), e.ClickedItem);
         }
     }
 }

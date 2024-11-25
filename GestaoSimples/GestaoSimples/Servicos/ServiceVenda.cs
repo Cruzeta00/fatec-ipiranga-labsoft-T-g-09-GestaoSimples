@@ -52,5 +52,13 @@ namespace GestaoSimples.Servicos
                 contexto.SaveChanges();
             }
         }
+
+        public List<ItemVenda> BuscarItensVenda(int idVenda)
+        {
+            using (var contexto = new ContextoGestaoSimples())
+            {
+                return contexto.ItensVenda.Where(x => x.VendaId == idVenda).ToList();
+            }
+        }
     }
 }
