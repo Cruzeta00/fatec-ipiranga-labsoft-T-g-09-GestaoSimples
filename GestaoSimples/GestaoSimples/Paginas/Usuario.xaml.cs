@@ -58,6 +58,11 @@ namespace GestaoSimples.Paginas
                     error++;
                     await ShowErrorNotificationAsync("A senha deve conter pelo menos 1 número, 1 simbolo, 1 letra maiúscula e 1 letra minúscula.");
                 }
+                if (!ValidadorCPF.Validar(usu.CPF))
+                {
+                    error++;
+                    await ShowErrorNotificationAsync("O CPF é inválido. É necessário informar um CPF válido.");
+                }
                 if (error == 0)
                 {
                     if (botao.Content.ToString() == "Adicionar")
