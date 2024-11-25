@@ -28,7 +28,7 @@
             <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="CadetBlue">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2" Background="CadetBlue" CornerRadius="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -74,7 +74,7 @@
             <TextBlock Text=" " x:Name="NomeCliente" FontWeight="Bold"/>
         </StackPanel>
 
-        <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="3,25" Background="CadetBlue">
+        <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="3,25" Background="CadetBlue" CornerRadius="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

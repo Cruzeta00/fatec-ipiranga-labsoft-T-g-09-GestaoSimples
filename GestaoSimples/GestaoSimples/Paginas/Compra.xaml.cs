@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -66,12 +67,14 @@ namespace GestaoSimples.Paginas
         private void Buscando(object sender, TextChangedEventArgs e)
         {
             string textoBuscado = Textobusca.Text.ToLower();
-            var listaFiltrada = listaProdutos.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
-                                                       f.Descricao.ToLower().Contains(textoBuscado) ||
-                                                       f.Categoria.ToString().ToLower().Contains(textoBuscado) ||
-                                                       f.Fornecedor.Nome.ToLower().Contains(textoBuscado)).ToList();
+            if(listaProdutos != null)
+            {
+                var listaFiltrada = listaProdutos.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
+                                                           f.Descricao.ToLower().Contains(textoBuscado) ||
+                                                           f.Categoria.ToString().ToLower().Contains(textoBuscado)).ToList();
 
-            ProdutosListView.ItemsSource = listaFiltrada;
+                ProdutosListView.ItemsSource = listaFiltrada;
+            }
         }
 
         private void AtualizarValorTotal()
@@ -115,24 +118,38 @@ namespace GestaoSimples.Paginas
             NenhumProduto.Visibility = Visibility.Visible;
         }
 
-        private void ConfirmarCompra_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ConfirmarCompra_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            Modelos.Compra compra = new Modelos.Compra();
+            compra.CompradorId = SessaoUsuario.Instancia.UsuarioId;
+            compra.DataCompra = DateTime.Now;
+            compra.ItensCompra = listaCompra;
+            compra.ValorTotal = _valorTotal;
+            compra.FornecedorId = 1;
             try
             {
-                Modelos.Compra compra = new Modelos.Compra();
-                compra.CompradorId = SessaoUsuario.Instancia.UsuarioId;
-                compra.DataCompra = DateTime.Now;
-                compra.ItensCompra = listaCompra;
-                compra.ValorTotal = _valorTotal;
-                VerificarFornecedoresUnicos(compra.ItensCompra);
-                compra.FornecedorId = 1;
-
+                sender.Hide();
                 _servicoCompra.AdicionarCompra(compra);
+                Frame.Navigate(typeof(Compras));
             }
-            catch (Exception ex)
+            catch (InvalidOperationException ex)
             {
-
+                await MostrarMensagemDeErroAsync("Erro ao Adicionar a Compra", ex.Message);
             }
+        }
+
+        private async Task MostrarMensagemDeErroAsync(string titulo, string mensagem)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = titulo,
+                Content = mensagem,
+                CloseButtonText = "Ok",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = this.Content.XamlRoot // Certifique-se de passar o contexto correto
+            };
+
+            await dialog.ShowAsync();
         }
 
         private void CancelarCompra_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -173,26 +190,6 @@ namespace GestaoSimples.Paginas
             ItensCompraListView.ItemsSource = listaCompra;
 
             AtualizarValorTotal();
-        }
-
-        public async void VerificarFornecedoresUnicos(List<ItemCompra> itensCompra)
-        {
-            
-            var fornecedores = itensCompra.Select(i => i.Produto.FornecedorId).Distinct();
-
-            if (fornecedores.Count() > 1)
-            {
-                /*
-                ContentDialog msgErro = new ContentDialog
-                {
-                    Title = "Erro - Multiplos Fornecedores",
-                    Content = "Necessário selecionar apenas produtos de 1 Fornecedor para adicionar a Compra.",
-                    CloseButtonText = "OK",
-                };
-                msgErro.XamlRoot = botaoAddCompra.XamlRoot;
-                await msgErro.ShowAsync();
-                */
-            }
         }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)

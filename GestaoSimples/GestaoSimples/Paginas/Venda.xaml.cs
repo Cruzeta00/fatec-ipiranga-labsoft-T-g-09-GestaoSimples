@@ -16,6 +16,7 @@ using System.ComponentModel;
 using GestaoSimples.Servicos;
 using GestaoSimples.Modelos;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -78,7 +79,7 @@ namespace GestaoSimples.Paginas
             if (resultado == ContentDialogResult.Primary) { }
             else
             {
-                NomeCliente.Text = " Cliente não informou o CPF";
+                NomeCliente.Text = " Cliente Avulso";
             }
         }
 
@@ -181,7 +182,7 @@ namespace GestaoSimples.Paginas
             AtualizarValorTotal();
         }
 
-        private void ConfirmarVenda_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        private async void ConfirmarVenda_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             Modelos.Venda venda = new Modelos.Venda();
             if(CPFTextBox.Text == "")
@@ -198,7 +199,30 @@ namespace GestaoSimples.Paginas
             venda.ItensVenda = listaVenda;
             venda.ValorTotal = _valorTotal;
 
-            _servicoVenda.AdicionarVenda(venda);
+            try
+            {
+                sender.Hide();
+                _servicoVenda.AdicionarVenda(venda);
+                Frame.Navigate(typeof(Vendas));
+            }
+            catch (InvalidOperationException ex)
+            {
+                await MostrarMensagemDeErroAsync("Erro ao Adicionar a Venda", ex.Message);
+            }
+        }
+
+        private async Task MostrarMensagemDeErroAsync(string titulo, string mensagem)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = titulo,
+                Content = mensagem,
+                CloseButtonText = "Ok",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = this.Content.XamlRoot // Certifique-se de passar o contexto correto
+            };
+
+            await dialog.ShowAsync();
         }
 
         private void CancelarVenda_Click(ContentDialog sender, ContentDialogButtonClickEventArgs args)

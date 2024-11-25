@@ -39,24 +39,35 @@ namespace GestaoSimples.Servicos
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                contexto.Compras.Add(compra);
-
-                foreach (var item in compra.ItensCompra)
+                using(var transaction = contexto.Database.BeginTransaction())
                 {
-                    var produto = contexto.Produtos.FirstOrDefault(p => p.Id == item.ProdutoId);
-                    if (produto != null)
+                    try
                     {
-                        if (produto.FornecedorId != compra.FornecedorId)
+                        contexto.Compras.Add(compra);
+
+                        foreach (var item in compra.ItensCompra)
                         {
-                            //throw new InvalidOperationException("O fornecedor do produto não corresponde ao fornecedor da compra.");
+                            var produto = contexto.Produtos.FirstOrDefault(p => p.Id == item.ProdutoId);
+                            if (produto == null)
+                                throw new InvalidOperationException($"Produto com Nome '{produto.Nome}' não encontrado.");
+                            
+                            produto.Estoque += item.Quantidade;
+
+                            if (produto.Estoque > 0)
+                                produto.Ativo = true;
+
+                            contexto.Produtos.Update(produto);
                         }
 
-                        produto.Estoque += item.Quantidade;
-                        contexto.Entry(produto).State = EntityState.Modified;
+                        contexto.SaveChanges();
                     }
-                }
+                    catch (System.Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
 
-                contexto.SaveChanges();
+                }
             }
         }
 
