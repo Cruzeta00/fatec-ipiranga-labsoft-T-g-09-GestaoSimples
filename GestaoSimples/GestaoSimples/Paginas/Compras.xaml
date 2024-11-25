@@ -33,7 +33,7 @@
                      x:Name="Textobusca" 
                  Background="DarkSlateGray" Margin="5,0" TextWrapping="Wrap"/>
             <Grid Grid.ColumnSpan="2" Margin="0,35">
-                <ListView x:Name="ComprasListView" HorizontalAlignment="Stretch" IsItemClickEnabled="True">
+                <ListView x:Name="ComprasListView" HorizontalAlignment="Stretch" IsItemClickEnabled="True" ItemClick="ComprasListView_ItemClick">
                     <ListView.HeaderTemplate>
                         <DataTemplate>
                             <Grid Margin="5" Grid.ColumnSpan="2" HorizontalAlignment="Stretch">

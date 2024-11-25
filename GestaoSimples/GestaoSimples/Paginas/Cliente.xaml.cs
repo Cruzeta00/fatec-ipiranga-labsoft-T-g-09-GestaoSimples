@@ -17,6 +17,7 @@ using GestaoSimples.Modelos;
 using System.Diagnostics;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using GestaoSimples.Recursos;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -97,7 +98,12 @@ namespace GestaoSimples.Paginas
                 cliente.Nome = Nome.Text;
                 cliente.CPF = CPF.Text;
                 cliente.Telefone = Telefone.Text;
-                
+
+                if (!ValidadorCPF.Validar(cliente.CPF))
+                {
+                    error++;
+                    await ShowErrorNotificationAsync("O CPF é inválido. É necessário informar um CPF válido.");
+                }
 
                 if (error == 0)
                 {

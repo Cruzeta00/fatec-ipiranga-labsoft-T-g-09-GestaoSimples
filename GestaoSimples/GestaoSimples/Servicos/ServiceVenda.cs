@@ -1,4 +1,5 @@
-﻿using GestaoSimples.Data;
+﻿using ABI.System;
+using GestaoSimples.Data;
 using GestaoSimples.Modelos;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -37,19 +38,48 @@ namespace GestaoSimples.Servicos
         {
             using(var contexto = new ContextoGestaoSimples())
             {
-                contexto.Vendas.Add(venda);
-
-                foreach (var item in venda.ItensVenda)
+                using(var transaction = contexto.Database.BeginTransaction())
                 {
-                    var produto = contexto.Produtos.FirstOrDefault(p => p.Id == item.ProdutoId);
-                    if (produto != null)
+                    try
                     {
-                        produto.Estoque -= item.Quantidade;
-                        contexto.Entry(produto).State = EntityState.Modified;
+                        contexto.Vendas.Add(venda);
+
+                        foreach (var item in venda.ItensVenda)
+                        {
+                            var produto = contexto.Produtos.FirstOrDefault(p => p.Id == item.ProdutoId);
+
+                            if (produto == null)
+                                throw new InvalidOperationException($"Produto com ID {item.ProdutoId} não encontrado.");
+
+                            if(item.Quantidade > produto.Estoque)
+                                throw new InvalidOperationException($"Estoque insuficiente para o produto com nome '{produto.Nome}'.\nEstoque atual: {produto.Estoque}, solicitado: {item.Quantidade}.\n" +
+                                    $"Venda cancelada.");
+                            
+                            produto.Estoque -= item.Quantidade;
+
+                            if(produto.Estoque == 0)
+                                produto.Ativo = false;
+                            
+                            contexto.Produtos.Update(produto);
+                        }
+
+                        contexto.SaveChanges();
+                        transaction.Commit();
+                    }
+                    catch (System.Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
                     }
                 }
+            }
+        }
 
-                contexto.SaveChanges();
+        public List<ItemVenda> BuscarItensVenda(int idVenda)
+        {
+            using (var contexto = new ContextoGestaoSimples())
+            {
+                return contexto.ItensVenda.Where(x => x.VendaId == idVenda).ToList();
             }
         }
     }

@@ -69,17 +69,21 @@ namespace GestaoSimples.Paginas
 
         private void Buscando(object sender, TextChangedEventArgs e)
         {
-            /*string textoBuscado = Textobusca.Text.ToLower();
-            var listaFiltrada = listaVendas.Where(f => f.Nome.ToLower().Contains(textoBuscado) ||
-                                                       f.Descricao.ToLower().Contains(textoBuscado) ||
-                                                       f.Categoria.ToString().ToLower().Contains(textoBuscado)).ToList();
+            string textoBuscado = Textobusca.Text.ToLower();
 
-            VendasListView.ItemsSource = listaFiltrada;*/
+            if(listaVendas != null)
+            {
+                var listaFiltrada = listaVendas.Where(f => f.Cliente.Nome.ToLower().Contains(textoBuscado) ||
+                                                           f.Vendedor.Nome.ToLower().Contains(textoBuscado) ||
+                                                           f.ItensVenda.ToString().ToLower().Contains(textoBuscado)).ToList();
+
+                VendasListView.ItemsSource = listaFiltrada;
+            }
         }
 
-        private void ClickVendaLista(object sender, ItemClickEventArgs e)
+        private void ClickVenda_ItemLine(object sender, ItemClickEventArgs e)
         {
-
+            Frame.Navigate(typeof(ItensVenda), e.ClickedItem);
         }
     }
 }

@@ -122,19 +122,19 @@ namespace GestaoSimples.BarraDeNavegacao
             if(frame.CanGoBack)
             {
                 var nomePag = frame.Content.GetType().Name;
-                if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda" || nomePag == "Cliente" || nomePag == "Usuario" || nomePag == "Compra")
+                if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda" || nomePag == "Cliente" || nomePag == "Usuario" || nomePag == "Compra" || nomePag == "ItensCompra" || nomePag == "ItensVenda")
                 {
                     if (nomePag == "Fornecedor")
                         frame.Navigate(typeof(Fornecedores));
                     else if (nomePag == "Produto")
                         frame.Navigate(typeof(Produtos));
-                    else if (nomePag == "Venda")
+                    else if (nomePag == "Venda" || nomePag == "ItensVenda")
                         frame.Navigate(typeof(Vendas));
                     else if (nomePag == "Cliente")
                         frame.Navigate(typeof(Clientes));
                     else if (nomePag == "Usuario")
                         frame.Navigate(typeof(Usuarios));
-                    else if (nomePag == "Compra")
+                    else if (nomePag == "Compra" || nomePag == "ItensCompra")
                         frame.Navigate(typeof(Compras));
                 }
                 else if (nomePag == "Fornecedores" || nomePag == "Produtos" || nomePag == "Vendas" || nomePag == "Clientes" || nomePag == "Usuarios" || nomePag == "Compras")
