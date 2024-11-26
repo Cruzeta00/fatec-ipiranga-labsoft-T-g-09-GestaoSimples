@@ -43,14 +43,14 @@
                                     <ColumnDefinition Width="*"/>
                                     <!-- ProdutoId -->
                                     <ColumnDefinition Width="*"/>
-                                    <!-- CompraId -->
+                                    <!-- VendaId -->
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <ListViewHeaderItem Content="ID" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
+                                <ListViewHeaderItem Content="Linha" Grid.Column="0" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
                                 <ListViewHeaderItem Content="Quantidade" Grid.Column="1" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
                                 <ListViewHeaderItem Content="Valor Total Item" Grid.Column="2" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
                                 <ListViewHeaderItem Content="ID Produto" Grid.Column="3" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
-                                <ListViewHeaderItem Content="ID Compra" Grid.Column="4" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
+                                <ListViewHeaderItem Content="ID Venda" Grid.Column="4" FontWeight="Bold" FontSize="20" HorizontalAlignment="Left" Foreground="White"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
