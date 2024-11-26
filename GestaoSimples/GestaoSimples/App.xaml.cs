@@ -3,6 +3,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
+using System.IO;
+using System.Windows;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,22 +31,29 @@ namespace GestaoSimples
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
-            using (var dbContext = new ContextoGestaoSimples())
+            try
             {
-                dbContext.Database.EnsureCreated(); // Certifica-se de que o banco de dados foi criado
+                using (var dbContext = new ContextoGestaoSimples())
+                {
+                    dbContext.Database.EnsureCreated(); // Certifica-se de que o banco de dados foi criado
 
-                dbContext.VerificarEAdicionarUsuarioAdministrador();
-                dbContext.VerificaEAdicionarClienteAvulso();
+                    dbContext.VerificarEAdicionarUsuarioAdministrador();
+                    dbContext.VerificaEAdicionarClienteAvulso();
+                }
+
+                var m_window = new GestaoSimples();
+                Frame frame0 = new Frame();
+
+                frame0.NavigationFailed += ErrodeNavegacao;
+                frame0.Navigate(typeof(Login), args.Arguments);     
+
+                m_window.Content = frame0;
+                m_window.Activate();
             }
-
-            m_window = new GestaoSimples();
-            Frame frame0 = new Frame();
-
-            frame0.NavigationFailed += ErrodeNavegacao;
-            frame0.Navigate(typeof(Login), args.Arguments);     
-
-            m_window.Content = frame0;
-            m_window.Activate();
+            catch (Exception ex)
+            {
+                File.WriteAllText("log.txt", ex.ToString());
+            }
         }
 
         void ErrodeNavegacao(object sender, NavigationFailedEventArgs e)
