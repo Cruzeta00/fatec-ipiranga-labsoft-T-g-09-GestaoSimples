@@ -63,5 +63,13 @@ namespace GestaoSimples.Servicos
             }
             return retorno;
         }
+
+        internal Usuario BuscarUsuarioPorCPF(string CPF)
+        {
+            using (var contexto = new ContextoGestaoSimples())
+            {
+                return contexto.Usuarios.FirstOrDefault(x => x.CPF == CPF);
+            }
+        }
     }
 }

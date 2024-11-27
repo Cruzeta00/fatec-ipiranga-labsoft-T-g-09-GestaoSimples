@@ -47,7 +47,7 @@ namespace GestaoSimples.Servicos
 
                         foreach (var item in compra.ItensCompra)
                         {
-                            var produto = contexto.Produtos.FirstOrDefault(p => p.Id == item.ProdutoId);
+                            var produto = contexto.Produtos.SingleOrDefault(p => p.Id == item.ProdutoId);
                             if (produto == null)
                                 throw new InvalidOperationException($"Produto com Nome '{produto.Nome}' não encontrado.");
                             
@@ -60,6 +60,7 @@ namespace GestaoSimples.Servicos
                         }
 
                         contexto.SaveChanges();
+                        transaction.Commit();
                     }
                     catch (System.Exception)
                     {

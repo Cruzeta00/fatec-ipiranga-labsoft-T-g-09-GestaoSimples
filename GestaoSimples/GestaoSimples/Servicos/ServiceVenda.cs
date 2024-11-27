@@ -46,7 +46,7 @@ namespace GestaoSimples.Servicos
 
                         foreach (var item in venda.ItensVenda)
                         {
-                            var produto = contexto.Produtos.FirstOrDefault(p => p.Id == item.ProdutoId);
+                            var produto = contexto.Produtos.SingleOrDefault(p => p.Id == item.ProdutoId);
 
                             if (produto == null)
                                 throw new InvalidOperationException($"Produto com ID {item.ProdutoId} não encontrado.");

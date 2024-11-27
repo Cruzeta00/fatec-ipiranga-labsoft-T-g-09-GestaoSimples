@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox PlaceholderText="Buscar Compra... (Nome Fornecedor/Nome Comprador/Produto)" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2" TextChanged="Buscando" 
+            <TextBox PlaceholderText="Buscar Compra... (Nome Fornecedor/Nome Comprador)" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.ColumnSpan="2" TextChanged="Buscando" 
                      x:Name="Textobusca" 
                  Background="DarkSlateGray" Margin="5,0" TextWrapping="Wrap"/>
             <Grid Grid.ColumnSpan="2" Margin="0,35">

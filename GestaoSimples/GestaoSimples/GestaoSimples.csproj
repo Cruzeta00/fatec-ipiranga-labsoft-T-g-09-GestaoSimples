@@ -15,6 +15,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="BarraDeNavegacao\BarraNavegacao.xaml" />
+    <None Remove="Configuracoes\appsettings.json" />
+    <None Remove="Configuracoes\appsettingsAntigo.json" />
     <None Remove="GestaoSimples.xaml" />
     <None Remove="JanelaInicial\Fornecedores.xaml" />
     <None Remove="Login.xaml" />
@@ -36,6 +38,12 @@
     <None Remove="Recursos\Sloggan.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuracoes\appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuracoes\appsettingsAntigo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\Logo.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -46,6 +54,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.29" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.29">
       <PrivateAssets>all</PrivateAssets>
@@ -83,9 +92,6 @@
     <Page Update="BarraDeNavegacao\BarraNavegacao.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <None Update="Configuracoes\appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Page Update="Paginas\ItensVenda.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,5 +134,8 @@
     <Page Update="Janelas\Fornecedores.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>

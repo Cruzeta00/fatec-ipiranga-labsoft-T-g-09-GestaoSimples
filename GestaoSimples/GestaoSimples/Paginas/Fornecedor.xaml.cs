@@ -3,21 +3,11 @@ using GestaoSimples.Modelos;
 using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -109,10 +99,26 @@ namespace GestaoSimples.Paginas
                 forn.EMail = EMail.Text;
                 forn.Ativo = Ativo.IsChecked == true;
                 forn.Observacoes = Obs.Text;
+                forn.DataCadastro = DateTime.Today;
 
+                if (!ValidarEmail(forn.EMail))
+                {
+                    error++;
+                    await MostrarMensagemDeErroAsync("Erro", "O email não está em formato padrão. \nXXX@XXX.COM");
+                }
+                if (!ValidarTelefone(forn.Telefone))
+                {
+                    error++;
+                    await MostrarMensagemDeErroAsync("Erro", "O telefone não está em formato padrão.\n(XX) XXXXX-XXXX");
+                }
+                if (!ValidarCNPJ(forn.CNPJ))
+                {
+                    error++;
+                    await MostrarMensagemDeErroAsync("Erro", "O CNPJ precisa ser válido");
+                }
                 if (Class.SelectedValue == null)
                 {
-                    await ShowErrorNotificationAsync("Classificação não selecionada.");
+                    await MostrarMensagemDeErroAsync("Erro", "Classificação não selecionada.");
                     error++;
                 }
                 else
@@ -154,20 +160,22 @@ namespace GestaoSimples.Paginas
                 Debug.WriteLine(ex.Message); // Para logar no console ou arquivo, se necessário
 
                 // Exibe a notificação de erro
-                await ShowErrorNotificationAsync(ex.Message);
-                if(ex.InnerException != null)
-                    _ = ShowErrorNotificationAsync(ex.InnerException.ToString());
+                await MostrarMensagemDeErroAsync("Erro", ex.Message);
             }
         }
 
-        private async Task ShowErrorNotificationAsync(string message)
+        private async Task MostrarMensagemDeErroAsync(string titulo, string mensagem)
         {
-            ErrorTextBlock.Text = message;  // Define o texto do erro
-            ErrorNotification.Visibility = Visibility.Visible;  // Torna a notificação visível
+            var dialog = new ContentDialog
+            {
+                Title = titulo,
+                Content = mensagem,
+                CloseButtonText = "Ok",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = this.Content.XamlRoot // Certifique-se de passar o contexto correto
+            };
 
-            // Aguarda 3 segundos antes de ocultar
-            await Task.Delay(3000);
-            ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
+            await dialog.ShowAsync();
         }
 
         private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -176,6 +184,30 @@ namespace GestaoSimples.Paginas
             {
                 selectedStatus = (Classificacao)Class.SelectedItem;
             }
+        }
+
+        private bool ValidarTelefone(string Telefone)
+        {
+            // Expressão regular para validar o telefone no formato (XX) XXXXX-XXXX
+            string padraoTelefone = @"^\(\d{2}\) \d{5}-\d{4}$";
+
+            return Regex.IsMatch(Telefone, padraoTelefone);
+        }
+
+        private bool ValidarEmail(string Email)
+        {
+            // Expressão regular para validar o telefone no formato (XX) XXXXX-XXXX
+            string padraoEmail= @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+
+            return Regex.IsMatch(Email, padraoEmail);
+        }
+
+        private bool ValidarCNPJ(string CNPJ)
+        {
+            // Expressão regular para validar o telefone no formato (XX) XXXXX-XXXX
+            string padraoCNPJ= @"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$";
+
+            return Regex.IsMatch(CNPJ, padraoCNPJ);
         }
     }
 }

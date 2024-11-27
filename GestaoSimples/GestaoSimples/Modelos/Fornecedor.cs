@@ -23,7 +23,6 @@ namespace GestaoSimples.Modelos
 
         public string Observacoes { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime DataCadastro { get; set; }
 
         public Classificacao Classificacao { get; set; }

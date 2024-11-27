@@ -187,7 +187,7 @@ namespace GestaoSimples.Paginas
             Modelos.Venda venda = new Modelos.Venda();
             if(CPFTextBox.Text == "")
             {
-                venda.ClienteId = 3;
+                venda.ClienteId = 1;
             }
             else
             {

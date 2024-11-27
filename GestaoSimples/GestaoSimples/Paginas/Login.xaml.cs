@@ -87,10 +87,10 @@ namespace GestaoSimples
             {
                 using (var contexto = new ContextoGestaoSimples())
                 {
-                    var Usuario = contexto.Usuarios.FirstOrDefault(u => u.CPF == nome.Text);
+                    var Usuario = contexto.Usuarios.SingleOrDefault(u => u.CPF == nome.Text);
                     if (Usuario != null)
                     {
-                        Frame.Navigate(typeof(Menu), this.usuario.Text, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+                        Frame.Navigate(typeof(Menu), nome.Text, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
                     }
                     else
                     {
