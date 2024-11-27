@@ -117,16 +117,29 @@ namespace GestaoSimples.Paginas
                 prod.Descricao = Descricao.Text;
                 prod.Codigo = Codigo.Text;
                 prod.CodigoDeBarras = Barras.Text;
-                prod.Preco = Convert.ToDouble(Preco.Text);
-                prod.Custo = Convert.ToDouble(Custo.Text);
-                prod.Estoque = Convert.ToInt32(Estoque.Text);
                 prod.Ativo = Ativo.IsChecked == true;
                 prod.DataValidade = Validade.Date.Value.DateTime;
 
-                if(Unidade.SelectedItem == null)
+
+                if (!IsNumber(Preco.Text))
                 {
                     error++;
-                    await ShowErrorNotificationAsync("Unidade não selecionada.");
+                    await MostrarMensagemDeErroAsync("Erro", "Preço tem que ser um número fracionado ou inteiro\n10,50");
+                }
+                if (!IsNumber(Custo.Text))
+                {
+                    error++;
+                    await MostrarMensagemDeErroAsync("Erro", "Custo tem que ser um número fracionado ou inteiro\n10,50");
+                }
+                if (!IsNumber(Estoque.Text))
+                {
+                    error++;
+                    await MostrarMensagemDeErroAsync("Erro", "Estoque tem que ser um número inteiro\n10");
+                }
+                if (Unidade.SelectedItem == null)
+                {
+                    error++;
+                    await MostrarMensagemDeErroAsync("Erro", "Unidade não selecionada.");
                 }
                 else
                 {
@@ -135,7 +148,7 @@ namespace GestaoSimples.Paginas
                 if(Categoria.SelectedItem == null)
                 {
                     error++;
-                    await ShowErrorNotificationAsync("Categoria não selecionada.");
+                    await MostrarMensagemDeErroAsync("Erro", "Categoria não selecionada.");
                 }
                 else
                 {
@@ -144,7 +157,7 @@ namespace GestaoSimples.Paginas
                 if(Forn.SelectedItem == null)
                 {
                     error++;
-                    await ShowErrorNotificationAsync("Fornecedor não selecionada.");
+                    await MostrarMensagemDeErroAsync("Erro", "Fornecedor não selecionada.");
                 }
                 else
                 {
@@ -153,11 +166,15 @@ namespace GestaoSimples.Paginas
                 if(prod.Estoque < 0)
                 {
                     error++;
-                    await ShowErrorNotificationAsync("Produtos não podem ser criados com quantidades negativas.");
+                    await MostrarMensagemDeErroAsync("Erro", "Produtos não podem ser criados com quantidades negativas.");
                 }
 
                 if (error == 0)
                 {
+                    prod.Preco = Convert.ToDouble(Preco.Text);
+                    prod.Custo = Convert.ToDouble(Custo.Text);
+                    prod.Estoque = Convert.ToInt32(Estoque.Text);
+
                     if (botao.Content.ToString() == "Adicionar")
                     {
                         prod.DataAtualizacao = DateTime.Now;
@@ -193,20 +210,22 @@ namespace GestaoSimples.Paginas
                 Debug.WriteLine(ex.Message); // Para logar no console ou arquivo, se necessário
 
                 // Exibe a notificação de erro
-                await ShowErrorNotificationAsync(ex.Message);
-                if (ex.InnerException != null)
-                    _ = ShowErrorNotificationAsync(ex.InnerException.ToString());
+                await MostrarMensagemDeErroAsync("Erro", ex.Message);
             }
         }
 
-        private async Task ShowErrorNotificationAsync(string message)
+        private async Task MostrarMensagemDeErroAsync(string titulo, string mensagem)
         {
-            ErrorTextBlock.Text = message;  // Define o texto do erro
-            ErrorNotification.Visibility = Visibility.Visible;  // Torna a notificação visível
+            var dialog = new ContentDialog
+            {
+                Title = titulo,
+                Content = mensagem,
+                CloseButtonText = "Ok",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = this.Content.XamlRoot // Certifique-se de passar o contexto correto
+            };
 
-            // Aguarda 3 segundos antes de ocultar
-            await Task.Delay(3000);
-            ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
+            await dialog.ShowAsync();
         }
 
         private void SelecaoUnidade(object sender, SelectionChangedEventArgs e)
@@ -231,6 +250,11 @@ namespace GestaoSimples.Paginas
             {
                 _fornecedor = (Modelos.Fornecedor)Forn.SelectedItem;
             }
+        }
+
+        private static bool IsNumber(string value)
+        {
+            return double.TryParse(value, out _); // Verifica se é um número inteiro
         }
     }
 }

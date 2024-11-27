@@ -27,7 +27,8 @@ namespace GestaoSimples.Data
                     .Build();
 
                 string connectionString = configuration.GetConnectionString("DefaultConnection");
-                optionsBuilder.UseSqlServer(connectionString).EnableSensitiveDataLogging();
+                optionsBuilder.UseSqlite(connectionString).EnableSensitiveDataLogging();
+                //optionsBuilder.UseSqlServer(connectionString).EnableSensitiveDataLogging();
             }
             //optionsBuilder.UseSqlServer(@"Data Source=CRUZETOBOOK\SQLEXPRESS;Initial Catalog=GestaoSimples;Integrated Security=true;");
         }
@@ -39,6 +40,7 @@ namespace GestaoSimples.Data
                 var usuarioAdministrador = new Usuario
                 {
                     Login = "admin",
+                    Nome = "admin",
                     Senha = "admin", // Lembre-se de usar um mecanismo seguro para armazenar senhas em um ambiente de produção
                     Cargo = Cargo.ADMINISTRADOR
                 };

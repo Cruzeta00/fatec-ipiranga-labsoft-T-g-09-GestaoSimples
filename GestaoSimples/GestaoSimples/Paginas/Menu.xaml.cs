@@ -46,7 +46,9 @@ namespace GestaoSimples
             {
                 Usuario usuLogado = _servicoUsuario.BuscarUsuarioPorLogin(e.Parameter.ToString());
             
-                if (usuLogado != null && e.Parameter.ToString() == usuLogado.Login)
+                usuLogado = _servicoUsuario.BuscarUsuarioPorCPF(e.Parameter.ToString());
+
+                if (usuLogado != null && (e.Parameter.ToString() == usuLogado.Login || e.Parameter.ToString() == usuLogado.CPF))
                 {
                     SessaoUsuario.Instancia.UsuarioId = usuLogado.Id;
                     SessaoUsuario.Instancia.Login = usuLogado.Login;

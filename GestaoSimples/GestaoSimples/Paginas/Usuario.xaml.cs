@@ -46,22 +46,22 @@ namespace GestaoSimples.Paginas
 
                 if(Cargo.SelectedItem == null)
                 {
-                    await ShowErrorNotificationAsync("Cargo não selecionado.");
+                    await MostrarMensagemDeErroAsync("Erro", "Cargo não selecionado.");
                     error++;
                 }
                 else
                 {
                     usu.Cargo = (Cargo)Cargo.SelectedValue;
                 }
-                if (!ValidadorSenha.ValidarSenha(usu.Senha))
+                if (usu.Cargo != Modelos.Cargo.ADMINISTRADOR && !ValidadorSenha.ValidarSenha(usu.Senha))
                 {
                     error++;
-                    await ShowErrorNotificationAsync("A senha deve conter pelo menos 1 número, 1 simbolo, 1 letra maiúscula e 1 letra minúscula.");
+                    await MostrarMensagemDeErroAsync("Erro", "A senha deve conter pelo menos 1 número, 1 simbolo, 1 letra maiúscula e 1 letra minúscula.");
                 }
-                if (!ValidadorCPF.Validar(usu.CPF))
+                if (usu.Cargo != Modelos.Cargo.ADMINISTRADOR && !ValidadorCPF.Validar(usu.CPF))
                 {
                     error++;
-                    await ShowErrorNotificationAsync("O CPF é inválido. É necessário informar um CPF válido.");
+                    await MostrarMensagemDeErroAsync("Erro", "O CPF é inválido. É necessário informar um CPF válido.");
                 }
                 if (error == 0)
                 {
@@ -97,9 +97,7 @@ namespace GestaoSimples.Paginas
                 Debug.WriteLine(ex.Message); // Para logar no console ou arquivo, se necessário
 
                 // Exibe a notificação de erro
-                await ShowErrorNotificationAsync(ex.Message);
-                if (ex.InnerException != null)
-                    _ = ShowErrorNotificationAsync(ex.InnerException.ToString());
+                await MostrarMensagemDeErroAsync("Erro",ex.Message);
             }
         }
 
@@ -164,14 +162,18 @@ namespace GestaoSimples.Paginas
             }
         }
 
-        private async Task ShowErrorNotificationAsync(string message)
+        private async Task MostrarMensagemDeErroAsync(string titulo, string mensagem)
         {
-            ErrorTextBlock.Text = message;  // Define o texto do erro
-            ErrorNotification.Visibility = Visibility.Visible;  // Torna a notificação visível
+            var dialog = new ContentDialog
+            {
+                Title = titulo,
+                Content = mensagem,
+                CloseButtonText = "Ok",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = this.Content.XamlRoot // Certifique-se de passar o contexto correto
+            };
 
-            // Aguarda 3 segundos antes de ocultar
-            await Task.Delay(3000);
-            ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
+            await dialog.ShowAsync();
         }
     }
 }

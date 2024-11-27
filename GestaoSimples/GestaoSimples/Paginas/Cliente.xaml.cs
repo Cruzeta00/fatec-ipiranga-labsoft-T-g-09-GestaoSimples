@@ -1,21 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using System.Text.RegularExpressions;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using GestaoSimples.Servicos;
-using GestaoSimples.Modelos;
 using System.Diagnostics;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using GestaoSimples.Recursos;
 
@@ -102,7 +91,13 @@ namespace GestaoSimples.Paginas
                 if (!ValidadorCPF.Validar(cliente.CPF))
                 {
                     error++;
-                    await ShowErrorNotificationAsync("O CPF é inválido. É necessário informar um CPF válido.");
+                    await MostrarMensagemDeErroAsync("O CPF é inválido", "É necessário informar um CPF válido.");
+                }
+
+                if (!ValidarTelefone(cliente.Telefone))
+                {
+                    error++;
+                    await MostrarMensagemDeErroAsync("Erro", "O telefone não está em formato padrão.\n(XX) XXXXX-XXXX");
                 }
 
                 if (error == 0)
@@ -139,20 +134,30 @@ namespace GestaoSimples.Paginas
                 Debug.WriteLine(ex.Message); // Para logar no console ou arquivo, se necessário
 
                 // Exibe a notificação de erro
-                await ShowErrorNotificationAsync(ex.Message);
-                if (ex.InnerException != null)
-                    _ = ShowErrorNotificationAsync(ex.InnerException.ToString());
+                await MostrarMensagemDeErroAsync("Erro", ex.Message);
             }
         }
 
-        private async Task ShowErrorNotificationAsync(string message)
+        private async Task MostrarMensagemDeErroAsync(string titulo, string mensagem)
         {
-            ErrorTextBlock.Text = message;  // Define o texto do erro
-            ErrorNotification.Visibility = Visibility.Visible;  // Torna a notificação visível
+            var dialog = new ContentDialog
+            {
+                Title = titulo,
+                Content = mensagem,
+                CloseButtonText = "Ok",
+                DefaultButton = ContentDialogButton.Close,
+                XamlRoot = this.Content.XamlRoot // Certifique-se de passar o contexto correto
+            };
 
-            // Aguarda 3 segundos antes de ocultar
-            await Task.Delay(3000);
-            ErrorNotification.Visibility = Visibility.Collapsed;  // Oculta a notificação
+            await dialog.ShowAsync();
+        }
+
+        private bool ValidarTelefone(string Telefone)
+        {
+            // Expressão regular para validar o telefone no formato (XX) XXXXX-XXXX
+            string padraoTelefone = @"^\(\d{2}\) \d{5}-\d{4}$";
+
+            return Regex.IsMatch(Telefone, padraoTelefone);
         }
     }
 }
