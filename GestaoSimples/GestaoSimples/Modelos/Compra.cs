@@ -10,6 +10,7 @@ namespace GestaoSimples.Modelos
     {
         public int Id { get; set; }
         public DateTime DataCompra { get; set; }
+        public string DataCompraFormatada => DataCompra.ToString("dd/MM/yyyy");
         public double ValorTotal { get; set; }
         public int CompradorId { get; set; }
         public int FornecedorId { get; set; }

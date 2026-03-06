@@ -44,12 +44,12 @@ namespace GestaoSimples.Servicos
                     try
                     {
                         contexto.Compras.Add(compra);
-
+                        
                         foreach (var item in compra.ItensCompra)
                         {
                             var produto = contexto.Produtos.SingleOrDefault(p => p.Id == item.ProdutoId);
                             if (produto == null)
-                                throw new InvalidOperationException($"Produto com Nome '{produto.Nome}' não encontrado.");
+                                throw new InvalidOperationException($"Produto não encontrado.");
                             
                             produto.Estoque += item.Quantidade;
 
