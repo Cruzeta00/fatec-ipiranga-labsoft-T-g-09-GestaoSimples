@@ -79,5 +79,19 @@ namespace GestaoSimples.Servicos
                 return contexto.ItensCompra.Where(x => x.CompraId == idCompra).ToList();
             }
         }
+
+        public List<GraficoMes> BuscarComprasPorMes()
+        {
+            using (var contexto = new ContextoGestaoSimples())
+            {
+                var dados = contexto.Compras.AsEnumerable().GroupBy(v => new { v.DataCompra.Year, v.DataCompra.Month }).Select(g => new GraficoMes
+                {
+                    Mes = $"{g.Key.Month:D2}/{g.Key.Year}",
+                    Total = g.Sum(v => v.ValorTotal)
+                }).OrderBy(x => DateTime.ParseExact("01/" + x.Mes, "dd/MM/yyyy", null)).ToList();
+
+                return dados;
+            }
+        }
     }
 }

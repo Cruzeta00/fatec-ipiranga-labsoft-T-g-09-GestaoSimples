@@ -20,6 +20,8 @@
         <HyperlinkButton Content="Compras" Click="ClickCompras" Height="100" Width="110" Background="DarkSlateGray"/>
 
         <HyperlinkButton Content="Usuários" Click="ClickUsuarios" Height="100" Width="110" Background="DarkSlateGray"/>
+        
+        <HyperlinkButton Content="Relatórios" Click="ClickRelatorios" Height="100" Width="110" Background="DarkSlateGray"/>
 
         <HyperlinkButton Content="Voltar" Click="ClickVoltar" Height="100" Width="110" Background="DarkSlateGray"/>
     </StackPanel>

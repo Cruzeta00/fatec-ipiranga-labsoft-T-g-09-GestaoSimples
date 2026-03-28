@@ -30,6 +30,7 @@
     <None Remove="Paginas\ItensVenda.xaml" />
     <None Remove="Paginas\Produto.xaml" />
     <None Remove="Paginas\Produtos.xaml" />
+    <None Remove="Paginas\Relatorios.xaml" />
     <None Remove="Paginas\Usuario.xaml" />
     <None Remove="Paginas\Usuarios.xaml" />
     <None Remove="Paginas\Venda.xaml" />
@@ -137,5 +138,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Migrations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Paginas\Relatorios.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
