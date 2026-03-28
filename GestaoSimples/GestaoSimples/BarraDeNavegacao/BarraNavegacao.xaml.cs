@@ -115,6 +115,19 @@ namespace GestaoSimples.BarraDeNavegacao
             }
         }
 
+        private void ClickRelatorios(object sender, RoutedEventArgs e)
+        {
+            if (this.Parent is Frame frame)
+            {
+                frame.Navigate(typeof(Relatorios));
+            }
+            else
+            {
+                frame = RetornaPai();
+                frame.Navigate(typeof(Relatorios));
+            }
+        }
+
         private void ClickVoltar(object sender, RoutedEventArgs e)
         {
             Frame frame = RetornaPai();
@@ -122,7 +135,8 @@ namespace GestaoSimples.BarraDeNavegacao
             if(frame.CanGoBack)
             {
                 var nomePag = frame.Content.GetType().Name;
-                if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda" || nomePag == "Cliente" || nomePag == "Usuario" || nomePag == "Compra" || nomePag == "ItensCompra" || nomePag == "ItensVenda")
+                if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda" || nomePag == "Cliente" || nomePag == "Usuario" || nomePag == "Compra" || 
+                    nomePag == "ItensCompra" || nomePag == "ItensVenda" || nomePag == "Relatorio")
                 {
                     if (nomePag == "Fornecedor")
                         frame.Navigate(typeof(Fornecedores));
@@ -136,8 +150,11 @@ namespace GestaoSimples.BarraDeNavegacao
                         frame.Navigate(typeof(Usuarios));
                     else if (nomePag == "Compra" || nomePag == "ItensCompra")
                         frame.Navigate(typeof(Compras));
+                    else if (nomePag == "Relatorio")
+                        frame.Navigate(typeof(Relatorios));
                 }
-                else if (nomePag == "Fornecedores" || nomePag == "Produtos" || nomePag == "Vendas" || nomePag == "Clientes" || nomePag == "Usuarios" || nomePag == "Compras")
+                else if (nomePag == "Fornecedores" || nomePag == "Produtos" || nomePag == "Vendas" || nomePag == "Clientes" || nomePag == "Usuarios" || 
+                    nomePag == "Compras" || nomePag == "Relatorios")
                 {
                     // Para guias principais, voltar para o Menu Inicial
                     frame.Navigate(typeof(Menu));
