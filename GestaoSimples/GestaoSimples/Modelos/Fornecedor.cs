@@ -24,6 +24,7 @@ namespace GestaoSimples.Modelos
         public string Observacoes { get; set; }
 
         public DateTime DataCadastro { get; set; }
+        public string DataCadastroFormatada => DataCadastro.ToString("dd/MM/yyyy");
 
         public Classificacao Classificacao { get; set; }
     }

@@ -108,10 +108,10 @@
                             <ListViewItem Content="{Binding Categoria}" Grid.Column="6" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                             <Border Grid.Column="6" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <CheckBox IsChecked="{Binding Ativo}" IsEnabled="False" Grid.Column="7" BorderThickness="35,0" IsHitTestVisible="False"/>
+                            <CheckBox IsChecked="{Binding Ativo}" IsEnabled="False" Grid.Column="7" BorderThickness="35,0" IsHitTestVisible="False" HorizontalAlignment="Center"/>
                             <Border Grid.Column="7" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding DataValidade}" Grid.Column="8" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                            <ListViewItem Content="{Binding DataValidadeFormatada}" Grid.Column="8" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

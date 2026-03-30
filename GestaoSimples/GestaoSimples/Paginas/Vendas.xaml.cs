@@ -56,8 +56,8 @@ namespace GestaoSimples.Paginas
         {
             foreach(Modelos.Venda v in  listaVendas)
             {
-                v.Cliente = _servicoCliente.BuscarCliente(v.ClienteId);
-                v.Vendedor = _servicoUsuario.BuscarUsuario(v.VendedorId);
+                v.Cliente = _servicoCliente.BuscarCliente(v.ClienteId) ?? new Modelos.Cliente { Nome = "Cliente não encontrado" };
+                v.Vendedor = _servicoUsuario.BuscarUsuario(v.VendedorId) ?? new Modelos.Usuario { Nome = "Usuário não encontrado" };
             }
             return listaVendas;
         }

@@ -19,9 +19,12 @@ namespace GestaoSimples.Modelos
         public Unidade Unidade { get; set; }
         public Categoria Categoria { get; set; }
         public bool Ativo { get; set; }
-        public DateTime? DataValidade { get; set; }
+        public DateTime DataValidade { get; set; }
+        public string DataValidadeFormatada => DataValidade.ToString("dd/MM/yyyy");
         public DateTime DataCriacao { get; set; }
+        public string DataCriacaoFormatada => DataCriacao.ToString("dd/MM/yyyy");
         public DateTime DataAtualizacao { get; set; }
+        public string DataAtualizacaoFormatada => DataAtualizacao.ToString("dd/MM/yyyy");
 
         public int FornecedorId { get; set; }
         public Fornecedor Fornecedor { get; set; }

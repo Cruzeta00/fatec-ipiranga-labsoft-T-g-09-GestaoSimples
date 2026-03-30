@@ -45,10 +45,10 @@
             <TextBox x:Name="Nome" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
             <TextBlock Text="CPF:" Grid.Row="2" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <TextBox x:Name="CPF" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="CPF" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5" TextChanging="Aplicando_CPF"/>
 
             <TextBlock Text="Telefone:" Grid.Row="3" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <TextBox x:Name="Telefone" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="Telefone" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5" TextChanging="Aplicando_Telefone"/>
         </Grid>
 
         <Border Grid.Row="2" Grid.ColumnSpan="3" x:Name="ErrorNotification" Background="Red" HorizontalAlignment="Center" VerticalAlignment="Bottom" 

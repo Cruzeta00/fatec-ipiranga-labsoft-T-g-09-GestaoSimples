@@ -86,7 +86,7 @@
                                 <ListViewItem Content="{Binding Id}" Grid.Column="0" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                                 <Border Grid.Column="0" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Center"/>
 
-                                <ListViewItem Content="{Binding DataVenda}" Grid.Column="1" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                                <ListViewItem Content="{Binding DataVendaFormatada}" Grid.Column="1" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                                 <Border Grid.Column="1" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
                                 <ListViewItem Content="{Binding ValorTotal}" Grid.Column="2" HorizontalAlignment="Left" IsHitTestVisible="False"/>
