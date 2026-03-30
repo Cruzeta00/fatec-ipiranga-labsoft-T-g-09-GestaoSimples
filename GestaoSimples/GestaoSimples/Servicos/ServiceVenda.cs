@@ -1,10 +1,10 @@
-﻿using ABI.System;
-using GestaoSimples.Data;
+﻿using GestaoSimples.Data;
 using GestaoSimples.Modelos;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestaoSimples.Servicos
 {
@@ -14,6 +14,7 @@ namespace GestaoSimples.Servicos
         {
             using (var contexto = new ContextoGestaoSimples())
             {
+                Debug.WriteLine(contexto.Database.GetDbConnection().DataSource);
                 return contexto.Vendas.ToList();
             }
         }

@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -21,6 +22,9 @@ namespace GestaoSimples.Paginas
     {
         private readonly ServiceFornecedor _servicoFornecedor;
         Classificacao? selectedStatus;
+        private bool _formatandoTelefone = false;
+        private bool _formatandoCnpj = false;
+
         public Fornecedor()
         {
             this.InitializeComponent();
@@ -208,6 +212,60 @@ namespace GestaoSimples.Paginas
             string padraoCNPJ= @"^\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}$";
 
             return Regex.IsMatch(CNPJ, padraoCNPJ);
+        }
+
+        private void Aplicando_Telefone(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            if (_formatandoTelefone)
+                return;
+
+            _formatandoTelefone = true;
+
+            string numeros = new string(sender.Text.Where(char.IsDigit).ToArray());
+
+            if (numeros.Length > 11)
+                numeros = numeros.Substring(0, 11);
+
+            if (numeros.Length >= 2)
+                numeros = $"({numeros.Substring(0, 2)}) {numeros.Substring(2)}";
+
+            if (numeros.Length >= 10)
+                numeros = numeros.Insert(10, "-");
+
+            sender.Text = numeros;
+            sender.SelectionStart = sender.Text.Length;
+
+            _formatandoTelefone = false;
+        }
+
+        private void Aplicando_CNPJ(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            if (_formatandoCnpj)
+                return;
+
+            _formatandoCnpj = true;
+
+            string numeros = new string(sender.Text.Where(char.IsDigit).ToArray());
+
+            if (numeros.Length > 14)
+                numeros = numeros.Substring(0, 14);
+
+            if (numeros.Length >= 3)
+                numeros = numeros.Insert(2, ".");
+
+            if (numeros.Length >= 7)
+                numeros = numeros.Insert(6, ".");
+
+            if (numeros.Length >= 11)
+                numeros = numeros.Insert(10, "/");
+
+            if (numeros.Length >= 16)
+                numeros = numeros.Insert(15, "-");
+
+            sender.Text = numeros;
+            sender.SelectionStart = sender.Text.Length;
+
+            _formatandoCnpj = false;
         }
     }
 }

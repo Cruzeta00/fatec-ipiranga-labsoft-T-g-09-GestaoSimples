@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="GestaoSimples.Paginas.Relatorios"
+    x:Class="GestaoSimples.Paginas.RelatorioCV"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GestaoSimples.BarraDeNavegacao"
@@ -24,18 +24,8 @@
             <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="1"
-      VerticalAlignment="Stretch"
-      HorizontalAlignment="Stretch"
-      Margin="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <HyperlinkButton Grid.Row="0" Content="Relatorios de Compras e Vendas" Click="ClickRelatoriosCV" Height="100" HorizontalAlignment="Stretch" Background="DarkSlateGray"/>
-
-            <HyperlinkButton Grid.Row="1" Content="Relatorio de Itens" Click="ClickRelatoriosItens" Height="100" HorizontalAlignment="Stretch" Background="DarkSlateGray"/>
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <controls:WebView2 x:Name="GraficoWebView"/>
         </Grid>
     </Grid>
 </Page>

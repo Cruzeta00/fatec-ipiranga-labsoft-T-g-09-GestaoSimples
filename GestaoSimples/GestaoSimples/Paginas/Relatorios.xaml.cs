@@ -1,6 +1,8 @@
-using GestaoSimples.Servicos;
+
+using GestaoSimples.Janelas;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -15,79 +17,37 @@ namespace GestaoSimples.Paginas;
 /// </summary>
 public sealed partial class Relatorios : Page
 {
-    private readonly ServiceVenda _servicoVendas;
     public Relatorios()
     {
         InitializeComponent();
-        _servicoVendas = new ServiceVenda();
-
-        this.Loaded += Relatorios_Carregados;
     }
 
-    private async void Relatorios_Carregados(object sender, RoutedEventArgs e)
+    private Frame RetornaPai()
     {
-        await GraficoWebView.EnsureCoreWebView2Async();
+        DependencyObject pai = VisualTreeHelper.GetParent(this.Parent);
+        while (pai != null && !(pai is Frame))
+        {
+            pai = VisualTreeHelper.GetParent(pai);
+        }
+        return (Frame)pai;
+    }
 
-        var labels = new List<string> { "Jan", "Fev", "Mar" };
-        var valores = new List<double> { 1000, 2000, 1500 };
+    private void ClickRelatoriosCV(object sender, RoutedEventArgs e)
+    {
+        
+        if (this.Parent is Frame frame)
+        {
+            frame.Navigate(typeof(RelatorioCV));
+        }
+        else
+        {
+            frame = RetornaPai();
+            frame.Navigate(typeof(RelatorioCV));
+        }
+    }
 
-        string labelsJson = JsonSerializer.Serialize(labels);
-        string valoresJson = JsonSerializer.Serialize(valores);
+    private void ClickRelatoriosItens(object sender, RoutedEventArgs e)
+    {
 
-        string html = $@"
-                        <html>
-                        <head>
-                        <meta charset='utf-8'>
-
-                        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
-
-                        <style>
-                        html, body {{
-                            margin:0;
-                            padding:0;
-                            height:100%;
-                        }}
-
-                        #grafico {{
-                            width:100%;
-                            height:100%;
-                        }}
-                        </style>
-
-                        </head>
-
-                        <body>
-
-                        <canvas id='grafico'></canvas>
-
-                        <script>
-
-                        window.onload = function() {{
-
-                        const ctx = document.getElementById('grafico');
-
-                        new Chart(ctx, {{
-                            type: 'bar',
-                            data: {{
-                                labels: {labelsJson},
-                                datasets: [{{
-                                    label: 'Vendas',
-                                    data: {valoresJson}
-                                }}]
-                            }},
-                            options: {{
-                                responsive: true,
-                                maintainAspectRatio: false
-                            }}
-                        }});
-
-                        }}
-
-                        </script>
-
-                        </body>
-                        </html>";
-
-        GraficoWebView.NavigateToString(html);
     }
 }

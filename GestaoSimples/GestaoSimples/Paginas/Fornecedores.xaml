@@ -110,10 +110,10 @@
                             <ListViewItem Content="{Binding Observacoes}" Grid.Column="6" HorizontalAlignment="Left" IsHitTestVisible="False"/>
                             <Border Grid.Column="6" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding DataCadastro}" Grid.Column="7" HorizontalAlignment="Center" IsHitTestVisible="False"/>
+                            <ListViewItem Content="{Binding DataCadastroFormatada}" Grid.Column="7" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                             <Border Grid.Column="7" BorderThickness="2" BorderBrush="White" HorizontalAlignment="Right"/>
 
-                            <ListViewItem Content="{Binding Classificacao}" Grid.Column="8" HorizontalAlignment="Left" IsHitTestVisible="False"/>
+                            <ListViewItem Content="{Binding Classificacao}" Grid.Column="8" HorizontalAlignment="Center" IsHitTestVisible="False"/>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

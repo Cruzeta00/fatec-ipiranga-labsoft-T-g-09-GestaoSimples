@@ -49,10 +49,10 @@
             <TextBox x:Name="Nome" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
 
             <TextBlock Text="CNPJ:" Grid.Row="2" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <TextBox x:Name="CNPJ" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="CNPJ" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="5" TextChanging="Aplicando_CNPJ"/>
 
             <TextBlock Text="Telefone:" Grid.Row="3" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
-            <TextBox x:Name="Telefone" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>
+            <TextBox x:Name="Telefone" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="5" TextChanging="Aplicando_Telefone"/>
 
             <TextBlock Text="E-mail:" Grid.Row="4" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Center"/>
             <TextBox x:Name="EMail" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="5"/>

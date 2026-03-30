@@ -1,12 +1,13 @@
-using System;
-using System.Text.RegularExpressions;
+using GestaoSimples.Recursos;
+using GestaoSimples.Servicos;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using GestaoSimples.Servicos;
+using System;
 using System.Diagnostics;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using GestaoSimples.Recursos;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -18,6 +19,8 @@ namespace GestaoSimples.Paginas
     /// </summary>
     public sealed partial class Cliente : Page
     {
+        private bool _formatandoCpf = false;
+        private bool _formatandoTelefone = false;
         private readonly ServiceCliente _servicoCliente;
         public Cliente()
         {
@@ -158,6 +161,57 @@ namespace GestaoSimples.Paginas
             string padraoTelefone = @"^\(\d{2}\) \d{5}-\d{4}$";
 
             return Regex.IsMatch(Telefone, padraoTelefone);
+        }
+
+        private void Aplicando_CPF(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            if (_formatandoCpf)
+                return;
+
+            _formatandoCpf = true;
+
+            string numeros = new string(sender.Text.Where(char.IsDigit).ToArray());
+
+            if (numeros.Length > 11)
+                numeros = numeros.Substring(0, 11);
+
+            if (numeros.Length >= 4)
+                numeros = numeros.Insert(3, ".");
+
+            if (numeros.Length >= 8)
+                numeros = numeros.Insert(7, ".");
+
+            if (numeros.Length >= 12)
+                numeros = numeros.Insert(11, "-");
+
+            sender.Text = numeros;
+            sender.SelectionStart = sender.Text.Length;
+
+            _formatandoCpf = false;
+        }
+
+        private void Aplicando_Telefone(TextBox sender, TextBoxTextChangingEventArgs args)
+        {
+            if (_formatandoTelefone)
+                return;
+
+            _formatandoTelefone = true;
+
+            string numeros = new string(sender.Text.Where(char.IsDigit).ToArray());
+
+            if (numeros.Length > 11)
+                numeros = numeros.Substring(0, 11);
+
+            if (numeros.Length >= 2)
+                numeros = $"({numeros.Substring(0, 2)}) {numeros.Substring(2)}";
+
+            if (numeros.Length >= 10)
+                numeros = numeros.Insert(10, "-");
+
+            sender.Text = numeros;
+            sender.SelectionStart = sender.Text.Length;
+
+            _formatandoTelefone = false;
         }
     }
 }
