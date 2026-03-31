@@ -16,6 +16,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -24,7 +25,9 @@
             <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+        <ComboBox Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" x:Name="ComboAno" Text="Seleção Anual" Width="120" SelectionChanged="ComboAno_SelectionChanged"/>
+
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
             <controls:WebView2 x:Name="GraficoWebView"/>
         </Grid>
     </Grid>

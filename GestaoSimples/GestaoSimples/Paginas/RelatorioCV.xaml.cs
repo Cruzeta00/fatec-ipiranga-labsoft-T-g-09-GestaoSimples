@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 // To learn more about WinUI, the WinUI project structure,
@@ -30,10 +31,72 @@ namespace GestaoSimples.Paginas
         {
             await GraficoWebView.EnsureCoreWebView2Async();
 
-            var vendas = _servicoVendas.BuscarVendasPorMes();
-            var compras = _servicoCompras.BuscarComprasPorMes();
+            CarregarAnos();
 
-            var labels = vendas.Select(v => v.Mes).ToList();
+            if (ComboAno.SelectedItem != null)
+            {
+                AtualizarGrafico((int)ComboAno.SelectedItem);
+            }
+        }
+
+        private void ComboAno_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboAno.SelectedItem == null)
+                return;
+
+            int anoSelecionado = (int)ComboAno.SelectedItem;
+
+            AtualizarGrafico(anoSelecionado);
+        }
+
+        private void CarregarAnos()
+        {
+            var anos = _servicoVendas
+                .BuscarVendas()
+                .Select(v => DateTime.Parse(v.DataVendaFormatada).Year)
+                .Distinct()
+                .OrderBy(a => a)
+                .ToList();
+
+            ComboAno.ItemsSource = anos;
+
+            int anoAtual = DateTime.Now.Year;
+
+            if (anos.Contains(anoAtual))
+                ComboAno.SelectedItem = anoAtual;
+            else
+                ComboAno.SelectedIndex = anos.Count - 1;
+        }
+
+        private void AtualizarGrafico(int ano)
+        {
+            var vendas = _servicoVendas
+                .BuscarVendas()
+                .Where(v => DateTime.Parse(v.DataVendaFormatada).Year == ano)
+                .GroupBy(v => DateTime.Parse(v.DataVendaFormatada).Month)
+                .Select(g => new
+                {
+                    NumeroMes = g.Key,
+                    Mes = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(g.Key),
+                    Total = g.Sum(x => x.ValorTotal)
+                })
+                .OrderBy(x => x.Mes)
+                .ToList();
+
+            var compras = _servicoCompras
+                .BuscarCompras()
+                .Where(c => DateTime.Parse(c.DataCompraFormatada).Year == ano)
+                .GroupBy(c => DateTime.Parse(c.DataCompraFormatada).Month)
+                .Select(g => new
+                {
+                    NumeroMes = g.Key,
+                    Mes = CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(g.Key),
+                    Total = g.Sum(x => x.ValorTotal)
+                })
+                .OrderBy(x => x.Mes)
+                .ToList();
+
+            var labels = vendas.OrderBy(v => v.NumeroMes).Select(v => v.Mes).ToList();
             var valoresVendas = vendas.Select(v => v.Total).ToList();
             var valoresCompras = compras.Select(c => c.Total).ToList();
 
@@ -45,9 +108,7 @@ namespace GestaoSimples.Paginas
                             <html>
                             <head>
                             <meta charset='utf-8'>
-
                             <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
-
                             <style>
                             html, body {{
                                 margin:0;
@@ -60,11 +121,8 @@ namespace GestaoSimples.Paginas
                                 height:100%;
                             }}
                             </style>
-
                             </head>
-
                             <body>
-
                             <canvas id='grafico'></canvas>
 
                             <script>
@@ -79,12 +137,12 @@ namespace GestaoSimples.Paginas
                                     labels: {labelsJson},
                                     datasets: [
                                     {{
-                                        label: 'Vendas',
-                                        data: {vendasJson}
-                                    }},
-                                    {{
                                         label: 'Compras',
                                         data: {comprasJson}
+                                    }},
+                                    {{
+                                        label: 'Vendas',
+                                        data: {vendasJson}
                                     }}
                                     ]
                                 }},
@@ -97,7 +155,6 @@ namespace GestaoSimples.Paginas
                             }}
 
                             </script>
-
                             </body>
                             </html>";
 
