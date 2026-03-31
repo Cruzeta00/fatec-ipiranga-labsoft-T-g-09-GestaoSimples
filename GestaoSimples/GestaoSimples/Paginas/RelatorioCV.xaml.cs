@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 // To learn more about WinUI, the WinUI project structure,
@@ -104,11 +105,12 @@ namespace GestaoSimples.Paginas
             string vendasJson = JsonSerializer.Serialize(valoresVendas);
             string comprasJson = JsonSerializer.Serialize(valoresCompras);
 
+            string chartJs = File.ReadAllText("Recursos/chart.js");
             string html = $@"
                             <html>
                             <head>
                             <meta charset='utf-8'>
-                            <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+                            <script>{chartJs}</script>
                             <style>
                             html, body {{
                                 margin:0;
