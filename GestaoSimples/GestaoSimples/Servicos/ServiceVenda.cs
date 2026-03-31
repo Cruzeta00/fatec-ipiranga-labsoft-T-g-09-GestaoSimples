@@ -14,7 +14,7 @@ namespace GestaoSimples.Servicos
         {
             using (var contexto = new ContextoGestaoSimples())
             {
-                Debug.WriteLine(contexto.Database.GetDbConnection().DataSource);
+                //Debug.WriteLine(contexto.Database.GetDbConnection().DataSource);
                 return contexto.Vendas.ToList();
             }
         }
@@ -81,20 +81,6 @@ namespace GestaoSimples.Servicos
             using (var contexto = new ContextoGestaoSimples())
             {
                 return contexto.ItensVenda.Where(x => x.VendaId == idVenda).ToList();
-            }
-        }
-
-        public List<GraficoMes> BuscarVendasPorMes()
-        {
-            using(var contexto = new ContextoGestaoSimples())
-            {
-                var dados = contexto.Vendas.AsEnumerable().GroupBy(v => new { v.DataVenda.Year, v.DataVenda.Month }).Select(g => new GraficoMes
-                {
-                    Mes = $"{g.Key.Month:D2}/{g.Key.Year}",
-                    Total = g.Sum(v => v.ValorTotal)
-                }).OrderBy(x => DateTime.ParseExact("01/" + x.Mes, "dd/MM/yyyy", null)).ToList();
-
-                return dados;
             }
         }
     }

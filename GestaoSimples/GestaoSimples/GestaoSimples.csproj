@@ -17,6 +17,7 @@
     <None Remove="BarraDeNavegacao\BarraNavegacao.xaml" />
     <None Remove="Configuracoes\appsettings.json" />
     <None Remove="Configuracoes\appsettingsAntigo.json" />
+    <None Remove="Configuracoes\GestaoSimples.db" />
     <None Remove="GestaoSimples.xaml" />
     <None Remove="JanelaInicial\Fornecedores.xaml" />
     <None Remove="Login.xaml" />
@@ -36,6 +37,7 @@
     <None Remove="Paginas\Usuarios.xaml" />
     <None Remove="Paginas\Venda.xaml" />
     <None Remove="Paginas\Vendas.xaml" />
+    <None Remove="Recursos\chart.js" />
     <None Remove="Recursos\Logo.ico" />
     <None Remove="Recursos\Sloggan.png" />
   </ItemGroup>
@@ -44,6 +46,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Configuracoes\appsettingsAntigo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configuracoes\GestaoSimples.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\chart.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Recursos\Logo.ico">

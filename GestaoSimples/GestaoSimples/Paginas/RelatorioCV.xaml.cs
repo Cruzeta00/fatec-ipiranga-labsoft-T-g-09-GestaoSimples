@@ -3,6 +3,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 // To learn more about WinUI, the WinUI project structure,
@@ -30,23 +32,87 @@ namespace GestaoSimples.Paginas
         {
             await GraficoWebView.EnsureCoreWebView2Async();
 
-            var vendas = _servicoVendas.BuscarVendasPorMes();
-            var compras = _servicoCompras.BuscarComprasPorMes();
+            CarregarAnos();
 
-            var labels = vendas.Select(v => v.Mes).ToList();
-            var valoresVendas = vendas.Select(v => v.Total).ToList();
-            var valoresCompras = compras.Select(c => c.Total).ToList();
+            if (ComboAno.SelectedItem != null)
+            {
+                AtualizarGrafico((int)ComboAno.SelectedItem);
+            }
+        }
+
+        private void ComboAno_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ComboAno.SelectedItem == null)
+                return;
+
+            int anoSelecionado = (int)ComboAno.SelectedItem;
+
+            AtualizarGrafico(anoSelecionado);
+        }
+
+        private void CarregarAnos()
+        {
+            var anos = _servicoVendas
+                .BuscarVendas()
+                .Select(v => DateTime.Parse(v.DataVendaFormatada).Year)
+                .Distinct()
+                .OrderBy(a => a)
+                .ToList();
+
+            ComboAno.ItemsSource = anos;
+
+            int anoAtual = DateTime.Now.Year;
+
+            if (anos.Contains(anoAtual))
+                ComboAno.SelectedItem = anoAtual;
+            else
+                ComboAno.SelectedIndex = anos.Count - 1;
+        }
+
+        private void AtualizarGrafico(int ano)
+        {
+            var vendasAgrupadas = _servicoVendas
+                                    .BuscarVendas()
+                                    .Where(v => DateTime.Parse(v.DataVendaFormatada).Year == ano)
+                                    .GroupBy(v => DateTime.Parse(v.DataVendaFormatada).Month)
+                                    .ToDictionary(g => g.Key, g => g.Sum(x => x.ValorTotal));
+
+            var comprasAgrupadas = _servicoCompras
+                                    .BuscarCompras()
+                                    .Where(c => DateTime.Parse(c.DataCompraFormatada).Year == ano)
+                                    .GroupBy(c => DateTime.Parse(c.DataCompraFormatada).Month)
+                                    .ToDictionary(g => g.Key, g => g.Sum(x => x.ValorTotal));
+
+
+            var labels = new List<string>();
+            var valoresVendas = new List<decimal>();
+            var valoresCompras = new List<decimal>();
+
+
+            for (int mes = 1; mes <= 12; mes++)
+            {
+                labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(mes));
+
+                valoresVendas.Add(
+                    (decimal)(vendasAgrupadas.ContainsKey(mes) ? vendasAgrupadas[mes] : 0)
+                );
+
+                valoresCompras.Add(
+                    (decimal)(comprasAgrupadas.ContainsKey(mes) ? comprasAgrupadas[mes] : 0)
+                );
+            }
+
 
             string labelsJson = JsonSerializer.Serialize(labels);
             string vendasJson = JsonSerializer.Serialize(valoresVendas);
             string comprasJson = JsonSerializer.Serialize(valoresCompras);
 
+            string chartJs = File.ReadAllText("Recursos/chart.js");
             string html = $@"
                             <html>
                             <head>
                             <meta charset='utf-8'>
-
-                            <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+                            <script>{chartJs}</script>
 
                             <style>
                             html, body {{
