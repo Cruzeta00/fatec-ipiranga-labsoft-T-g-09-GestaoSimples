@@ -33,9 +33,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <HyperlinkButton Grid.Row="0" Content="Relatorios de Compras e Vendas" Click="ClickRelatoriosCV" Height="100" HorizontalAlignment="Stretch" Background="DarkSlateGray"/>
+            <HyperlinkButton Grid.Row="0" Content="Relatório de Compras e Vendas" Click="ClickRelatoriosCV" Height="100" HorizontalAlignment="Stretch" Background="DarkSlateGray"/>
 
-            <HyperlinkButton Grid.Row="1" Content="Relatorio de Itens" Click="ClickRelatoriosItens" Height="100" HorizontalAlignment="Stretch" Background="DarkSlateGray"/>
+            <HyperlinkButton Grid.Row="1" Content="Relatório de Itens" Click="ClickRelatoriosItens" Height="100" HorizontalAlignment="Stretch" Background="DarkSlateGray"/>
         </Grid>
     </Grid>
 </Page>

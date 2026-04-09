@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Page
-    x:Class="GestaoSimples.Paginas.RelatorioCV"
+    x:Class="GestaoSimples.Paginas.RelatorioItens"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:GestaoSimples.BarraDeNavegacao"
@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5">
-            <TextBlock HorizontalAlignment="Left" x:Name="paginaRelatorioCV" Text="Relatório C/V" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
+            <TextBlock HorizontalAlignment="Left" x:Name="paginaRelatorioItens" Text="Relatório Itens" Margin="10" Style="{StaticResource TitleTextBlockStyle}"/>
             <local:BarraNavegacao HorizontalAlignment="Center"/>
         </Grid>
 

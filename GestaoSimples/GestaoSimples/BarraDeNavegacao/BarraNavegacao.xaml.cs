@@ -152,6 +152,8 @@ namespace GestaoSimples.BarraDeNavegacao
                         frame.Navigate(typeof(Compras));
                     else if (nomePag == "RelatorioCV")
                         frame.Navigate(typeof(Relatorios));
+                    else if (nomePag == "RelatorioItens")
+                        frame.Navigate(typeof(Relatorios));
                 }
                 else if (nomePag == "Fornecedores" || nomePag == "Produtos" || nomePag == "Vendas" || nomePag == "Clientes" || nomePag == "Usuarios" || 
                     nomePag == "Compras" || nomePag == "Relatorios")

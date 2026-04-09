@@ -48,6 +48,14 @@ public sealed partial class Relatorios : Page
 
     private void ClickRelatoriosItens(object sender, RoutedEventArgs e)
     {
-
+        if (this.Parent is Frame frame)
+        {
+            frame.Navigate(typeof(RelatorioItens));
+        }
+        else
+        {
+            frame = RetornaPai();
+            frame.Navigate(typeof(RelatorioItens));
+        }
     }
 }
