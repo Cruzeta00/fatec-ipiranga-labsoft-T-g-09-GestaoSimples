@@ -15,7 +15,7 @@ namespace GestaoSimples.Servicos
             using (var contexto = new ContextoGestaoSimples())
             {
                 //Debug.WriteLine(contexto.Database.GetDbConnection().DataSource);
-                return contexto.Vendas.ToList();
+                return contexto.Vendas.Include(v => v.ItensVenda).ToList();
             }
         }
 

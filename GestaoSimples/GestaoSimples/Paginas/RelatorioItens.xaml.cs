@@ -36,22 +36,39 @@ public sealed partial class RelatorioItens : Page
     {
         await GraficoWebView.EnsureCoreWebView2Async();
 
+        CarregarItens();
+        CarregarMeses();
         CarregarAnos();
 
         if (ComboAno.SelectedItem != null)
         {
-            AtualizarGrafico((int)ComboAno.SelectedItem);
+            AtualizarGrafico();
         }
     }
 
-    private void ComboAno_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void CarregarItens()
     {
-        if (ComboAno.SelectedItem == null)
-            return;
+        var itens = _servicoProdutos
+        .BuscarProdutos()
+        .OrderBy(p => p.Descricao)
+        .ToList();
 
-        int anoSelecionado = (int)ComboAno.SelectedItem;
+        ComboItem.ItemsSource = itens;
 
-        AtualizarGrafico(anoSelecionado);
+        ComboItem.DisplayMemberPath = "Nome";
+        ComboItem.SelectedValuePath = "Id";
+
+        if (itens.Any())
+            ComboItem.SelectedIndex = 0;
+    }
+
+    private void CarregarMeses()
+    {
+        var meses = Enumerable.Range(1, 12).ToList();
+
+        ComboMes.ItemsSource = meses;
+
+        ComboMes.SelectedItem = DateTime.Now.Month;
     }
 
     private void CarregarAnos()
@@ -73,104 +90,161 @@ public sealed partial class RelatorioItens : Page
             ComboAno.SelectedIndex = anos.Count - 1;
     }
 
-    private void AtualizarGrafico(int ano)
+    private void AtualizarGrafico()
     {
-        var vendasAgrupadas = _servicoVendas
-                                .BuscarVendas()
-                                .Where(v => DateTime.Parse(v.DataVendaFormatada).Year == ano)
-                                .GroupBy(v => DateTime.Parse(v.DataVendaFormatada).Month)
-                                .ToDictionary(g => g.Key, g => g.Sum(x => x.ValorTotal));
+        if (ComboItem.SelectedValue == null ||
+            ComboMes.SelectedItem == null ||
+            ComboAno.SelectedItem == null)
+            return;
 
-        var comprasAgrupadas = _servicoCompras
-                                .BuscarCompras()
-                                .Where(c => DateTime.Parse(c.DataCompraFormatada).Year == ano)
-                                .GroupBy(c => DateTime.Parse(c.DataCompraFormatada).Month)
-                                .ToDictionary(g => g.Key, g => g.Sum(x => x.ValorTotal));
+        int itemId = (int)ComboItem.SelectedValue;
+        int mes = (int)ComboMes.SelectedItem;
+        int ano = (int)ComboAno.SelectedItem;
 
 
-        var labels = new List<string>();
-        var valoresVendas = new List<decimal>();
-        var valoresCompras = new List<decimal>();
+        DateTime inicioMes = new DateTime(ano, mes, 1);
+        DateTime fimMes = inicioMes.AddMonths(1).AddDays(-1);
 
 
-        for (int mes = 1; mes <= 12; mes++)
+        var compras = _servicoCompras.BuscarCompras();
+        var vendas = _servicoVendas.BuscarVendas();
+
+
+        decimal estoqueInicial = CalcularEstoqueInicial(itemId, inicioMes);
+
+
+        List<string> labels = new();
+        List<decimal> estoquePorDia = new();
+
+        decimal estoqueAtual = estoqueInicial;
+
+
+        for (DateTime dia = inicioMes; dia <= fimMes; dia = dia.AddDays(1))
         {
-            labels.Add(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(mes));
+            decimal comprasDia = compras
+                .Where(c => DateTime.Parse(c.DataCompraFormatada).Date == dia)
+                .SelectMany(c => c.ItensCompra)
+                .Where(i => i.ProdutoId == itemId)
+                .Sum(i => i.Quantidade);
 
-            valoresVendas.Add(
-                (decimal)(vendasAgrupadas.ContainsKey(mes) ? vendasAgrupadas[mes] : 0)
-            );
+            decimal vendasDia = vendas
+                .Where(v => DateTime.Parse(v.DataVendaFormatada).Date == dia)
+                .SelectMany(v => v.ItensVenda)
+                .Where(i => i.ProdutoId == itemId)
+                .Sum(i => i.Quantidade);
 
-            valoresCompras.Add(
-                (decimal)(comprasAgrupadas.ContainsKey(mes) ? comprasAgrupadas[mes] : 0)
-            );
+
+            estoqueAtual += comprasDia;
+            estoqueAtual -= vendasDia;
+
+
+            labels.Add(dia.Day.ToString());
+            estoquePorDia.Add(estoqueAtual);
         }
 
 
+        RenderizarGrafico(labels, estoquePorDia);
+    }
+
+    private decimal CalcularEstoqueInicial(int itemId, DateTime dataInicio)
+    {
+        var produto = _servicoProdutos
+            .BuscarProdutos()
+            .FirstOrDefault(p => p.Id == itemId);
+
+        decimal estoqueAtual = produto?.Estoque ?? 0;
+
+        int teste = _servicoCompras.BuscarCompras().First().ItensCompra.Count;
+
+        var comprasDepois = _servicoCompras.BuscarCompras()
+            .Where(c => DateTime.Parse(c.DataCompraFormatada) >= dataInicio)
+            .SelectMany(c => c.ItensCompra)
+            .Where(i => i.ProdutoId == itemId)
+            .Sum(i => i.Quantidade);
+
+
+        var vendasDepois = _servicoVendas.BuscarVendas()
+            .Where(v => DateTime.Parse(v.DataVendaFormatada) >= dataInicio)
+            .SelectMany(v => v.ItensVenda)
+            .Where(i => i.ProdutoId == itemId)
+            .Sum(i => i.Quantidade);
+
+
+        return estoqueAtual - comprasDepois + vendasDepois;
+    }
+
+    private void RenderizarGrafico(List<string> labels, List<decimal> valores)
+    {
         string labelsJson = JsonSerializer.Serialize(labels);
-        string vendasJson = JsonSerializer.Serialize(valoresVendas);
-        string comprasJson = JsonSerializer.Serialize(valoresCompras);
+        string valoresJson = JsonSerializer.Serialize(valores);
 
         string chartJs = File.ReadAllText("Recursos/chart.js");
+
         string html = $@"
-                            <html>
-                            <head>
-                            <meta charset='utf-8'>
-                            <script>{chartJs}</script>
+                        <html>
+                        <head>
+                        <meta charset='utf-8'>
+                        <script>{chartJs}</script>
 
-                            <style>
-                            html, body {{
-                                margin:0;
-                                padding:0;
-                                height:100%;
-                            }}
+                        <style>
+                        html, body {{
+                        margin:0;
+                        padding:0;
+                        height:100%;
+                        }}
 
-                            #grafico {{
-                                width:100%;
-                                height:100%;
-                            }}
-                            </style>
+                        #grafico {{
+                        width:100%;
+                        height:100%;
+                        }}
+                        </style>
 
-                            </head>
+                        </head>
 
-                            <body>
+                        <body>
 
-                            <canvas id='grafico'></canvas>
+                        <canvas id='grafico'></canvas>
 
-                            <script>
+                        <script>
 
-                            window.onload = function() {{
+                        window.onload = function() {{
 
-                            const ctx = document.getElementById('grafico');
+                        const ctx = document.getElementById('grafico');
 
-                            new Chart(ctx, {{
-                                type: 'bar',
-                                data: {{
-                                    labels: {labelsJson},
-                                    datasets: [
-                                    {{
-                                        label: 'Vendas',
-                                        data: {vendasJson}
-                                    }},
-                                    {{
-                                        label: 'Compras',
-                                        data: {comprasJson}
-                                    }}
-                                    ]
-                                }},
-                                options: {{
-                                    responsive: true,
-                                    maintainAspectRatio: false
-                                }}
-                            }});
+                        new Chart(ctx, {{
+                        type: 'line',
+                        data: {{
 
-                            }}
+                        labels: {labelsJson},
 
-                            </script>
+                        datasets: [{{
+                        label: 'Estoque diário',
+                        data: {valoresJson},
+                        fill: false,
+                        tension: 0.2
+                        }}]
 
-                            </body>
-                            </html>";
+                        }},
+
+                        options: {{
+                        responsive: true,
+                        maintainAspectRatio: false
+                        }}
+
+                        }});
+
+                        }}
+
+                        </script>
+
+                        </body>
+                        </html>";
 
         GraficoWebView.NavigateToString(html);
+    }
+
+    private void Filtro_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        AtualizarGrafico();
     }
 }
