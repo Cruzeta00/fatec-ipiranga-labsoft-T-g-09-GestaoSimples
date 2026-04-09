@@ -136,7 +136,7 @@ namespace GestaoSimples.BarraDeNavegacao
             {
                 var nomePag = frame.Content.GetType().Name;
                 if(nomePag == "Fornecedor" || nomePag == "Produto" || nomePag == "Venda" || nomePag == "Cliente" || nomePag == "Usuario" || nomePag == "Compra" || 
-                    nomePag == "ItensCompra" || nomePag == "ItensVenda" || nomePag == "RelatorioCV")
+                    nomePag == "ItensCompra" || nomePag == "ItensVenda" || nomePag == "RelatorioCV" || nomePag == "RelatorioItens")
                 {
                     if (nomePag == "Fornecedor")
                         frame.Navigate(typeof(Fornecedores));
