@@ -228,7 +228,21 @@ public sealed partial class RelatorioItens : Page
 
                         options: {{
                         responsive: true,
-                        maintainAspectRatio: false
+                        maintainAspectRatio: false,
+
+                        scales: {{
+                        y: {{
+                        min: Math.min(...{valoresJson}) - 2,
+                        max: Math.max(...{valoresJson}) + 2,
+                        
+
+                        ticks: {{
+                        stepSize: 1,
+                        precision: 0
+                        }}
+                        }}
+                        }}
+
                         }}
 
                         }});
